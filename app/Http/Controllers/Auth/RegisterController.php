@@ -68,8 +68,13 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        
+        $newUserId = $data->id;
 
-        $data = DB::select('CALL 9_USER_INS_TAMBAHAN(?, ?)', [$idUser]);
+        $data = DB::select('CALL 9_USER_INS_TAMBAHAN(?, ?)', [$newUserId]);
+    }
+    protected function registered()
+    {   
+        auth()->logout();
+        return redirect()->route('login');
     }
 }

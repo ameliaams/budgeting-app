@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input id="password" placeholder="Retype password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+          <input id="password_confirmation" placeholder="Retype password" type="password" class="form-control @error('password') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -61,4 +61,3 @@
 </div>
 <!-- /.register-box -->
 @endsection
-

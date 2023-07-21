@@ -1,5 +1,9 @@
 @extends('layouts.app')
-
+<style>
+    .level-one-row {
+    background-color: #F5A623;
+}
+</style>
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -19,9 +23,8 @@
                             </tr>
                         </thead>
                         <tbody>
-
-                            @foreach ($data as $d)
-                            <tr>
+                        @foreach ($data as $d)
+                            <tr class="{{ $d->LEVEL == 1 ? 'level-one-row' : '' }}">
                                 <td>{{ $d->COA_NUMBER }}</td>
                                 <td>{{ $d->LEVEL }}</td>
                                 <td>{{ $d->NAMA_COA }}</td>
@@ -29,9 +32,8 @@
                                 <td class="editable" data-column="NOMINAL" data-id="{{ $d->ID }}">{{ $d->NOMINAL }}</td>
                                 <!-- Display more columns as needed -->
                             </tr>
-
-                            @endforeach
-                        </tbody>
+                        @endforeach
+                    </tbody>
                     </table>
                 </div>
             </div>

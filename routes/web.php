@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\CoaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,4 +21,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
-Route::post('/home/update', [App\Http\Controllers\HomeController::class, 'update'])->name('home.update');
+
+Route::get('/coa', [App\Http\Controllers\CoaController::class, 'index'])->name('coa.index');
+Route::get('/coa/update', [App\Http\Controllers\CoaController::class, 'update'])->name('coa.update');
+Route::get('/kasMasuk', [App\Http\Controllers\kasMasukController::class, 'index'])->name('kasMasuk.index');

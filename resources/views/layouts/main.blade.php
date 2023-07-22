@@ -25,14 +25,21 @@
   <link rel="stylesheet" href="{{ asset('admin/plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('admin/plugins/summernote/summernote-bs4.min.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <style>
+    .level-one-row {
+    background-color: #F5A623;
+    }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  <!-- Preloader -->
+  <!-- Preloader
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="{{ asset('admin/dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60" width="60">
-  </div>
+  </div> -->
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -54,7 +61,7 @@
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
+          <i class="fas fa-solid fa-power-off"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <div class="dropdown-divider"></div>
@@ -95,7 +102,7 @@
           <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">Ini Nama Admin</a>
         </div>
       </div>
 
@@ -117,25 +124,27 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+           <a href="{{ asset('/home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
-                <i class="right fas fa-angle-left"></i>
+                
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
+            <a href="{{ asset('/home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
+            
+            <i class="nav-icon fas fa-key"></i>
+
               <p>
                 Master
-                <i class="right fas fa-angle-left"></i>
+                <i class="right fas fa-angle-left {{ Request::is('coa') ? 'active' : '' }}"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ asset('admin/pages/charts/chartjs.html') }}" class="nav-link">
+              <a href="{{ asset('/coa') }}" class="nav-link {{ Request::is('coa') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Master COA</p>
                 </a>
@@ -156,7 +165,8 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
+            <i class="nav-icon fas fa-dollar-sign"></i>
+
               <p>
                 Transaksi
                 <i class="fas fa-angle-left right"></i>
@@ -164,13 +174,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ asset('admin/pages/UI/general.html') }}" class="nav-link">
+              <a href="{{ asset('/kasMasuk') }}" class="nav-link {{ Request::is('kasMasuk') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Transaksi Masuk</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ asset('admin/pages/UI/icons.html') }}" class="nav-link">
+              <a href="{{ asset('/kasKeluar') }}" class="nav-link {{ Request::is('kasKeluar') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Transaksi Keluar</p>
                 </a>
@@ -187,7 +197,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ asset('admin/pages/forms/general.html') }}" class="nav-link">
+              <a href="{{ asset('/laporanRealisasi') }}" class="nav-link {{ Request::is('laporanRealisasi') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Laporan Realisasi RAB</p>
                 </a>

@@ -34,7 +34,7 @@
 
   <style>
     .level-one-row {
-      background-color: #4A55A2;
+      background-color: #E9967A;
       color: #fff;
       font-weight: bold;
     }
@@ -46,7 +46,7 @@
 
     <!-- Preloader
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="{{ asset('admin/dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60" width="60">
+    <img class="animation__shake" src="{{ asset('admin/dist/img/B.png') }}" height="60" width="60">
   </div> -->
 
     <!-- Navbar -->
@@ -87,7 +87,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
-            <i class="fas fa-th-large"></i>
+          <i class="fa-solid fa-gear"></i>
           </a>
         </li>
       </ul>
@@ -98,23 +98,27 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="home" class="brand-link">
-        <img src="https://cdn1.iconfinder.com/data/icons/social-black-buttons/512/vk-512.png" alt="LOGO" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">Admin Budgeting</span>
+      <img src="https://drive.google.com/uc?id=13R7E34OIt03i6eiBszu53Zn3WIW9qt4Y" alt="LOGO" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Admin Budgeting</span>
       </a>
+
 
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-  <div class="image">
-    <img src="https://d2pn8kiwq2w21t.cloudfront.net/images/blank-profile-picture-973460_6.2e16d0ba.fill-560x560-c70.png" class="img-circle elevation-2" alt="User Image">
-  </div>
+        <div class="image">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png" class="img-circle elevation-2" alt="User Image">
+        </div>
+        @if($user)
   <div class="info">
-    @if($user)
-    <a class="d-block">{{$user->username }}</a>
-    @endif
+    <a class="d-block" style="font-weight: bold; font-size: 18px;">
+      {{ $user->username }}
+    </a>  
   </div>
-</div>
+@endif
+
+      </div>
 
 
         <!-- SidebarSearch Form -->
@@ -134,7 +138,7 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            <li class="nav-item menu-open">
+            <li class="nav-item {{ isActiveDashboard() ? 'menu-open' : '' }}">
               <a href="{{ asset('/home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
@@ -143,39 +147,38 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="{{ asset('/coa') }}" class="nav-link ">
-
+            <li class="nav-item {{ isActiveMaster() ? 'menu-open' : '' }}">
+              <a href="javascript:void(0);" class="nav-link {{ isActiveMaster() ? 'active' : '' }}">
                 <i class="nav-icon fas fa-key"></i>
-
                 <p>
                   Master
-                  <i class="right fas fa-angle-left {{ Request::is('coa') ? 'active' : '' }}"></i>
+                  <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
               <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{ asset('/coa') }}" class="nav-link {{ Request::is('coa') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Master COA</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{ asset('/rab') }}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Master RAB</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{ asset('admin/pages/charts/inline.html') }}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Master Tahun Anggaran</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
+        <li class="nav-item">
+            <a href="{{ asset('/coa') }}" class="nav-link {{ Request::is('coa') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Master COA</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ asset('/rab') }}" class="nav-link {{ Request::is('rab') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Master RAB</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ asset('/tahun') }}" class="nav-link {{ Request::is('/tahun') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Master Tahun Anggaran</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
+            <li class="nav-item {{ isActiveTransaksi() ? 'menu-open' : '' }}">
+              <a href="javascript:void(0)" class="nav-link {{ isActiveTransaksi() ? 'active' : '' }}">
                 <i class="nav-icon fas fa-dollar-sign"></i>
 
                 <p>
@@ -184,7 +187,7 @@
                 </p>
               </a>
               <ul class="nav nav-treeview">
-                <li class="nav-item">
+                <li class="nav-item" >
                   <a href="{{ asset('/kasMasuk') }}" class="nav-link {{ Request::is('kasMasuk') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Transaksi Masuk</p>
@@ -233,7 +236,7 @@
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="/home">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard</li>
+                <li class="breadcrumb-item active">@yield('title')</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->

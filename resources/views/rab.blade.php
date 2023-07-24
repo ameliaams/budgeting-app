@@ -3,6 +3,14 @@
 @section('title', 'Master RAB')
 
 @section('content')
+<style>
+  /* CSS untuk memberi warna pada header tabel */
+  th {
+    background-color: #FFD700; /* Ganti dengan warna yang Anda inginkan */
+    /* tambahkan gaya lainnya seperti font-color, padding, dsb. sesuai kebutuhan */
+  }
+</style>
+
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
@@ -10,7 +18,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">MASTER COA</h3>
+            <h3 class="card-title">MASTER RAB</h3>
             <form method="post" action="{{ route('rab.sync') }}">
               @csrf
               <button type="submit" id="syncButton" class="btn btn-default form-control float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #068FFF">

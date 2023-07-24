@@ -38,7 +38,10 @@ class kasKeluarController extends Controller
 
         // Pass the $results variable to the view
        
-        return view('kasKeluar', compact('dropdownOptions'));
+        return view('kasKeluar', [
+            'user' => $user,
+            'dropdownOptions' => $dropdownOptions,
+        ]);;
     }
 
 }

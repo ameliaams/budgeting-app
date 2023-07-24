@@ -8,7 +8,7 @@
       <a href="{{ route('login') }}" class="h1"><b>Log </b>in</a>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg">Masukkan Username Dan Password Anda </p>
 
       <form action="{{route('login')}}" method="post">
       @csrf
@@ -48,7 +48,7 @@
 
 
       <p class="mb-1">
-        <a href="forgot-password.html">Lupa Password?</a>
+        <a href="">Lupa Password?</a>
       </p>
       <p class="mb-0">
         <a href="{{route('register')}}" class="text-center">Belum punya akun? Daftar</a>

@@ -34,6 +34,7 @@ class HomeController extends Controller
         $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran, $idUser]);
 
         return view('home', ['user' => $user, 'data' => $data]);
+        
     }
 
     public function update(Request $request)

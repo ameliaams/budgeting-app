@@ -33,14 +33,15 @@ class kasMasukController extends Controller
         
         $dropdownOptions = [];
         foreach ($results as $result) {
-        if ($result->SALDO_NORMAL === 'D') {
-            $dropdownOptions[] = $result->NAMA_COA;
+            if ($result->SALDO_NORMAL === 'D') {
+                $dropdownOptions[] = $result->NAMA_COA;
+            }
         }
-    }
 
-        // Pass the $results variable to the view
-       
-        return view('kasMasuk', compact('dropdownOptions'));
+        return view('kasMasuk', [
+            'user' => $user,
+            'dropdownOptions' => $dropdownOptions,
+        ]);
     }
 
 }

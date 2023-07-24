@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Traksaksi Masuk')
+@section('title', 'TRANSAKSI MASUK')
 
 @section('content')
     <!-- Main content -->
@@ -8,11 +8,11 @@
       <div class="container-fluid">
         <div class="row">
           <!-- left column -->
-          <div class="col-md-10">
+          <div class="col-md-8 mx-auto">
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Transaksi Masuk</h3>
+                <h3 class="card-title">TRANSAKSI MASUK</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -36,13 +36,13 @@
                   <div class="col-md-6">
                     <input type="text" class="form-control" id="id_coa" name="id_coa" disabled>
                   </div>
-                  <div class="col-md-6">
-                    <select id="debit" name="debit" required>
+                  <div class="form-group col-md-6">
+                  <select class="custom-select form-control-border" id="debit" name="debit" required>
                       @foreach ($dropdownOptions as $result)
                         <option value="{{ $result }}">{{ $result }}</option>
                       @endforeach
                     </select>
-                  </div>
+                </div>
                   </div>
                   </div>
                   <div class="form-group">

@@ -31,6 +31,8 @@ Route::get('/rab', [App\Http\Controllers\RabController::class, 'index'])->name('
 Route::post('/rab/sync', [App\Http\Controllers\RabController::class, 'sync'])->name('rab.sync');
 Route::post('/rab/update', [App\Http\Controllers\RabController::class, 'update'])->name('rab.update');
 
+Route::get('/tahun', [App\Http\Controllers\TahunAnggaranController::class, 'index'])->name('tahun.index');
+
 Route::get('/kasMasuk', [App\Http\Controllers\kasMasukController::class, 'index'])->name('kasMasuk.index');
 
 Route::get('/kasKeluar', [App\Http\Controllers\kasKeluarController::class, 'index'])->name('kasKeluar.index');

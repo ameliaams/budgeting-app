@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>@yield ('title') | Budgeting</title> 
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -57,8 +57,8 @@
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="index3.html" class="nav-link">Home</a>
-        </li>
+  <a href="/home" class="nav-link">Home</a>
+</li>
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link">Contact</a>
         </li>
@@ -97,22 +97,25 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
-        <img src="{{ asset('admin/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <a href="home" class="brand-link">
+        <img src="https://cdn1.iconfinder.com/data/icons/social-black-buttons/512/vk-512.png" alt="LOGO" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">Admin Budgeting</span>
       </a>
 
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
-          </div>
-          <div class="info">
-            <a href="#" class="d-block">Ini Nama Admin</a>
-          </div>
-        </div>
+  <div class="image">
+    <img src="https://d2pn8kiwq2w21t.cloudfront.net/images/blank-profile-picture-973460_6.2e16d0ba.fill-560x560-c70.png" class="img-circle elevation-2" alt="User Image">
+  </div>
+  <div class="info">
+    @if($user)
+    <a class="d-block">{{$user->username }}</a>
+    @endif
+  </div>
+</div>
+
 
         <!-- SidebarSearch Form -->
         <div class="form-inline">
@@ -141,7 +144,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ asset('/home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
+              <a href="{{ asset('/coa') }}" class="nav-link ">
 
                 <i class="nav-icon fas fa-key"></i>
 
@@ -158,7 +161,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{ asset('admin/pages/charts/flot.html') }}" class="nav-link">
+                  <a href="{{ asset('/rab') }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Master RAB</p>
                   </a>
@@ -225,12 +228,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Dashboard</h1>
+              <h1 class="m-0">@yield('title')</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard v1</li>
+                <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -242,7 +245,7 @@
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-      <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+      <strong>Copyright &copy; 2023 <a href="#">Budgeting</a>.</strong>
       All rights reserved.
       <div class="float-right d-none d-sm-inline-block">
         <b>Version</b> 3.2.0

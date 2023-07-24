@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Master COA')
+@section('title', 'Master RAB')
 
 @section('content')
 <!-- Main content -->
@@ -11,6 +11,12 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">MASTER COA</h3>
+            <form method="post" action="{{ route('rab.sync') }}">
+              @csrf
+              <button type="submit" id="syncButton" class="btn btn-default form-control float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #068FFF">
+                <i class="fas fa-arrows-rotate"></i> Sync
+              </button>
+            </form>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -20,6 +26,7 @@
                   <th style="width: 10px">COA NUMBER</th>
                   <th>NAMA COA</th>
                   <th style="width: 40px">SALDO NORMAL</th>
+                  <th>NOMINAL</th>
                 </tr>
               </thead>
               <tbody>
@@ -28,6 +35,7 @@
                   <td>{{ isset($d->COA_NUMBER) ? $d->COA_NUMBER : '' }}</td>
                   <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
                   <td>{{ isset($d->SALDO_NORMAL) ? $d->SALDO_NORMAL : '' }}</td>
+                  <td class="editable" data-column="NOMINAL" data-id="{{ isset($d->ID) ? $d->ID : '' }}">{{ isset($d->NOMINAL) ? $d->NOMINAL : '' }}</td>
                 </tr>
                 @endforeach
               </tbody>
@@ -81,7 +89,7 @@
   });
 
   function saveData(id, column, value) {
-    fetch('/coa/sync', {
+    fetch('/rab/update', { // Replace 'coa/update' with the appropriate route URL
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +97,7 @@
         },
         body: JSON.stringify({
           id: id,
-          NOMINAL: value,
+          NOMINAL: value, // Correct column name to 'NOMINAL'
         }),
       })
       .then((response) => response.json())
@@ -112,7 +120,7 @@
 
   function syncData() {
     // Perform the AJAX request to update the data
-    fetch('/coa/sync', {
+    fetch('/rab/update', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

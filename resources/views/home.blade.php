@@ -40,7 +40,7 @@
           <!-- ./col -->
           <div class="col-lg-4 col-8">
             <!-- small box -->
-            <div class="small-box bg-primary">
+            <div class="small-box bg-info">
               <div class="inner">
                 <h3>03</h3>
                 <p>Master Tahun Anggaran</p>
@@ -54,7 +54,7 @@
   
           <div class="col-lg-4 col-8">
             <!-- small box -->
-            <div class="small-box bg-info">
+            <div class="small-box bg-primary">
               <div class="inner">
                 <h3>04</h3>
                 <p>Transaksi Masuk</p>

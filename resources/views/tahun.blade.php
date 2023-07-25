@@ -6,7 +6,7 @@
 <style>
   /* CSS untuk memberi warna pada header tabel */
   th {
-    background-color: #1E90FF; /* Ganti dengan warna yang Anda inginkan */
+    background-color: #4682B4; /* Ganti dengan warna yang Anda inginkan */
     /* tambahkan gaya lainnya seperti font-color, padding, dsb. sesuai kebutuhan */
   }
 </style>

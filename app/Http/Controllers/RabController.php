@@ -1,0 +1,76 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+class RabController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index(Request $request)
+    {
+        $user = Auth::user();
+
+        $idTahunAjaran = 10;
+        $idUser = 11;
+        // Call the stored procedure and fetch the data
+        $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran, $idUser]);
+
+        return view('rab', ['user' => $user, 'data' => $data]);
+    }
+
+    public function update(Request $request)
+    {
+        $id = $request->input('id');
+        $nominal = $request->input('NOMINAL'); // Use 'NOMINAL' to match the JavaScript code
+
+        try {
+            $result = DB::update('CALL 9_MASTER_RAB_UPD(?, ?)', [
+                $id, $nominal // Assuming IN_NOMINAL_PERUBAHAN and IN_REALISASI have default values
+            ]);
+
+            if ($result === 1) {
+                // Update successful
+
+                // Fetch the updated data
+                $idTahunAjaran = 10;
+                $idUser = 11;
+                $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran, $idUser]);
+
+                return response()->json(['success' => true, 'data' => $data]);
+            } else {
+                // Update failed
+                return response()->json(['success' => false, 'message' => 'Update failed']);
+            }
+        } catch (\Exception $e) {
+            // Handle the exception if the update fails
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function sync(Request $request)
+    {
+        $idUser = 11;
+        $idTahunAjaran = 10;
+        // Call the stored procedure and fetch the data
+        $data = DB::select('CALL UPD_TOTAL_NOMINAL_RAB_ALL(?, ?)', [$idUser, $idTahunAjaran]);
+
+        return view('coa', ['data' => $data]);
+    }
+}

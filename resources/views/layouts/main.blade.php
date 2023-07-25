@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>@yield ('title') | Budgeting</title> 
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -34,7 +34,7 @@
 
   <style>
     .level-one-row {
-      background-color: #4A55A2;
+      background-color: #E9967A;
       color: #fff;
       font-weight: bold;
     }
@@ -46,7 +46,7 @@
 
     <!-- Preloader
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="{{ asset('admin/dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60" width="60">
+    <img class="animation__shake" src="{{ asset('admin/dist/img/B.png') }}" height="60" width="60">
   </div> -->
 
     <!-- Navbar -->
@@ -57,8 +57,8 @@
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="index3.html" class="nav-link">Home</a>
-        </li>
+  <a href="/home" class="nav-link">Home</a>
+</li>
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link">Contact</a>
         </li>
@@ -87,7 +87,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
-            <i class="fas fa-th-large"></i>
+          <i class="fa-solid fa-gear"></i>
           </a>
         </li>
       </ul>
@@ -97,22 +97,29 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
-        <img src="{{ asset('admin/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <a href="home" class="brand-link">
+      <img src="https://drive.google.com/uc?id=13R7E34OIt03i6eiBszu53Zn3WIW9qt4Y" alt="LOGO" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Admin Budgeting</span>
       </a>
+
 
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
-          </div>
-          <div class="info">
-            <a href="#" class="d-block">Ini Nama Admin</a>
-          </div>
+        <div class="image">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png" class="img-circle elevation-2" alt="User Image">
         </div>
+        @if($user)
+  <div class="info">
+    <a class="d-block" style="font-weight: bold; font-size: 18px;">
+      {{ $user->username }}
+    </a>  
+  </div>
+@endif
+
+      </div>
+
 
         <!-- SidebarSearch Form -->
         <div class="form-inline">
@@ -131,7 +138,7 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            <li class="nav-item menu-open">
+            <li class="nav-item {{ isActiveDashboard() ? 'menu-open' : '' }}">
               <a href="{{ asset('/home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
@@ -140,39 +147,38 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="{{ asset('/home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
-
+            <li class="nav-item {{ isActiveMaster() ? 'menu-open' : '' }}">
+              <a href="javascript:void(0);" class="nav-link {{ isActiveMaster() ? 'active' : '' }}">
                 <i class="nav-icon fas fa-key"></i>
-
                 <p>
                   Master
-                  <i class="right fas fa-angle-left {{ Request::is('coa') ? 'active' : '' }}"></i>
+                  <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
               <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{ asset('/coa') }}" class="nav-link {{ Request::is('coa') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Master COA</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{ asset('admin/pages/charts/flot.html') }}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Master RAB</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{ asset('admin/pages/charts/inline.html') }}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Master Tahun Anggaran</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
+        <li class="nav-item">
+            <a href="{{ asset('/coa') }}" class="nav-link {{ Request::is('coa') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Master COA</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ asset('/rab') }}" class="nav-link {{ Request::is('rab') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Master RAB</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ asset('/tahun') }}" class="nav-link {{ Request::is('/tahun') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Master Tahun Anggaran</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
+            <li class="nav-item {{ isActiveTransaksi() ? 'menu-open' : '' }}">
+              <a href="javascript:void(0)" class="nav-link {{ isActiveTransaksi() ? 'active' : '' }}">
                 <i class="nav-icon fas fa-dollar-sign"></i>
 
                 <p>
@@ -181,7 +187,7 @@
                 </p>
               </a>
               <ul class="nav nav-treeview">
-                <li class="nav-item">
+                <li class="nav-item" >
                   <a href="{{ asset('/kasMasuk') }}" class="nav-link {{ Request::is('kasMasuk') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Transaksi Masuk</p>
@@ -225,12 +231,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Dashboard</h1>
+              <h1 class="m-0">@yield('title')</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard v1</li>
+                <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                <li class="breadcrumb-item active">@yield('title')</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -242,7 +248,7 @@
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-      <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+      <strong>Copyright &copy; 2023 <a href="#">Budgeting</a>.</strong>
       All rights reserved.
       <div class="float-right d-none d-sm-inline-block">
         <b>Version</b> 3.2.0

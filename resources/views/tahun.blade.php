@@ -1,12 +1,12 @@
 @extends('layouts.main')
 
-@section('title', 'Master COA')
+@section('title', 'MASTER TAHUN ANGGARAN')
 
 @section('content')
 <style>
   /* CSS untuk memberi warna pada header tabel */
   th {
-    background-color: #32CD32; /* Ganti dengan warna yang Anda inginkan */
+    background-color: #1E90FF; /* Ganti dengan warna yang Anda inginkan */
     /* tambahkan gaya lainnya seperti font-color, padding, dsb. sesuai kebutuhan */
   }
 </style>
@@ -19,24 +19,26 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">MASTER COA</h3>
+            <h3 class="card-title">MASTER TAHUN ANGGARAN</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
             <table class="table table-bordered">
               <thead style="text-align: center;">
                 <tr>
-                  <th style="width: 10px">COA NUMBER</th>
-                  <th>NAMA COA</th>
-                  <th style="width: 40px">SALDO NORMAL</th>
+                  <th style="width: 10px">ID</th>
+                  <th>TAHUN</th>
+                  <th>BULAN</th>
+                  <th style="width: 40px">ID USER</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach ($data as $d)
-                <tr class="{{ isset($d->LEVEL) && $d->LEVEL == 1 ? 'level-one-row' : '' }}" data-widget="expandable-table" aria-expanded="false">
-                  <td>{{ isset($d->COA_NUMBER) ? $d->COA_NUMBER : '' }}</td>
-                  <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
-                  <td>{{ isset($d->SALDO_NORMAL) ? $d->SALDO_NORMAL : '' }}</td>
+                @foreach ($tahun as $t)
+                <tr>
+                    <td>{{ $t->ID }}</td>
+                    <td>{{ $t->TAHUN }}</td>
+                    <td>{{ $t->BULAN }}</td>
+                    <td>{{ $t->ID_USER }}</td>
                 </tr>
                 @endforeach
               </tbody>

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'TRANSAKSI MASUK')
+@section('title', 'TRANSAKSI KELUAR')
 
 @section('content')
     <!-- Main content -->
@@ -10,9 +10,9 @@
           <!-- left column -->
           <div class="col-md-8 mx-auto">
             <!-- general form elements -->
-            <div class="card card-primary">
+            <div class="card card-danger">
               <div class="card-header">
-                <h3 class="card-title">TRANSAKSI MASUK</h3>
+                <h3 class="card-title">TRANSAKSI KELUAR</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -37,7 +37,7 @@
                     <input type="text" class="form-control" id="id_coa" name="id_coa" disabled>
                   </div>
                   <div class="form-group col-md-6">
-                  <select class="custom-select form-control-border" id="debit" name="debit" required>
+                  <select class="custom-select form-control-border" id="kredit" name="kredit" required>
                       @foreach ($dropdownOptions as $result)
                         <option value="{{ $result }}">{{ $result }}</option>
                       @endforeach
@@ -51,11 +51,7 @@
                   </div>
                   <div class="form-group">
                   <label for="kas">Kas:</label>
-                  <select id="kas" name="kas" required>
-                      @foreach ($dropdownOptions as $result)
-                        <option value="{{ $result }}">{{ $result }}</option>
-                      @endforeach
-                    </select>
+                    <input type="text" class="form-control" id="kas" name="kas" required>
                   </div>
                   <div class="form-group">
                   <label for="keterangan">Keterangan:</label>

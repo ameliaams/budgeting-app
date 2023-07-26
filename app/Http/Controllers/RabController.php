@@ -26,21 +26,27 @@ class RabController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+    
+        $idUser = $user->id;
+        $idTahunAjaran = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
 
-        $idTahunAjaran = 10;
-        $idUser = 11;
+        //echo dd($idTahunAjaran[0]->ID);
+    
         // Call the stored procedure and fetch the data
-        $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran, $idUser]);
-
+        $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran[0]->ID, $idUser]);
+    
         return view('rab', ['user' => $user, 'data' => $data]);
     }
+    
 
     public function update(Request $request)
     {
         $id = $request->input('id');
         $nominal = $request->input('NOMINAL'); // Use 'NOMINAL' to match the JavaScript code
-
+        $editMode = true;
+        
         try {
+            
             $result = DB::update('CALL 9_MASTER_RAB_UPD(?, ?)', [
                 $id, $nominal // Assuming IN_NOMINAL_PERUBAHAN and IN_REALISASI have default values
             ]);
@@ -49,9 +55,9 @@ class RabController extends Controller
                 // Update successful
 
                 // Fetch the updated data
-                $idTahunAjaran = 10;
-                $idUser = 11;
-                $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran, $idUser]);
+                $idTahunAjaran = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
+                $idUser = $user->id;
+                $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran[0]->ID, $idUser]);
 
                 return response()->json(['success' => true, 'data' => $data]);
             } else {
@@ -66,11 +72,13 @@ class RabController extends Controller
 
     public function sync(Request $request)
     {
-        $idUser = 11;
-        $idTahunAjaran = 10;
-        // Call the stored procedure and fetch the data
-        $data = DB::select('CALL UPD_TOTAL_NOMINAL_RAB_ALL(?, ?)', [$idUser, $idTahunAjaran]);
+        $user = Auth::user();
 
-        return view('coa', ['data' => $data]);
+        $idUser = $user->id;
+        $idTahunAjaran = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
+        // Call the stored procedure and fetch the data
+        $data = DB::select('CALL UPD_TOTAL_NOMINAL_RAB_ALL(?, ?)', [$idUser, $idTahunAjaran[0]->ID]);
+
+        return view('rab', ['user' => $user, 'data' => $data]);
     }
 }

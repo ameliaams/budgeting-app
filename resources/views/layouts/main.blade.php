@@ -169,7 +169,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ asset('/tahun') }}" class="nav-link {{ Request::is('/tahun') ? 'active' : '' }}">
+            <a href="{{ asset('/tahun') }}" class="nav-link {{ Request::is('tahun') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Master Tahun Anggaran</p>
             </a>
@@ -265,6 +265,7 @@
 
   <!-- jQuery -->
   <script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
   <script src="{{ asset('admin/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
   <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->

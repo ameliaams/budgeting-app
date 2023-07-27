@@ -240,7 +240,7 @@
               </ul>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{ asset('/laporanMasuk?tes=2023-01-01') }}" class="nav-link {{ Request::is('laporanMasuk') ? 'active' : '' }}">
+                <a href="{{ asset('/laporanTransaksiMasuk') }}" class="nav-link {{ Request::is('laporanTransaksiMasuk') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Laporan Kas Masuk</p>
                   </a>
@@ -248,7 +248,7 @@
               </ul>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{ asset('/laporanKasKeluar') }}" class="nav-link {{ Request::is('laporanKasKeluar') ? 'active' : '' }}">
+                <a href="{{ asset('/laporanTransaksiKeluar') }}" class="nav-link {{ Request::is('laporan') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Laporan Kas Keluar</p>
                   </a>

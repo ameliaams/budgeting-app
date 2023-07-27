@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class laporanMasukController extends Controller
+class laporanTransaksiKeluarController extends Controller
 {
     public function __construct()
     {
@@ -29,7 +29,7 @@ class laporanMasukController extends Controller
             
             // Lakukan apapun yang Anda perlukan dengan hasil data
             // Misalnya, tampilkan data menggunakan view
-            return view('laporanMasuk', ['user' => $user, 'results' => $results]);
+            return view('laporanTransaksiKeluar', ['user' => $user, 'results' => $results]);
 
     }
 }

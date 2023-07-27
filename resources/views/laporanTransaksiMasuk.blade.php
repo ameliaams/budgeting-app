@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Laporan Kas Keluar')
+@section('title', 'Laporan Kas Masuk')
 
 @section('content')
 <!-- Main content -->
@@ -10,11 +10,11 @@
           <!-- left column -->
           <div class="col-md-8 mx-auto">
             <!-- general form elements -->
-            <div class="card card-secondary">
+            <div class="card card-dark">
               <div class="card-header">
-                <h3 class="card-title">Laporan Kas Keluar</h3>
+                <h3 class="card-title">Laporan Kas Masuk</h3>
               </div>
-              <form action="{{ route('laporanKasKeluar.index', ['tanggalAwal' => request('tanggalAwal')]) }}" method="get">
+              <form action="{{ route('laporanTransaksiMasuk.index') }}" method="get">
                 @csrf
                 <div class="card-body">
                 <div class="form-group row">
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="card-footer text-center">
-                   <button type="submit" class="btn btn-secondary w-100">Cari</button>
+                   <button type="submit" class="btn btn-dark w-100">Cari</button>
                 </div>
 
                 </div>
@@ -41,7 +41,7 @@
               </div>
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">LAPORAN KAS KELUAR</h3>
+            <h3 class="card-title">LAPORAN KAS MASUK</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -53,7 +53,7 @@
                   <th>TANGGAL</th>
                   <th>NAMA COA</th>
                   <th>KETERANGAN</th>
-                  <th>NOMINAL KREDIT</th>
+                  <th>NOMINAL DEBIT</th>
                 </tr>
               </thead>
               <tbody>
@@ -64,7 +64,7 @@
                   <td>{{ isset($result->TANGGAL) ? $result->TANGGAL : '' }}</td>
                   <td>{{ isset($result->NAMA_COA) ? $result->NAMA_COA : '' }}</td>
                   <td>{{ isset($result->KETERANGAN) ? $result->KETERANGAN : '' }}</td>
-                  <td style="text-align: right;">@money(isset($result->KREDIT) && $result->KREDIT !== '' ? floatval($result->KREDIT) : 0)</td>
+                  <td style="text-align: right;">@money(isset($result->DEBET) && $result->DEBET !== '' ? floatval($result->DEBET) : 0)</td>
                 </tr>
                 @endforeach
               </tbody>

@@ -39,9 +39,5 @@ Route::get('/kasKeluar', [App\Http\Controllers\kasKeluarController::class, 'inde
 Route::post('/kasKeluar/simpanData', [App\Http\Controllers\kasKeluarController::class, 'simpanData'])->name('kasKeluar.simpanData');
 
 Route::get('/laporanRealisasi', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan.index');
-Route::get('/laporanMasuk/{tanggalAwal}', [laporanMasukController::class, 'index'])
-    ->name('laporanMasuk.index')
-    ->where('tanggalAwal', '\d{4}-\d{2}-\d{2}');
-Route::get('/laporanKasKeluar/{tanggalAwal}', [laporanKasKeluarController::class, 'index'])
-    ->name('laporanKasKeluar.index')
-    ->where('tanggalAwal', '\d{4}-\d{2}-\d{2}');
+Route::get('/laporanTransaksiKeluar', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'index'])->name('laporanTransaksiKeluar.index');
+Route::get('/laporanTransaksiMasuk', [App\Http\Controllers\laporanTransaksiMasukController::class, 'index'])->name('laporanTransaksiMasuk.index');

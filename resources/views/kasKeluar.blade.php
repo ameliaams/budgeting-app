@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'TRANSAKSI KELUAR')
+@section('title', 'Transaksi Keluar')
 
 @section('content')
     <!-- Main content -->
@@ -12,7 +12,7 @@
             <!-- general form elements -->
             <div class="card card-danger">
               <div class="card-header">
-                <h3 class="card-title">TRANSAKSI KELUAR</h3>
+                <h3 class="card-title">Transaksi Keluar</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->

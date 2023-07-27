@@ -201,7 +201,6 @@
             <li class="nav-item {{ isActiveTransaksi() ? 'menu-open' : '' }}">
               <a href="javascript:void(0)" class="nav-link {{ isActiveTransaksi() ? 'active' : '' }}">
                 <i class="nav-icon fas fa-dollar-sign"></i>
-
                 <p>
                   Transaksi
                   <i class="fas fa-angle-left right"></i>
@@ -222,9 +221,9 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-edit"></i>
+            <li class="nav-item {{ isActiveLaporan() ? 'menu-open' : '' }}">
+              <a href="javascript:void(0)" class="nav-link {{ isActiveLaporan() ? 'active' : '' }}">
+                <i class="nav-icon fas fa-dollar-sign"></i>
                 <p>
                   Laporan
                   <i class="fas fa-angle-left right"></i>

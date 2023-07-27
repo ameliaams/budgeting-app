@@ -5,7 +5,7 @@
 @section('content')
 <style>
   th {
-    background-color: #FFD700;
+    background-color: #778899;
   }
 </style>
 
@@ -19,7 +19,7 @@
             <h3 class="card-title">MASTER RAB</h3>
             <form method="post" action="{{ route('rab.sync') }}">
               @csrf
-              <button type="submit" id="syncButton" class="btn btn-warning form-control float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #DAA520">
+              <button type="submit" id="syncButton" class="btn form-control float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #778899">
                 <i class="fas fa-arrows-rotate"></i> Sync
               </button>
             </form>

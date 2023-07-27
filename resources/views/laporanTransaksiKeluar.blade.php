@@ -3,6 +3,11 @@
 @section('title', 'Laporan Kas Keluar')
 
 @section('content')
+<style>
+  th {
+    background-color: #778899;
+  }
+</style>
 <!-- Main content -->
 <section class="content">
       <div class="container-fluid">
@@ -10,7 +15,7 @@
           <!-- left column -->
           <div class="col-md-8 mx-auto">
             <!-- general form elements -->
-            <div class="card card-dark">
+            <div class="card card-danger">
               <div class="card-header">
                 <h3 class="card-title">Laporan Kas Keluar</h3>
               </div>
@@ -31,7 +36,7 @@
                 </div>
 
                 <div class="card-footer text-center">
-                   <button type="submit" class="btn btn-dark w-100">Cari</button>
+                   <button type="submit" class="btn btn-danger w-100">Cari</button>
                 </div>
 
                 </div>

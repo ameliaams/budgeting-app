@@ -4,13 +4,10 @@
 
 @section('content')
 <style>
-  /* CSS untuk memberi warna pada header tabel */
   th {
-    background-color: #32CD32; /* Ganti dengan warna yang Anda inginkan */
-    /* tambahkan gaya lainnya seperti font-color, padding, dsb. sesuai kebutuhan */
+    background-color: #778899;
   }
-</style>   
-
+</style>
 
 <!-- Main content -->
 <section class="content">
@@ -42,10 +39,10 @@
                         <div class="col-sm-5">
                             <!-- Second Dropdown (Kas) -->
                             <select class="custom-select form-control-border" id="level" name="level" required>
-    @foreach ($dropdownOptionsCoa as $result)
-        <option value="{{ $result->ID }}">{{ $result->NAMA_COA }}</option>
-    @endforeach
-</select>
+                                @foreach ($dropdownOptionsCoa as $result)
+                                    <option value="{{ $result->ID }}">{{ $result->NAMA_COA }}</option>
+                                @endforeach
+                            </select>
 
 
                         </div>

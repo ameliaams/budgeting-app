@@ -28,17 +28,38 @@
   <link rel="stylesheet" href="{{ asset('admin/plugins/summernote/summernote-bs4.min.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
+  <!-- editable -->
   <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/css/jquery-editable.css" rel="stylesheet" />
   <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/js/jquery-editable-poshytip.min.js"></script>
-
+  <!-- modal -->
+  <!-- Add these lines inside the <head> section of your layout file -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  
   <style>
     .level-one-row {
       background-color: #E9967A;
       color: #fff;
       font-weight: bold;
     }
+    .alert-success {
+            background-color: #4CAF50; /* Warna hijau */
+            color: white; /* Warna teks putih */
+            padding: 10px; /* Jarak antara teks dan pinggiran div */
+            border-radius: 5px; /* Membuat sudut div menjadi melengkung */
+        }
+
+        /* Gaya untuk alert dengan teks merah */
+        .alert-danger {
+            background-color: #f44336; /* Warna merah */
+            color: white; /* Warna teks putih */
+            padding: 10px; /* Jarak antara teks dan pinggiran div */
+            border-radius: 5px; /* Membuat sudut div menjadi melengkung */
+        }
+        .swal-custom-size {
+          max-width: 100px;
+        }
   </style>
+  
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -111,12 +132,12 @@
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png" class="img-circle elevation-2" alt="User Image">
         </div>
         @if($user)
-  <div class="info">
-    <a class="d-block" style="font-weight: bold; font-size: 18px;">
-      {{ $user->username }}
-    </a>  
-  </div>
-@endif
+        <div class="info">
+          <a class="d-block" style="font-weight: bold; font-size: 18px;">
+            {{ $user->username }}
+          </a>  
+        </div>
+        @endif
 
       </div>
 
@@ -211,9 +232,25 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{ asset('/laporanRealisasi') }}" class="nav-link {{ Request::is('laporanRealisasi') ? 'active' : '' }}">
+                  <a href="{{ asset('/laporanRealisasi') }}" class="nav-link {{ Request::is('laporan') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Laporan Realisasi RAB</p>
+                  </a>
+                </li>
+              </ul>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ asset('/laporanMasuk?tes=2023-01-01') }}" class="nav-link {{ Request::is('laporanMasuk') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Laporan Kas Masuk</p>
+                  </a>
+                </li>
+              </ul>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ asset('/laporanKasKeluar') }}" class="nav-link {{ Request::is('laporanKasKeluar') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Laporan Kas Keluar</p>
                   </a>
                 </li>
               </ul>

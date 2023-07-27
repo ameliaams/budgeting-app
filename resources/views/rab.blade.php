@@ -4,10 +4,8 @@
 
 @section('content')
 <style>
-  /* CSS untuk memberi warna pada header tabel */
   th {
-    background-color: #FFD700; /* Ganti dengan warna yang Anda inginkan */
-    /* tambahkan gaya lainnya seperti font-color, padding, dsb. sesuai kebutuhan */
+    background-color: #FFD700;
   }
 </style>
 
@@ -21,7 +19,7 @@
             <h3 class="card-title">MASTER RAB</h3>
             <form method="post" action="{{ route('rab.sync') }}">
               @csrf
-              <button type="submit" id="syncButton" class="btn btn-default form-control float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #068FFF">
+              <button type="submit" id="syncButton" class="btn btn-warning form-control float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #DAA520">
                 <i class="fas fa-arrows-rotate"></i> Sync
               </button>
             </form>
@@ -43,9 +41,8 @@
                   <td>{{ isset($d->COA_NUMBER) ? $d->COA_NUMBER : '' }}</td>
                   <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
                   <td>{{ isset($d->SALDO_NORMAL) ? $d->SALDO_NORMAL : '' }}</td>
-                  
                   <td class="editable" data-column="NOMINAL" data-id="{{ isset($d->ID) ? $d->ID : '' }}" style="text-align: right;">
-                      @currency(isset($d->NOMINAL) ? $d->NOMINAL : '')
+                      @money(isset($d->NOMINAL) ? $d->NOMINAL : '')
                   </td>
                 </tr>
                 @endforeach
@@ -100,7 +97,7 @@
   });
 
   function saveData(id, column, value) {
-    fetch('/rab/update', { // Replace 'coa/update' with the appropriate route URL
+    fetch('/rab/update', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -108,12 +105,12 @@
         },
         body: JSON.stringify({
           id: id,
-          NOMINAL: value, // Correct column name to 'NOMINAL'
+          NOMINAL: value, 
         }),
       })
       .then((response) => response.json())
       .then((data) => {
-        // Handle the response from the server, if needed
+        // Handle the response from the server
         console.log(data);
       })
       .catch((error) => {

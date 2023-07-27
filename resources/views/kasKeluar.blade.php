@@ -17,16 +17,16 @@
               <!-- /.card-header -->
               <!-- form start -->
               <form id="myForm" action="{{ route('kasKeluar.simpanData') }}" method="post">
-                @csrf
-              <div class="card-body">
-                <div class="form-group row">
-                  <label for="id" class="col-sm-2 col-form-label">ID:</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="id" name="id" disabled>
-                  </div>
-                </div>
+                            @csrf
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="id" class="col-sm-2 col-form-label">ID:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="id" name="id" disabled>
+                                    </div>
+                                </div>
 
-                <div class="form-group row">
+                                <div class="form-group row">
                   <label for="no_kwitansi" class="col-sm-2 col-form-label">No Kwitansi:</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="no_kwitansi" name="no_kwitansi" placeholder="KW/K/../../.." disabled required>
@@ -41,34 +41,25 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="id_coa" class="col-sm-2 col-form-label">ID COA:</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="id_coa" name="id_coa" disabled>
-                  </div>
+                  <label for="nama_coa" class="col-sm-2 col-form-label">Nama COA:</label>       
                   <!-- Second Dropdown (COA) -->
-                  <div class="col-sm-4">
+                  <div class="col-sm-5">
                     <select class="custom-select form-control-border" id="kredit" name="kredit" required>
                       @foreach ($dropdownOptionsCoa as $result)
-                        <option value="{{ $result }}">{{ $result }}</option>
+                        <option value="{{ $result->ID}}">{{ $result->NAMA_COA}}</option>
                       @endforeach
                     </select>
                   </div>
                 </div>
 
                 <div class="form-group row">
-                  <label for="nama_coa" class="col-sm-2 col-form-label">Nama COA:</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nama_coa" name="nama_coa" disabled>
-                  </div>
-                </div>
-
-                <div class="form-group row">
                   <label for="kas" class="col-sm-2 col-form-label">Kas:</label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-5">
                     <!-- Second Dropdown (Kas) -->
                     <select class="custom-select form-control-border" id="kas" name="kas" required>
                       @foreach ($dropdownOptionsKas as $option)
-                        <option value="{{ $option }}">{{ $option }}</option>
+                      <!-- Ganti (Kas) -->
+                        <option value="{{ $option->ID}}">{{ $option->NAMA_KAS}}</option>
                       @endforeach
                     </select>
                   </div>
@@ -97,34 +88,46 @@
               </div>
               <!-- /.card-body -->
 
-              <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Simpan</button>
-                <button type="button" id="deleteButton" class="btn btn-danger">Hapus</button>
-              </div>
-            </form>
-
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="button" id="deleteButton" class="btn btn-danger">Hapus</button>
+                            </div>
+                        </form>
+             <!-- Tampilan SweetAlert -->
               @if (session('success'))
-                  <div>{{ session('success') }}</div>
+                  <!-- Link eksternal untuk SweetAlert -->
+                  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+                  <script>
+                      // Tampilkan alert pesan sukses saat halaman dimuat
+                      document.addEventListener('DOMContentLoaded', function() {
+                        swal({
+                        title: "Data Berhasil Disimpan!",
+                        text: "",
+                        icon: "success",
+                        buttons: {
+                          confirm: {
+                            text: "OK",
+                            value: true,
+                            className: "btn btn-success"
+                          }
+                        }
+                      });
+                      });
+                  </script>
               @endif
-              <script>
-                // Add an event listener to the "Delete" button
-                document.getElementById('deleteButton').addEventListener('click', function() {
-                // Reset the form fields to their initial state or empty values
-                document.getElementById('myForm').reset();
-                });
-            </script>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
     </section>
-  
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 @endsection

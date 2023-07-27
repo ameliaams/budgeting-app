@@ -25,7 +25,7 @@ class kasKeluarController extends Controller
 
         $IN_SEARCH = '%%'; // Replace 'your_search_string' with the actual search string
         //$NAMA_COA = ''; // Replace 'your_nama_coa_value' with the actual value
-        $IN_SALDO_NORMAL = 'd'; // Assuming the value does not exceed 5 characters
+        $IN_SALDO_NORMAL = 'k'; // Assuming the value does not exceed 5 characters
         $IN_ID_USER = $userId = $user->id; // Assuming the value does not exceed 5 characters; // Assuming the value does not exceed 5 characters
         
         // Call the stored procedure using DB::select (COA GET DATA)
@@ -33,8 +33,9 @@ class kasKeluarController extends Controller
 
         $dropdownOptionsCoa = [];
         foreach ($resultsCoa as $result) {
-        if ($result->SALDO_NORMAL === 'D') {
-            $dropdownOptionsCoa[] = $result->NAMA_COA;
+        if ($result->SALDO_NORMAL === 'K') {
+            $dropdownOptionsCoa[] = $result;
+            // $dropdownOptionsCoa[] = $result->NAMA_COA;
         }
     }
     // Call the second stored procedure using DB::select (KAS GET DATA)
@@ -43,7 +44,7 @@ class kasKeluarController extends Controller
         $dropdownOptionsKas = [];
         foreach ($resultsKas as $result) {
         // Assuming you have a property named NAMA_KAS in the results
-        $dropdownOptionsKas[] = $result->NAMA_KAS;
+        $dropdownOptionsKas[] = $result;
     }
         // Pass the $results variable to the view
        
@@ -58,9 +59,9 @@ class kasKeluarController extends Controller
     public function simpanData(Request $request)
     {
         $IN_TANGGAL = $request->input('tanggal');
-        $IN_ID_COA = $request->input('id');
+        $IN_ID_COA = $request->input('kredit');
         $IN_ID_KAS = $request->input('kas');
-        $IN_JENIS_TRANSAKSI = 'KSKLR'; // Assuming this is a constant value
+        $IN_JENIS_TRANSAKSI = 'K'; // Assuming this is a constant value
         $IN_KETERANGAN = $request->input('keterangan');
         $IN_NO_REF = $request->input('no_ref');
         $IN_NOMINAL = $request->input('nominal');
@@ -105,7 +106,8 @@ class kasKeluarController extends Controller
         // Assuming the store procedure returns a result, you can handle it here if needed.
 
         // Redirect back with a success message
-        return redirect()->back()->with('success');
+        //return redirect()->back()->with('success');
+        return redirect()->route('kasKeluar.index')->with('success', 'Data Berhasil Disimpan!');
     }
 
     public function getKodeKwitansi(Request $request)
@@ -117,7 +119,9 @@ class kasKeluarController extends Controller
     try {
         // Call the stored procedure using DB facade
         $results = DB::select("CALL GET_KODE_KWITANSI(?, ?, ?)",
-            [$IN_JENIS_TRANSAKSI, $IN_TANGGAL, $IN_ID_USER]);
+        // call kode kwitansi
+        [$IN_JENIS_TRANSAKSI, str_replace('-', '', $IN_TANGGAL), $IN_ID_USER]);
+
 
         // $results will contain the result of the stored procedure call
         // The result will be an array of rows, but in this case, it will have only one row

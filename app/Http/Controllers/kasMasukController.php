@@ -34,7 +34,10 @@ class kasMasukController extends Controller
         $dropdownOptionsCoa = [];
         foreach ($resultsCoa as $result) {
         if ($result->SALDO_NORMAL === 'D') {
-            $dropdownOptionsCoa[] = $result->NAMA_COA;
+
+            $dropdownOptionsCoa[] = $result;
+            //$dropdownOptionsCoa[] = $result;
+            //echo dd($result);
         }
     }
     // Call the second stored procedure using DB::select (KAS GET DATA)
@@ -43,7 +46,7 @@ class kasMasukController extends Controller
         $dropdownOptionsKas = [];
         foreach ($resultsKas as $result) {
         // Assuming you have a property named NAMA_KAS in the results
-        $dropdownOptionsKas[] = $result->NAMA_KAS;
+        $dropdownOptionsKas[] = $result;
     }
         // Pass the $results variable to the view
        
@@ -58,9 +61,9 @@ class kasMasukController extends Controller
     public function simpanData(Request $request)
     {
         $IN_TANGGAL = $request->input('tanggal');
-        $IN_ID_COA = $request->input('id');
+        $IN_ID_COA = $request->input('kredit');
         $IN_ID_KAS = $request->input('kas');
-        $IN_JENIS_TRANSAKSI = 'KSMSK'; // Assuming this is a constant value
+        $IN_JENIS_TRANSAKSI = 'M'; // Assuming this is a constant value
         $IN_KETERANGAN = $request->input('keterangan');
         $IN_NO_REF = $request->input('no_ref');
         $IN_NOMINAL = $request->input('nominal');
@@ -102,10 +105,11 @@ class kasMasukController extends Controller
             $IN_ID_USER,
         ]);
 
+        //session()->flash('success', 'Data berhasil disimpan.');
         // Assuming the store procedure returns a result, you can handle it here if needed.
 
         // Redirect back with a success message
-        return redirect()->back()->with('success');
+        return redirect()->route('kasMasuk.index')->with('success', 'Data Berhasil Disimpan!');
     }
 
     public function getKodeKwitansi(Request $request)
@@ -117,7 +121,7 @@ class kasMasukController extends Controller
     try {
         // Call the stored procedure using DB facade
         $results = DB::select("CALL GET_KODE_KWITANSI(?, ?, ?)",
-            [$IN_JENIS_TRANSAKSI, $IN_TANGGAL, $IN_ID_USER]);
+            [$IN_JENIS_TRANSAKSI, str_replace('-', '', $IN_TANGGAL), $IN_ID_USER]);
 
         // $results will contain the result of the stored procedure call
         // The result will be an array of rows, but in this case, it will have only one row
@@ -168,4 +172,5 @@ public function someControllerMethod(Request $request)
     // Do something with the retrieved ID
     // ...
 }
+
 }

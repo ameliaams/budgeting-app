@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CoaController;
 use App\Http\Controllers\kasKeluarController;
+use App\Http\Controllers\laporanTransaksiMasukController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,5 +40,11 @@ Route::get('/kasKeluar', [App\Http\Controllers\kasKeluarController::class, 'inde
 Route::post('/kasKeluar/simpanData', [App\Http\Controllers\kasKeluarController::class, 'simpanData'])->name('kasKeluar.simpanData');
 
 Route::get('/laporanRealisasi', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan.index');
-Route::get('/laporanTransaksiKeluar', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'index'])->name('laporanTransaksiKeluar.index');
-Route::get('/laporanTransaksiMasuk', [App\Http\Controllers\laporanTransaksiMasukController::class, 'index'])->name('laporanTransaksiMasuk.index');
+//Route::get('/laporanTransaksiKeluar', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'index'])->name('laporanTransaksiKeluar.index');
+//Route::get('/laporanTransaksiMasuk', [App\Http\Controllers\laporanTransaksiMasukController::class, 'index'])->name('laporanTransaksiMasuk.index');
+Route::get('/laporanTransaksiMasuk/{tanggalAwal}', [laporanTransaksiMasukController::class, 'index'])
+    ->name('laporanTransaksiMasuk.index')
+    ->where('tanggalAwal', '\d{4}-\d{2}-\d{2}');
+Route::get('/laporanTransaksiKeluar/{tanggalAwal}', [laporanTransaksiKeluarController::class, 'index'])
+    ->name('laporanTransaksiKeluar.index')
+    ->where('tanggalAwal', '\d{4}-\d{2}-\d{2}');

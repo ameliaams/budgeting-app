@@ -14,7 +14,7 @@
               <div class="card-header">
                 <h3 class="card-title">Laporan Kas Keluar</h3>
               </div>
-              <form action="{{ route('laporanTransaksiKeluar.index') }}" method="get">
+              <form action="{{ route('laporanTransaksiKeluar.index', ['tanggalAwal' => request('tanggalAwal')]) }}" method="get">
                 @csrf
                 <div class="card-body">
                 <div class="form-group row">
@@ -64,7 +64,7 @@
                   <td>{{ isset($result->TANGGAL) ? $result->TANGGAL : '' }}</td>
                   <td>{{ isset($result->NAMA_COA) ? $result->NAMA_COA : '' }}</td>
                   <td>{{ isset($result->KETERANGAN) ? $result->KETERANGAN : '' }}</td>
-                  <td style="text-align: right;">@money(isset($result->KREDIT) && $result->KREDIT !== '' ? floatval($result->DEBET) : 0)</td>
+                  <td style="text-align: right;">@money(isset($result->KREDIT) && $result->KREDIT !== '' ? floatval($result->KREDIT) : 0)</td>
                 </tr>
                 @endforeach
               </tbody>

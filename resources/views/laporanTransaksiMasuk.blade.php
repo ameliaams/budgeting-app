@@ -14,7 +14,7 @@
               <div class="card-header">
                 <h3 class="card-title">Laporan Kas Masuk</h3>
               </div>
-              <form action="{{ route('laporanTransaksiMasuk.index') }}" method="get">
+              <form action="{{ route('laporanTransaksiMasuk.index', ['tanggalAwal' => request('tanggalAwal')]) }}" method="get">
                 @csrf
                 <div class="card-body">
                 <div class="form-group row">

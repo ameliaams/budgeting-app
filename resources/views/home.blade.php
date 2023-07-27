@@ -96,6 +96,36 @@
             </div>
           </div>
           <!-- ./col -->
+          <div class="col-lg-4 col-8">
+            <!-- small box -->
+            <div class="small-box bg-dark">
+              <div class="inner">
+                <h3>07</h3>
+                <p>Laporan Transaksi Masuk</p>
+              </div>
+              <div class="icon">
+              <i class="fas fa-file-alt"></i>
+              </div>
+              <a href="laporanMasuk" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <!-- ./col -->
+          <div class="col-lg-4 col-8">
+            <!-- small box -->
+            <div class="small-box bg-white">
+              <div class="inner">
+                <h3>08</h3>
+                <p>Laporan Transaksi Keluar</p>
+              </div>
+              <div class="icon">
+              <i class="fas fa-file-alt"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <!-- ./col -->
         </div>
         <!-- /.row -->
         <!-- Main row -->

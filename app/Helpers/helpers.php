@@ -23,3 +23,10 @@ if (!function_exists('isActiveDashboard')) {
         return Request::is('home');
     }
 }
+
+if (!function_exists('isActiveLaporan')) {
+    function isActiveLaporan()
+    {
+        return Request::is('laporan');
+    }
+}

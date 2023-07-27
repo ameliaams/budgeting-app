@@ -85,46 +85,43 @@
                 </div>
               </div>
               <!-- /.card-body -->
+
               <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                                <button type="button" id="deleteButton" class="btn btn-danger">Hapus</button>
-                            </div>
-                        </form>
-             <!-- Tampilan SweetAlert -->
-              @if (session('success'))
-                  <!-- Link eksternal untuk SweetAlert -->
-                  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="button" id="deleteButton" class="btn btn-danger">Hapus</button>
+              </div>
+            </form>
 
-                  <script>
-                      // Tampilkan alert pesan sukses saat halaman dimuat
-                      document.addEventListener('DOMContentLoaded', function() {
-                        swal({
-                        title: "Data Berhasil Disimpan!",
-                        text: "",
-                        icon: "success",
-                        buttons: {
-                          confirm: {
-                            text: "OK",
-                            value: true,
-                            className: "btn btn-success"
-                          }
-                        }
-                      });
-                      });
-                  </script>
-              @endif
-                    </div>
-                </div>
+            <!-- Tampilan Blade Anda -->
+            @if (session('success'))
+                <script>
+                    // Tampilkan alert pesan sukses saat halaman dimuat
+                    window.onload = function() {
+                        alert('{{ session('success') }}');
+                    };
+                </script>
+            @endif
+
+
+              <script>
+                // Add an event listener to the "Delete" button
+                document.getElementById('deleteButton').addEventListener('click', function() {
+                // Reset the form fields to their initial state or empty values
+                document.getElementById('myForm').reset();
+                });
+            </script>
             </div>
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
     </section>
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
+  
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 @endsection

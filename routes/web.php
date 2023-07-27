@@ -24,9 +24,10 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
 
 Route::get('/coa', [App\Http\Controllers\CoaController::class, 'index'])->name('coa.index');
+Route::post('/coa/add', [App\Http\Controllers\CoaController::class, 'addData'])->name('coa.add');
 
 Route::get('/rab', [App\Http\Controllers\RabController::class, 'index'])->name('rab.index');
-Route::post('/rab/sync', [App\Http\Controllers\RabController::class, 'sync'])->name('rab.sync');
+Route::post('/rab', [App\Http\Controllers\RabController::class, 'sync'])->name('rab.sync');
 Route::post('/rab/update', [App\Http\Controllers\RabController::class, 'update'])->name('rab.update');
 
 Route::get('/tahun', [App\Http\Controllers\TahunAnggaranController::class, 'index'])->name('tahun.index');
@@ -37,3 +38,10 @@ Route::post('/kasMasuk/simpanData', [App\Http\Controllers\kasMasukController::cl
 Route::get('/kasKeluar', [App\Http\Controllers\kasKeluarController::class, 'index'])->name('kasKeluar.index');
 Route::post('/kasKeluar/simpanData', [App\Http\Controllers\kasKeluarController::class, 'simpanData'])->name('kasKeluar.simpanData');
 
+Route::get('/laporanRealisasi', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan.index');
+Route::get('/laporanMasuk/{tanggalAwal}', [laporanMasukController::class, 'index'])
+    ->name('laporanMasuk.index')
+    ->where('tanggalAwal', '\d{4}-\d{2}-\d{2}');
+Route::get('/laporanKasKeluar/{tanggalAwal}', [laporanKasKeluarController::class, 'index'])
+    ->name('laporanKasKeluar.index')
+    ->where('tanggalAwal', '\d{4}-\d{2}-\d{2}');

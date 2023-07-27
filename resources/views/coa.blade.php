@@ -9,7 +9,7 @@
     background-color: #32CD32; /* Ganti dengan warna yang Anda inginkan */
     /* tambahkan gaya lainnya seperti font-color, padding, dsb. sesuai kebutuhan */
   }
-</style>
+</style>   
 
 
 <!-- Main content -->
@@ -20,6 +20,55 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">MASTER COA</h3>
+            <form action="{{ route('coa.add') }}" id="addDataModal">
+              @csrf
+              <button type="button" class="btn btn-primary form-control float-right" data-toggle="modal" data-target="#myModal" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #fff">
+              <i class="fa-solid fa-plus"></i> Tambah
+              </button>
+            </form>
+            <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form class="myForm" action="{{ route('coa.add') }}" method="post">
+                @csrf
+                <div class="modal-header">
+                    <h4 class="modal-title">Add COA</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="kas" class="col-sm-2 col-form-label">Level 1</label>
+                        <div class="col-sm-5">
+                            <!-- Second Dropdown (Kas) -->
+                            <select class="custom-select form-control-border" id="level" name="level" required>
+    @foreach ($dropdownOptionsCoa as $result)
+        <option value="{{ $result->ID }}">{{ $result->NAMA_COA }}</option>
+    @endforeach
+</select>
+
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="coa" class="col-sm-2 col-form-label">Nama Akun</label>
+                        <div class="col-sm-5">
+                            <!-- Second Dropdown (Kas) -->
+                            <input type="text" class="form-control" id="nama_akun" name="nama_akun" required>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.modal-body -->
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal">Simpan</button>
+                    <button type="button" id="deleteButton" class="btn btn-danger" data-dismiss="modal">Hapus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -54,7 +103,36 @@
           </div>
         </div>
         <!-- /.card -->
-      </div><!-- /.container-fluid -->
+      </div>
+    </div>
+  </div>
 </section>
 <!-- /.content -->
+
+<!-- Add Data Modal
+<div class="modal fade" id="addDataModal" tabindex="-1" role="dialog" aria-labelledby="addDataModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    
+  </div>
+</div> -->
+
+
+
+
+<!-- Add this JavaScript code at the end of your Blade view -->
+<script>
+  $(document).ready(function() {
+    // Add a click event listener to the "Tambah" button
+    $('#addData').click(function() {
+      // Show the add data modal
+      $('#addDataModal').modal('show');
+    });
+
+    // If you want to reset the form when the modal is closed
+    $('#addDataModal').on('hidden.bs.modal', function () {
+      $('#myForm').trigger('reset');
+    });
+  });
+</script>
+<!-- JavaScript file -->
 @endsection

@@ -19,7 +19,7 @@
             <h3 class="card-title">MASTER RAB</h3>
             <form method="post" action="{{ route('rab.sync') }}">
               @csrf
-              <button type="submit" id="syncButton" class="btn form-control float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #778899">
+              <button type="submit" id="syncButton" class="btn form-control float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
                 <i class="fas fa-arrows-rotate"></i> Sync
               </button>
             </form>

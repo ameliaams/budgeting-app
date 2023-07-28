@@ -27,6 +27,5 @@ if (!function_exists('isActiveDashboard')) {
 if (!function_exists('isActiveLaporan')) {
     function isActiveLaporan()
     {
-        return Request::is('laporan');
-    }
+        return Request::is('laporanRealisasi') || Request::is('laporanTransaksiMasuk') || Request::is('laporanTransaksiKeluar');    }
 }

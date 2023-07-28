@@ -34,11 +34,14 @@
   <!-- modal -->
   <!-- Add these lines inside the <head> section of your layout file -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   
   <style>
     .level-one-row {
-      background-color: #E9967A;
-      color: #fff;
+      background-color: #DCDCDC;
+      color: #000;
       font-weight: bold;
     }
     .alert-success {
@@ -231,7 +234,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{ asset('/laporanRealisasi') }}" class="nav-link {{ Request::is('laporan') ? 'active' : '' }}">
+                  <a href="{{ asset('/laporanRealisasi') }}" class="nav-link {{ Request::is('laporanRealisasi') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Laporan Realisasi RAB</p>
                   </a>
@@ -247,7 +250,7 @@
               </ul>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                <a href="{{ asset('/laporanTransaksiKeluar') }}" class="nav-link {{ Request::is('laporan') ? 'active' : '' }}">
+                <a href="{{ asset('/laporanTransaksiKeluar') }}" class="nav-link {{ Request::is('laporanTransaksiKeluar') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Laporan Kas Keluar</p>
                   </a>

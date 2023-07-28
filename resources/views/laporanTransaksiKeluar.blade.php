@@ -58,18 +58,34 @@
                   <th>TANGGAL</th>
                   <th>NAMA COA</th>
                   <th>KETERANGAN</th>
-                  <th>NOMINAL KREDIT</th>
+                  <th>NOMINAL DEBIT</th>
+                  <th>AKSI</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach ($results as $result)
-                <tr>
-                  <td>{{ isset($result->ID) ? $result->ID : '' }}</td>
-                  <td>{{ isset($result->KODE_KWITANSI) ? $result->KODE_KWITANSI : '' }}</td>
-                  <td>{{ isset($result->TANGGAL) ? $result->TANGGAL : '' }}</td>
-                  <td>{{ isset($result->NAMA_COA) ? $result->NAMA_COA : '' }}</td>
-                  <td>{{ isset($result->KETERANGAN) ? $result->KETERANGAN : '' }}</td>
-                  <td style="text-align: right;">@money(isset($result->KREDIT) && $result->KREDIT !== '' ? floatval($result->KREDIT) : 0)</td>
+              @foreach ($results as $d)
+    <tr>
+        <td>{{ isset($d->ID) ? $d->ID : '' }}</td>
+        <td>{{ isset($d->KODE_KWITANSI) ? $d->KODE_KWITANSI : '' }}</td>
+        <td>{{ isset($d->TANGGAL) ? $d->TANGGAL : '' }}</td>
+        <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
+        <td>{{ isset($d->KETERANGAN) ? $d->KETERANGAN : '' }}</td>
+        <td style="text-align: right;">@money(isset($d->KREDIT) && $d->KREDIT !== '' ? floatval($d->KREDIT) : 0)</td>
+        <td style="text-align: center;">
+            <!-- Edit Button -->
+            <a href="#" class="btn btn-sm btn-primary">
+                Edit
+            </a>
+            <!-- Delete Button -->
+            <form action="{{ route('laporanTransaksiKeluar.delete', ['id' => $d->ID, 'idTahunAjaran' => $d->ID_TAHUN_AJARAN, 'idUser' => $d->ID_USER]) }}" method="post" style="display: inline-block;">
+    @csrf
+    @method('DELETE')
+                
+                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this transaction?')">Delete</button> 
+               
+            </form>
+
+                    </td>
                 </tr>
                 @endforeach
               </tbody>

@@ -59,19 +59,33 @@
                   <th>NAMA COA</th>
                   <th>KETERANGAN</th>
                   <th>NOMINAL DEBIT</th>
+                  <th>AKSI</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach ($results as $result)
-                <tr>
-                  <td>{{ isset($result->ID) ? $result->ID : '' }}</td>
-                  <td>{{ isset($result->KODE_KWITANSI) ? $result->KODE_KWITANSI : '' }}</td>
-                  <td>{{ isset($result->TANGGAL) ? $result->TANGGAL : '' }}</td>
-                  <td>{{ isset($result->NAMA_COA) ? $result->NAMA_COA : '' }}</td>
-                  <td>{{ isset($result->KETERANGAN) ? $result->KETERANGAN : '' }}</td>
-                  <td style="text-align: right;">@money(isset($result->DEBET) && $result->DEBET !== '' ? floatval($result->DEBET) : 0)</td>
-                </tr>
-                @endforeach
+              @foreach ($results as $result)
+    <tr>
+        <td>{{ isset($result->ID) ? $result->ID : '' }}</td>
+        <td>{{ isset($result->KODE_KWITANSI) ? $result->KODE_KWITANSI : '' }}</td>
+        <td>{{ isset($result->TANGGAL) ? $result->TANGGAL : '' }}</td>
+        <td>{{ isset($result->NAMA_COA) ? $result->NAMA_COA : '' }}</td>
+        <td>{{ isset($result->KETERANGAN) ? $result->KETERANGAN : '' }}</td>
+        <td style="text-align: right;">@money(isset($result->DEBET) && $result->DEBET !== '' ? floatval($result->DEBET) : 0)</td>
+        <td style="text-align: center;">
+            <!-- Edit Button -->
+            <a href="#" class="btn btn-sm btn-primary">
+                Edit
+            </a>
+            <!-- Delete Button -->
+            <form action="#" method="post" style="display: inline-block;">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this transaction?')">Delete</button>
+</form>
+
+        </td>
+    </tr>
+    @endforeach
               </tbody>
             </table>
           </div>

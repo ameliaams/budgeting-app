@@ -89,7 +89,7 @@
                         @csrf
                         @method('PUT')
                         <div class="modal-header">
-                          <h4 class="modal-title">Update Data</h4>
+                          <h4 class="modal-title">Update Data Laporan</h4>
                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">

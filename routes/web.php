@@ -48,4 +48,4 @@ Route::put('laporanTransaksiKeluar/{id}/update', [App\Http\Controllers\laporanTr
 
 Route::get('/laporanTransaksiMasuk', [App\Http\Controllers\laporanTransaksiMasukController::class, 'index'])->name('laporanTransaksiMasuk.index');
 Route::delete('/laporanTransaksiMasuk/delete/{id}', [App\Http\Controllers\laporanTransaksiMasukController::class, 'deleteData'])->name('laporanTransaksiMasuk.delete');
-Route::post('laporanTransaksiMasuk/edit/{id}', [App\Http\Controllers\laporanTransaksiMasukController::class, 'editData'])->name('laporanTransaksiMasuk.edit');
+Route::put('laporanTransaksiMasuk/{id}/update', [App\Http\Controllers\laporanTransaksiMasukController::class, 'editData'])->name('laporanTransaksiMasuk.update');

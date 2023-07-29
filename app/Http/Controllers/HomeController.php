@@ -30,29 +30,25 @@ class HomeController extends Controller
 
         $idTahunAjaran = 10;
         $idUser = 11;
-        // Call the stored procedure and fetch the data
+        // Call the stored procedure
         $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran, $idUser]);
 
         return view('home', ['user' => $user, 'data' => $data]);
-        
     }
 
     public function update(Request $request)
     {
         $id = $request->input('id');
-        $nominal = $request->input('NOMINAL'); // Use 'NOMINAL' to match the JavaScript code
+        $nominal = $request->input('NOMINAL');
 
         $result = DB::update('CALL 9_MASTER_RAB_UPD(?, ?, ?, ?)', [
-            $id, $nominal, 0, 0 // Assuming IN_NOMINAL_PERUBAHAN and IN_REALISASI have default values
+            $id, $nominal, 0, 0
         ]);
 
         if ($result === 1) {
-            // Update successful
             return response()->json(['success' => true]);
         } else {
-            // Update failed
             return response()->json(['success' => false]);
         }
     }
 }
-

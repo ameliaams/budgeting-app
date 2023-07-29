@@ -26,14 +26,14 @@ class CoaController extends Controller
 
         $dropdownOptionsCoa = [];
         foreach ($resultsCoa as $result) {
-        $dropdownOptionsCoa[] = $result;
-    }
+            $dropdownOptionsCoa[] = $result;
+        }
 
-    return view('coa', [
-        'user' => $user,
-        'data' => $data, // Assuming $result contains the newly added data, otherwise, adjust accordingly.
-        'dropdownOptionsCoa' => $dropdownOptionsCoa
-    ]);
+        return view('coa', [
+            'user' => $user,
+            'data' => $data,
+            'dropdownOptionsCoa' => $dropdownOptionsCoa
+        ]);
     }
 
     public function addData(Request $request)
@@ -47,29 +47,24 @@ class CoaController extends Controller
         $keterangan = '';
         $idUser = $user->id;
 
-        // Call the stored procedure using the select method
+        // Call the stored procedure
         $result = DB::statement('CALL 9_MASTER_COA_INS_NEW(?, ?, ?, ?, ?, ?)', [
             $id, $inKodeLevel1, $level, $namaCoa, $keterangan, $idUser
         ]);
 
-        // echo dd($result);
-
-        // Pass the user, updated dropdown options, and the newly added data to the view
         return redirect()->route('coa.index')->with('success', 'Data Berhasil Disimpan!');
     }
 
     public function deleteData($id)
     {
         $user = Auth::user();
-        // Call the stored procedure using the select method
+        // Call the stored procedure
         $result = DB::statement('CALL 9_MASTER_COA_DEL_BYID(?)', [$id]);
 
-        // Check the result and handle any success or error conditions
+        // Check the result
         if ($result) {
-            // Delete successful
             return redirect()->route('coa.index')->with('success', 'Data Berhasil Dihapus!');
         } else {
-            // Delete failed
             return redirect()->route('coa.index')->with('error', 'Failed to delete data.');
         }
     }

@@ -1,12 +1,13 @@
 @extends('layouts.main')
 
-@section('title', 'MASTER TAHUN ANGGARAN')
+@section('title', 'Master Tahun Anggaran')
 
 @section('content')
 <style>
   /* CSS untuk memberi warna pada header tabel */
   th {
-    background-color: #778899; /* Ganti dengan warna yang Anda inginkan */
+    background-color: #778899;
+    /* Ganti dengan warna yang Anda inginkan */
     /* tambahkan gaya lainnya seperti font-color, padding, dsb. sesuai kebutuhan */
   }
 </style>
@@ -35,10 +36,10 @@
               <tbody>
                 @foreach ($tahun as $t)
                 <tr>
-                    <td>{{ $t->ID }}</td>
-                    <td>{{ $t->TAHUN }}</td>
-                    <td>{{ $t->BULAN }}</td>
-                    <td>{{ $t->ID_USER }}</td>
+                  <td>{{ $t->ID }}</td>
+                  <td>{{ $t->TAHUN }}</td>
+                  <td>{{ $t->BULAN }}</td>
+                  <td>{{ $t->ID_USER }}</td>
                 </tr>
                 @endforeach
               </tbody>

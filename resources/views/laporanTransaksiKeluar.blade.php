@@ -18,6 +18,7 @@
             <div class="card card-danger">
               <div class="card-header">
                 <h3 class="card-title">Laporan Kas Keluar</h3>
+                
               </div>
               <form action="{{ route('laporanTransaksiKeluar.index', ['tanggalAwal' => request('tanggalAwal')]) }}" method="get">
                 @csrf
@@ -58,7 +59,7 @@
                   <th>TANGGAL</th>
                   <th>NAMA COA</th>
                   <th>KETERANGAN</th>
-                  <th>NOMINAL DEBIT</th>
+                  <th>NOMINAL KREDIT</th>
                   <th>AKSI</th>
                 </tr>
               </thead>
@@ -71,26 +72,99 @@
         <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
         <td>{{ isset($d->KETERANGAN) ? $d->KETERANGAN : '' }}</td>
         <td style="text-align: right;">@money(isset($d->KREDIT) && $d->KREDIT !== '' ? floatval($d->KREDIT) : 0)</td>
-        <td style="text-align: center;">
-            <!-- Edit Button -->
-            <a href="#" class="btn btn-sm btn-primary">
+        <td>
+          <!-- Edit Button -->
+          <form action="{{ route('laporanTransaksiKeluar.edit', $d->ID) }}" id="addDataModal">
+            @csrf
+              <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal">
                 Edit
-            </a>
-            <!-- Delete Button -->
-            <form action="{{ route('laporanTransaksiKeluar.delete', ['id' => $d->ID, 'idTahunAjaran' => $d->ID_TAHUN_AJARAN, 'idUser' => $d->ID_USER]) }}" method="post" style="display: inline-block;">
-    @csrf
-    @method('DELETE')
-                
-                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this transaction?')">Delete</button> 
-               
-            </form>
+              </button>
+              <!-- FORM ADD COA -->
+            <div class="modal fade" id="myModal">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="container-fluid">
+                  <form method="post" action="{{ route('laporanTransaksiKeluar.edit', $d->ID) }}">
+                    @csrf
+                    <div class="modal-header">
+                      <h4 class="modal-title">Update Data</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
 
-                    </td>
+                  <div class="form-group row">
+                    <label for="tanggal" class="col-sm-3 col-form-label">Tanggal:</label>
+                    <div class="col-sm-8">
+    <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ old('tanggal', $d->TANGGAL ?? '') }}" required>
+</div>
+
+                  </div>
+                <div class="form-group row">
+                  <label for="nama_coa" class="col-sm-3 col-form-label">Nama COA:</label>       
+                  <div class="col-sm-8">
+                  <input type="text" class="form-control" id="kredit" name="kredit" value="{{ old('kredit', $d->NAMA_COA) }}" disabled required>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="kas" class="col-sm-3 col-form-label">Kas:</label>
+                  <div class="col-sm-8">
+                    <!-- Second Dropdown (Kas) -->
+                    <select class="custom-select form-control-border" id="kas" name="kas" required>
+                      @foreach ($dropdownOptionsKas as $option)
+                      <!-- Ganti (Kas) -->
+                        <option value="{{ $option->ID}}">{{ $option->NAMA_KAS}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="keterangan" class="col-sm-3 col-form-label">Keterangan:</label>
+                  <div class="col-sm-8">
+                      <textarea id="keterangan" class="form-control" name="keterangan" rows="4" required>{{ old('keterangan', $d->KETERANGAN ?? '') }}</textarea>
+                  </div>
+              </div>
+
+
+                <div class="form-group row">
+                  <label for="no_ref" class="col-sm-3 col-form-label">No Ref:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="no_ref" name="no_ref" value="{{ old('no_ref') ?? ($d->NO_REF ?? '') }}" required>
+                </div>
+
+                </div>
+                
+                <div class="form-group row">
+                    <label for="nominal" class="col-sm-3 col-form-label">Nominal:</label>
+                    <div class="col-sm-8">
+                    <input type="number" class="form-control" id="nominal" name="nominal" placeholder="0" value="{{ old('nominal') ?? ($d->NOMINAL ?? '') }}" required>
+                    </div>
+                </div>
+
+                
+                      <div class="modal-footer">
+                        <button type="submit" id="SaveButton" class="btn form-control float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan
+                        </button>
+                      </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            </div>
+          </form>
+          <!-- Delete Button -->
+          <form action="{{ route('laporanTransaksiKeluar.delete', $d->ID) }}" method="post" style="display: inline-block;">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this transaction?')">Delete</button> 
+          </form>
+          </td>
                 </tr>
                 @endforeach
               </tbody>
             </table>
-          </div>
+
           <!-- /.card-body -->
           <div class="card-footer clearfix">
             <ul class="pagination pagination-sm m-0 float-right">

@@ -63,29 +63,30 @@
                 </tr>
               </thead>
               <tbody>
-              @foreach ($results as $result)
+              @foreach ($results as $d)
     <tr>
-        <td>{{ isset($result->ID) ? $result->ID : '' }}</td>
-        <td>{{ isset($result->KODE_KWITANSI) ? $result->KODE_KWITANSI : '' }}</td>
-        <td>{{ isset($result->TANGGAL) ? $result->TANGGAL : '' }}</td>
-        <td>{{ isset($result->NAMA_COA) ? $result->NAMA_COA : '' }}</td>
-        <td>{{ isset($result->KETERANGAN) ? $result->KETERANGAN : '' }}</td>
-        <td style="text-align: right;">@money(isset($result->DEBET) && $result->DEBET !== '' ? floatval($result->DEBET) : 0)</td>
+        <td>{{ isset($d->ID) ? $d->ID : '' }}</td>
+        <td>{{ isset($d->KODE_KWITANSI) ? $d->KODE_KWITANSI : '' }}</td>
+        <td>{{ isset($d->TANGGAL) ? $d->TANGGAL : '' }}</td>
+        <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
+        <td>{{ isset($d->KETERANGAN) ? $d->KETERANGAN : '' }}</td>
+        <td style="text-align: right;">@money(isset($d->DEBIT) && $d->DEBIT !== '' ? floatval($d->DEBIT) : 0)</td>
         <td style="text-align: center;">
             <!-- Edit Button -->
             <a href="#" class="btn btn-sm btn-primary">
                 Edit
             </a>
             <!-- Delete Button -->
-            <form action="#" method="post" style="display: inline-block;">
+            <form action="{{ route('laporanTransaksiMasuk.delete', $d->ID) }}" method="post" style="display: inline-block;">
     @csrf
     @method('DELETE')
-    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this transaction?')">Delete</button>
+                
+    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this transaction?')">Delete</button> 
 </form>
 
-        </td>
-    </tr>
-    @endforeach
+                    </td>
+                </tr>
+                @endforeach
               </tbody>
             </table>
           </div>

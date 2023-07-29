@@ -61,17 +61,16 @@ class CoaController extends Controller
     public function deleteData($id)
     {
         $user = Auth::user();
+        // Call the stored procedure using the select method
+        $result = DB::statement('CALL 9_MASTER_COA_DEL_BYID(?)', [$id]);
 
-    // Call the stored procedure using the select method
-    $result = DB::statement('CALL 9_MASTER_COA_DEL_BYID(?)', [$id]);
-
-    // Check the result and handle any success or error conditions
-    if ($result) {
-        // Delete successful
-        return redirect()->route('coa.index')->with('success', 'Data Berhasil Dihapus!');
-    } else {
-        // Delete failed
-        return redirect()->route('coa.index')->with('error', 'Failed to delete data.');
-    }
+        // Check the result and handle any success or error conditions
+        if ($result) {
+            // Delete successful
+            return redirect()->route('coa.index')->with('success', 'Data Berhasil Dihapus!');
+        } else {
+            // Delete failed
+            return redirect()->route('coa.index')->with('error', 'Failed to delete data.');
+        }
     }
 }

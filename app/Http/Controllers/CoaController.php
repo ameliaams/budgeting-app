@@ -16,13 +16,24 @@ class CoaController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+        $level = 1;
         $inSearch = '%%';
         $idUser = $user->id;
 
         // Call the stored procedure and fetch the data
         $data = DB::select('CALL 9_MASTER_COA_GET_DATA(?, ?)', [$inSearch, $idUser]);
+        $resultsCoa = DB::select('CALL 9_MASTER_COA_GET_DATA_BYLEVEL(?, ?)', [$level, $idUser]);
 
-        return view('coa', ['user' => $user, 'data' => $data]);
+        $dropdownOptionsCoa = [];
+        foreach ($resultsCoa as $result) {
+        $dropdownOptionsCoa[] = $result;
+    }
+
+    return view('coa', [
+        'user' => $user,
+        'data' => $data, // Assuming $result contains the newly added data, otherwise, adjust accordingly.
+        'dropdownOptionsCoa' => $dropdownOptionsCoa
+    ]);
     }
 
     public function addData(Request $request)
@@ -30,31 +41,36 @@ class CoaController extends Controller
         $user = Auth::user();
 
         $id = '';
-        $inKodeLevel1 = '';
-        $level = 1;
-        $namaCoa = $request->input('level');
+        $inKodeLevel1 = $request->input('level');
+        $level = 2;
+        $namaCoa = $request->input('nama_akun');
         $keterangan = '';
         $idUser = $user->id;
 
-        $resultsCoa = DB::select('CALL 9_MASTER_COA_GET_DATA_BYLEVEL(?, ?)', [$level, $idUser]);
-
-        $dropdownOptionsCoa = $resultsCoa;
-        foreach ($resultsCoa as $result) {
-            if ($result->LEVEL === '1'){
-                // Assuming you have a property named NAMA_COA in the results
-            $dropdownOptionsCoa[] = $result->NAMA_COA;
-            }
-            
-        }
-
-
-
         // Call the stored procedure using the select method
-        $result = DB::select('CALL 9_MASTER_COA_INS_NEW(?, ?, ?, ?, ?, ?)', [
+        $result = DB::statement('CALL 9_MASTER_COA_INS_NEW(?, ?, ?, ?, ?, ?)', [
             $id, $inKodeLevel1, $level, $namaCoa, $keterangan, $idUser
         ]);
 
-        // Return a response indicating success (optional)
-        return view('coa', ['user' => $user, 'dropdownOptionsCoa' => $dropdownOptionsCoa]);
+        // echo dd($result);
+
+        // Pass the user, updated dropdown options, and the newly added data to the view
+        return redirect()->route('coa.index')->with('success', 'Data Berhasil Disimpan!');
+    }
+
+    public function deleteData($id)
+    {
+        $user = Auth::user();
+        // Call the stored procedure using the select method
+        $result = DB::statement('CALL 9_MASTER_COA_DEL_BYID(?)', [$id]);
+
+        // Check the result and handle any success or error conditions
+        if ($result) {
+            // Delete successful
+            return redirect()->route('coa.index')->with('success', 'Data Berhasil Dihapus!');
+        } else {
+            // Delete failed
+            return redirect()->route('coa.index')->with('error', 'Failed to delete data.');
+        }
     }
 }

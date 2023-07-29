@@ -106,7 +106,7 @@
               <div class="icon">
               <i class="fas fa-file-alt"></i>
               </div>
-              <a href="laporanMasuk" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="laporanTransaksiMasuk" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -121,7 +121,7 @@
               <div class="icon">
               <i class="fas fa-file-alt"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="laporanTransaksiKeluar" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->

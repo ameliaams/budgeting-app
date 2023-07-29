@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Transaksi Masuk')
+@section('title', ' Edit Transaksi Keluar')
 
 @section('content')
     <!-- Main content -->
@@ -10,37 +10,24 @@
           <!-- left column -->
           <div class="col-md-8 mx-auto">
             <!-- general form elements -->
-            <div class="card card-primary">
+            <div class="card card-danger">
               <div class="card-header">
-                <h3 class="card-title">Transaksi Masuk</h3>
+                <h3 class="card-title">Transaksi Keluar</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form id="myForm" action="{{ route('kasMasuk.simpanData') }}" method="post">
-                @csrf
-              <div class="card-body">
-                <div class="form-group row">
-                  <label for="id" class="col-sm-2 col-form-label">ID:</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="id" name="id" disabled>
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label for="no_kwitansi" class="col-sm-2 col-form-label">No Kwitansi:</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="no_kwitansi" name="no_kwitansi" placeholder="KW/M/../../.." disabled required>
-                  </div>
-                </div>
-
+              <form id="myForm" action="{{ route('editTransaksiKeluar'}}" method="post">
+                            @csrf
+                @method('PUT')
                 <div class="form-group row">
                   <label for="tanggal" class="col-sm-2 col-form-label">Tanggal:</label>
                   <div class="col-sm-10">
                     <input type="date" class="form-control" id="tanggal" name="tanggal" required>
                   </div>
                 </div>
+
                 <div class="form-group row">
-                  <label for="id_coa" class="col-sm-2 col-form-label">Nama COA:</label>
+                  <label for="nama_coa" class="col-sm-2 col-form-label">Nama COA:</label>       
                   <!-- Second Dropdown (COA) -->
                   <div class="col-sm-5">
                     <select class="custom-select form-control-border" id="kredit" name="kredit" required>
@@ -57,7 +44,8 @@
                     <!-- Second Dropdown (Kas) -->
                     <select class="custom-select form-control-border" id="kas" name="kas" required>
                       @foreach ($dropdownOptionsKas as $option)
-                        <option value="{{ $option->ID }}">{{ $option->NAMA_KAS }}</option>
+                      <!-- Ganti (Kas) -->
+                        <option value="{{ $option->ID}}">{{ $option->NAMA_KAS}}</option>
                       @endforeach
                     </select>
                   </div>
@@ -85,9 +73,9 @@
                 </div>
               </div>
               <!-- /.card-body -->
-              <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                                <button type="button" id="deleteButton" class="btn btn-danger">Hapus</button>
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">UPADATE</button>
                             </div>
                         </form>
              <!-- Tampilan SweetAlert -->
@@ -99,7 +87,7 @@
                       // Tampilkan alert pesan sukses saat halaman dimuat
                       document.addEventListener('DOMContentLoaded', function() {
                         swal({
-                        title: "Data Berhasil Disimpan!",
+                        title: "Data Berhasil DiUpdate!",
                         text: "",
                         icon: "success",
                         buttons: {
@@ -113,18 +101,5 @@
                       });
                   </script>
               @endif
-                    </div>
-                </div>
-            </div>
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
+                    
 @endsection

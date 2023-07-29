@@ -5,7 +5,7 @@
 @section('content')
 <style>
   th {
-    background-color: #FFD700;
+    background-color: #778899;
   }
 </style>
 
@@ -16,7 +16,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">MASTER RAB</h3>
+            <h3 class="card-title">Laporan Realisasi RAB</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">

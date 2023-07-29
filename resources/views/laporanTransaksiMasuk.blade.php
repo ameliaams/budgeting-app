@@ -1,8 +1,13 @@
 @extends('layouts.main')
 
-@section('title', 'Laporan Kas Keluar')
+@section('title', 'Laporan Kas Masuk')
 
 @section('content')
+<style>
+  th {
+    background-color: #778899;
+  }
+</style>
 <!-- Main content -->
 <section class="content">
       <div class="container-fluid">
@@ -10,11 +15,11 @@
           <!-- left column -->
           <div class="col-md-8 mx-auto">
             <!-- general form elements -->
-            <div class="card card-secondary">
+            <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Laporan Kas Keluar</h3>
+                <h3 class="card-title">Laporan Kas Masuk</h3>
               </div>
-              <form action="{{ route('laporanKasKeluar.index', ['tanggalAwal' => request('tanggalAwal')]) }}" method="get">
+              <form action="{{ route('laporanTransaksiMasuk.index', ['tanggalAwal' => request('tanggalAwal')]) }}" method="get">
                 @csrf
                 <div class="card-body">
                 <div class="form-group row">
@@ -31,7 +36,7 @@
                 </div>
 
                 <div class="card-footer text-center">
-                   <button type="submit" class="btn btn-secondary w-100">Cari</button>
+                   <button type="submit" class="btn btn-primary w-100">Cari</button>
                 </div>
 
                 </div>
@@ -41,7 +46,7 @@
               </div>
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">LAPORAN KAS KELUAR</h3>
+            <h3 class="card-title">LAPORAN KAS MASUK</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -53,18 +58,33 @@
                   <th>TANGGAL</th>
                   <th>NAMA COA</th>
                   <th>KETERANGAN</th>
-                  <th>NOMINAL KREDIT</th>
+                  <th>NOMINAL DEBIT</th>
+                  <th>AKSI</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach ($results as $result)
-                <tr>
-                  <td>{{ isset($result->ID) ? $result->ID : '' }}</td>
-                  <td>{{ isset($result->KODE_KWITANSI) ? $result->KODE_KWITANSI : '' }}</td>
-                  <td>{{ isset($result->TANGGAL) ? $result->TANGGAL : '' }}</td>
-                  <td>{{ isset($result->NAMA_COA) ? $result->NAMA_COA : '' }}</td>
-                  <td>{{ isset($result->KETERANGAN) ? $result->KETERANGAN : '' }}</td>
-                  <td style="text-align: right;">@money(isset($result->KREDIT) && $result->KREDIT !== '' ? floatval($result->KREDIT) : 0)</td>
+              @foreach ($results as $d)
+    <tr>
+        <td>{{ isset($d->ID) ? $d->ID : '' }}</td>
+        <td>{{ isset($d->KODE_KWITANSI) ? $d->KODE_KWITANSI : '' }}</td>
+        <td>{{ isset($d->TANGGAL) ? $d->TANGGAL : '' }}</td>
+        <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
+        <td>{{ isset($d->KETERANGAN) ? $d->KETERANGAN : '' }}</td>
+        <td style="text-align: right;">@money(isset($d->DEBIT) && $d->DEBIT !== '' ? floatval($d->DEBIT) : 0)</td>
+        <td style="text-align: center;">
+            <!-- Edit Button -->
+            <a href="#" class="btn btn-sm btn-primary">
+                Edit
+            </a>
+            <!-- Delete Button -->
+            <form action="{{ route('laporanTransaksiMasuk.delete', $d->ID) }}" method="post" style="display: inline-block;">
+    @csrf
+    @method('DELETE')
+                
+    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this transaction?')">Delete</button> 
+</form>
+
+                    </td>
                 </tr>
                 @endforeach
               </tbody>

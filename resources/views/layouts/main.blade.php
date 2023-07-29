@@ -34,11 +34,14 @@
   <!-- modal -->
   <!-- Add these lines inside the <head> section of your layout file -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   
   <style>
     .level-one-row {
-      background-color: #E9967A;
-      color: #fff;
+      background-color: #DCDCDC;
+      color: #000;
       font-weight: bold;
     }
     .alert-success {
@@ -201,7 +204,6 @@
             <li class="nav-item {{ isActiveTransaksi() ? 'menu-open' : '' }}">
               <a href="javascript:void(0)" class="nav-link {{ isActiveTransaksi() ? 'active' : '' }}">
                 <i class="nav-icon fas fa-dollar-sign"></i>
-
                 <p>
                   Transaksi
                   <i class="fas fa-angle-left right"></i>
@@ -222,9 +224,9 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-edit"></i>
+            <li class="nav-item {{ isActiveLaporan() ? 'menu-open' : '' }}">
+              <a href="javascript:void(0)" class="nav-link {{ isActiveLaporan() ? 'active' : '' }}">
+                <i class="nav-icon fas fa-dollar-sign"></i>
                 <p>
                   Laporan
                   <i class="fas fa-angle-left right"></i>
@@ -232,7 +234,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{ asset('/laporanRealisasi') }}" class="nav-link {{ Request::is('laporan') ? 'active' : '' }}">
+                  <a href="{{ asset('/laporanRealisasi') }}" class="nav-link {{ Request::is('laporanRealisasi') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Laporan Realisasi RAB</p>
                   </a>
@@ -240,7 +242,7 @@
               </ul>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{ asset('/laporanMasuk?tes=2023-01-01') }}" class="nav-link {{ Request::is('laporanMasuk') ? 'active' : '' }}">
+                <a href="{{ asset('/laporanTransaksiMasuk') }}" class="nav-link {{ Request::is('laporanTransaksiMasuk') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Laporan Kas Masuk</p>
                   </a>
@@ -248,7 +250,7 @@
               </ul>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{ asset('/laporanKasKeluar') }}" class="nav-link {{ Request::is('laporanKasKeluar') ? 'active' : '' }}">
+                <a href="{{ asset('/laporanTransaksiKeluar') }}" class="nav-link {{ Request::is('laporanTransaksiKeluar') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Laporan Kas Keluar</p>
                   </a>

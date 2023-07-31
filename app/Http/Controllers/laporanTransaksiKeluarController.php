@@ -90,13 +90,13 @@ class laporanTransaksiKeluarController extends Controller
 
 public function editData(Request $request, $id)
 {
-    $IN_TANGGAL = $request->validate(['tanggal' => 'required|date']);
+    $IN_TANGGAL = $request->input('tanggal');
     $IN_ID_COA = $request->input('kredit');
     $IN_ID_KAS = $request->input('kas');
     $IN_JENIS_TRANSAKSI = 'K'; // Assuming this is a constant value
     $IN_KETERANGAN = $request->input('keterangan');
     $IN_NO_REF = $request->input('no_ref');
-    $IN_NOMINAL = $request->validate(['nominal' => 'required|numeric']);
+    $IN_NOMINAL = $request->input('nominal');
     $IN_ID = ''; // IN_ID will be empty for new records (insert)
     $IN_KODE_KWINTANSI = $this->getKodeKwitansi($request);
     $IN_DEPARTEMEN = ''; // Assuming this is not used for the insert operation
@@ -142,10 +142,10 @@ public function editData(Request $request, $id)
     // Check the result and handle any success or error conditions
     if ($result) {
         // Update successful
-        return redirect()->route('laporanTransaksiKeluar.edit')->with('success', 'Data has been updated successfully!');
+        return redirect()->route('laporanTransaksiKeluar.edit')->withInput()->with('success', 'Data has been updated successfully!');
     } else {
         // Update failed
-        return redirect()->route('laporanTransaksiKeluar.edit')->with('error', 'Failed to update data.');
+        return redirect()->route('laporanTransaksiKeluar.edit')->withInput()->with('error', 'Failed to update data.');
     }
 }   
 

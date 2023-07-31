@@ -72,12 +72,19 @@ class laporanTransaksiMasukController extends Controller
                 'tgl_akhir' => $IN_TANGGAL_AKHIR,
             ]);
         } else {
-            return redirect()->route('laporanTransaksiMasuk')->with('error', 'Failed to delete data.');
+            // Example: After successful deletion
+            return redirect()->route('laporanTransaksiMasuk.index')->with('success', 'Data berhasil dihapus.');
+
         }
     }
 
     public function editData(Request $request, $id)
     {
+        $request->validate([
+            'tanggal' => 'required|date',
+            // Add other validation rules for your input fields if needed
+        ]);
+    
         $IN_TANGGAL = $request->input('tanggal');
         $IN_ID_COA = $request->input('debit');
         $IN_ID_KAS = $request->input('kas');
@@ -93,11 +100,6 @@ class laporanTransaksiMasukController extends Controller
         $IN_KODE_PENARIKAN_DANA = '';
         $IN_NOMINAL_PERUBAHAN = $request->input('IN_NOMINAL_PERUBAHAN');
         $IN_ID_USER = auth()->user()->id;
-
-        $request->validate([
-            'nominal' => 'required|numeric',
-            'tanggal' => 'required|date',
-        ]);
 
         $results = DB::select(
             "CALL GET_KODE_KWITANSI(?, ?, ?)",

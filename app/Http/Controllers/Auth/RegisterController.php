@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -67,20 +68,10 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
         ]);
-
-        // $users = DB::table('users')
-        //         ->where([
-        //             ['username', '=', $data['username']],
-        //             ['password', '=', Hash::make($data['password'])]
-        //             ])
-        //         ->first();
-
-        $newUserId = 12;
-        
         $data = DB::select('CALL 9_USER_INS_TAMBAHAN(12)');
     }
     protected function registered()
-    {   
+    {
         //auth()->logout();
         //return redirect()->route('login');
     }

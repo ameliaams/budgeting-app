@@ -44,8 +44,8 @@ Route::get('/laporanRealisasi', [App\Http\Controllers\LaporanController::class, 
 
 Route::get('/laporanTransaksiKeluar', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'index'])->name('laporanTransaksiKeluar.index');
 Route::delete('/laporanTransaksiKeluar/delete/{id}', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'deleteData'])->name('laporanTransaksiKeluar.delete');
-Route::post('laporanTransaksiKeluar/{id}/edit', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'editData'])->name('laporanTransaksiKeluar.edit');
+Route::put('laporanTransaksiKeluar/{id}/update', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'editData'])->name('laporanTransaksiKeluar.update');
 
 Route::get('/laporanTransaksiMasuk', [App\Http\Controllers\laporanTransaksiMasukController::class, 'index'])->name('laporanTransaksiMasuk.index');
 Route::delete('/laporanTransaksiMasuk/delete/{id}', [App\Http\Controllers\laporanTransaksiMasukController::class, 'deleteData'])->name('laporanTransaksiMasuk.delete');
-Route::post('laporanTransaksiMasuk/edit/{id}', [App\Http\Controllers\laporanTransaksiMasukController::class, 'editData'])->name('laporanTransaksiMasuk.edit');
+Route::put('laporanTransaksiMasuk/{id}/update', [App\Http\Controllers\laporanTransaksiMasukController::class, 'editData'])->name('laporanTransaksiMasuk.update');

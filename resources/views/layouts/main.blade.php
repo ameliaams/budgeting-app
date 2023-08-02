@@ -36,6 +36,8 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- ... Other meta tags and CSS links ... -->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   
   <style>

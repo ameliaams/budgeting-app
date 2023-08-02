@@ -57,7 +57,7 @@
               <th>TANGGAL</th>
               <th>NAMA COA</th>
               <th>KETERANGAN</th>
-              <th>NOMINAL KREDIT</th>
+              <th>NOMINAL DEBET</th>
               <th>AKSI</th>
             </tr>
           </thead>
@@ -69,18 +69,74 @@
               <td>{{ isset($d->TANGGAL) ? $d->TANGGAL : '' }}</td>
               <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
               <td>{{ isset($d->KETERANGAN) ? $d->KETERANGAN : '' }}</td>
-              <td style="text-align: right;">@money(isset($d->DEBIT) && $d->DEBIT !== '' ? floatval($d->DEBIT) : 0)</td>
+              <td style="text-align: right;">@money(isset($d->DEBET) && $d->DEBET !== '' ? floatval($d->DEBET) : 0)</td>
               <td style="text-align: center;">
                 <!-- Edit Button -->
                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal{{ $d->ID }}">
                   Edit
                 </button>
+                <!-- Add SweetAlert library to the head section of your HTML layout -->
+                <head>
+                  <!-- ... Other meta tags and CSS links ... -->
+                  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                </head>
+
                 <!-- Delete Button -->
-                <form action="{{ route('laporanTransaksiMasuk.delete', $d->ID) }}" method="post" style="display: inline-block;">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this transaction?')">Delete</button>
-                </form>
+<form action="{{ route('laporanTransaksiMasuk.delete', $d->ID) }}" method="post" style="display: inline-block;">
+  @csrf
+  @method('DELETE')
+  <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete()">Delete</button>
+</form>
+
+<!-- JavaScript -->
+<script>
+  // Function to handle the delete confirmation using SweetAlert
+  function confirmDelete() {
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this transaction!",
+      icon: "warning",
+      buttons: {
+        cancel: {
+          text: "Cancel",
+          value: null,
+          visible: true,
+          className: "btn btn-secondary",
+        },
+        confirm: {
+          text: "Delete",
+          value: true,
+          className: "btn btn-danger",
+        },
+      },
+    }).then(function (willDelete) {
+      // If user confirms deletion, submit the form
+      if (willDelete) {
+        // Find the form element and submit it
+        var formElement = document.querySelector("form[action='{{ route('laporanTransaksiMasuk.delete', $d->ID) }}']");
+        formElement.submit();
+      }
+    });
+  }
+
+  // Function to display SweetAlert success message after successful deletion
+  @if (session('success'))
+  swal({
+    title: "Berhasil!",
+    text: "Data berhasil dihapus.",
+    icon: "success",
+    buttons: {
+      confirm: {
+        text: "OK",
+        value: true,
+        className: "btn btn-success"
+      }
+    }
+  });
+  @endif
+</script>
+
+
                 <!-- FORM ADD COA -->
                 <div class="modal fade" id="myModal{{ $d->ID }}">
                   <div class="modal-dialog modal-dialog-centered">
@@ -93,12 +149,13 @@
                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">
-                          <div class="form-group row">
+                        <div class="form-group row">
                             <label for="tanggal" class="col-sm-3 col-form-label">Tanggal:</label>
                             <div class="col-sm-8">
-                              <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ old('tanggal', $d->TANGGAL ?? '') }}" required>
+                                <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ old('tanggal', $d->TANGGAL) }}" required>
                             </div>
-                          </div>
+                        </div>
+                        </div>
                           <div class="form-group row">
                             <label for="nama_coa" class="col-sm-3 col-form-label">Nama COA:</label>
                             <div class="col-sm-8">
@@ -132,7 +189,7 @@
                           <div class="form-group row">
                             <label for="nominal" class="col-sm-3 col-form-label">Nominal:</label>
                             <div class="col-sm-8">
-                              <input type="number" class="form-control" id="nominal" name="nominal" placeholder="0" value="{{ old('nominal') ?? ($d->NOMINAL ?? '') }}" required>
+                              <input type="number" class="form-control" id="nominal" name="nominal" placeholder="0" value="{{ old('nominal') ?? ($d->DEBET ?? '') }}" required>
                             </div>
                           </div>
                           <div class="modal-footer">
@@ -144,13 +201,13 @@
                     </div>
                   </div>
                 </div>
-      </div>
-      </form>
-      </td>
-      </tr>
-      @endforeach
-      </tbody>
-      </table>
+              </div>
+              </form>
+              </td>
+              </tr>
+              @endforeach
+              </tbody>
+              </table>
 
       <!-- /.card-body -->
       <div class="card-footer clearfix">
@@ -168,13 +225,10 @@
   <!-- /.row -->
   </div><!-- /.container-fluid -->
 </section>
-
-<!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
-  <!-- Control sidebar content goes here -->
-</aside>
 <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
+
 
 @endsection

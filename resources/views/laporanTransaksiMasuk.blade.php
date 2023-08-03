@@ -26,13 +26,13 @@
               <div class="form-group row">
                 <label for="tanggal" class="col-sm-2 col-form-label">Tanggal Awal</label>
                 <div class="col-sm-10">
-                  <input type="date" class="form-control" id="tanggalA" name="tanggalA" value="{{ old('tanggalA') }}" required>
+                  <input type="date" class="form-control" id="tanggalA" name="tanggalA" value="{{ $tgl_awal->format('Y-m-d') }}" required>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="tanggal" class="col-sm-2 col-form-label">Tanggal Akhir</label>
                 <div class="col-sm-10">
-                  <input type="date" class="form-control" id="tanggalAK" name="tanggalAK" value="{{ old('tanggalAK') }}" required>
+                  <input type="date" class="form-control" id="tanggalAK" name="tanggalAK" value="{{ $tgl_akhir->format('Y-m-d') }}" required>
                 </div>
               </div>
               <div class="card-footer text-center">
@@ -76,65 +76,66 @@
                   Edit
                 </button>
                 <!-- Add SweetAlert library to the head section of your HTML layout -->
+
                 <head>
                   <!-- ... Other meta tags and CSS links ... -->
                   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
                 </head>
 
                 <!-- Delete Button -->
-<form action="{{ route('laporanTransaksiMasuk.delete', $d->ID) }}" method="post" style="display: inline-block;">
-  @csrf
-  @method('DELETE')
-  <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete()">Delete</button>
-</form>
+                <form action="{{ route('laporanTransaksiMasuk.delete', $d->ID) }}" method="post" style="display: inline-block;">
+                  @csrf
+                  @method('DELETE')
+                  <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete()">Delete</button>
+                </form>
 
-<!-- JavaScript -->
-<script>
-  // Function to handle the delete confirmation using SweetAlert
-  function confirmDelete() {
-    swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this transaction!",
-      icon: "warning",
-      buttons: {
-        cancel: {
-          text: "Cancel",
-          value: null,
-          visible: true,
-          className: "btn btn-secondary",
-        },
-        confirm: {
-          text: "Delete",
-          value: true,
-          className: "btn btn-danger",
-        },
-      },
-    }).then(function (willDelete) {
-      // If user confirms deletion, submit the form
-      if (willDelete) {
-        // Find the form element and submit it
-        var formElement = document.querySelector("form[action='{{ route('laporanTransaksiMasuk.delete', $d->ID) }}']");
-        formElement.submit();
-      }
-    });
-  }
+                <!-- JavaScript -->
+                <script>
+                  // Function to handle the delete confirmation using SweetAlert
+                  function confirmDelete() {
+                    swal({
+                      title: "Apakah Anda yakin?",
+                      text: "Sekali dihapus, Anda tidak akan dapat memulihkan transaksi ini!",
+                      icon: "warning",
+                      buttons: {
+                        cancel: {
+                          text: "Batal",
+                          value: null,
+                          visible: true,
+                          className: "btn btn-secondary",
+                        },
+                        confirm: {
+                          text: "Hapus",
+                          value: true,
+                          className: "btn btn-danger",
+                        },
+                      },
+                    }).then(function(willDelete) {
+                      // If user confirms deletion, submit the form
+                      if (willDelete) {
+                        // Find the form element and submit it
+                        var formElement = document.querySelector("form[action='{{ route('laporanTransaksiMasuk.delete', $d->ID) }}']");
+                        formElement.submit();
+                      }
+                    });
+                  }
 
-  // Function to display SweetAlert success message after successful deletion
-  @if (session('success'))
-  swal({
-    title: "Berhasil!",
-    text: "Data berhasil dihapus.",
-    icon: "success",
-    buttons: {
-      confirm: {
-        text: "OK",
-        value: true,
-        className: "btn btn-success"
-      }
-    }
-  });
-  @endif
-</script>
+                  // Function to display SweetAlert success message after successful deletion
+                  @if(session('success'))
+                  swal({
+                    title: "Berhasil!",
+                    text: "Data berhasil dihapus.",
+                    icon: "success",
+                    buttons: {
+                      confirm: {
+                        text: "OK",
+                        value: true,
+                        className: "btn btn-success"
+                      }
+                    }
+                  });
+                  @endif
+                </script>
 
 
                 <!-- FORM ADD COA -->
@@ -149,65 +150,65 @@
                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">
-                        <div class="form-group row">
+                          <div class="form-group row">
                             <label for="tanggal" class="col-sm-3 col-form-label">Tanggal:</label>
                             <div class="col-sm-8">
-                                <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ old('tanggal', $d->TANGGAL) }}" required>
+                              <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ \Carbon\Carbon::parse($d->TANGGAL)->format('Y-m-d') }}" required>
                             </div>
+                          </div>
                         </div>
+                        <div class="form-group row">
+                          <label for="nama_coa" class="col-sm-3 col-form-label">Nama COA:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="debit" name="debit" value="{{ old('debit', $d->NAMA_COA) }}" disabled required>
+                          </div>
                         </div>
-                          <div class="form-group row">
-                            <label for="nama_coa" class="col-sm-3 col-form-label">Nama COA:</label>
-                            <div class="col-sm-8">
-                              <input type="text" class="form-control" id="debit" name="debit" value="{{ old('debit', $d->NAMA_COA) }}" disabled required>
-                            </div>
+                        <div class="form-group row">
+                          <label for="kas" class="col-sm-3 col-form-label">Kas:</label>
+                          <div class="col-sm-8">
+                            <!-- Second Dropdown (Kas) -->
+                            <select class="custom-select form-control-border" id="kas" name="kas" required>
+                              @foreach ($dropdownOptionsKas as $option)
+                              <!-- Ganti (Kas) -->
+                              <option value="{{ $option->ID}}">{{ $option->NAMA_KAS}}</option>
+                              @endforeach
+                            </select>
                           </div>
-                          <div class="form-group row">
-                            <label for="kas" class="col-sm-3 col-form-label">Kas:</label>
-                            <div class="col-sm-8">
-                              <!-- Second Dropdown (Kas) -->
-                              <select class="custom-select form-control-border" id="kas" name="kas" required>
-                                @foreach ($dropdownOptionsKas as $option)
-                                <!-- Ganti (Kas) -->
-                                <option value="{{ $option->ID}}">{{ $option->NAMA_KAS}}</option>
-                                @endforeach
-                              </select>
-                            </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="keterangan" class="col-sm-3 col-form-label">Keterangan:</label>
+                          <div class="col-sm-8">
+                            <textarea id="keterangan" class="form-control" name="keterangan" rows="4" required>{{ old('keterangan', $d->KETERANGAN ?? '') }}</textarea>
                           </div>
-                          <div class="form-group row">
-                            <label for="keterangan" class="col-sm-3 col-form-label">Keterangan:</label>
-                            <div class="col-sm-8">
-                              <textarea id="keterangan" class="form-control" name="keterangan" rows="4" required>{{ old('keterangan', $d->KETERANGAN ?? '') }}</textarea>
-                            </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="no_ref" class="col-sm-3 col-form-label">No Ref:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="no_ref" name="no_ref" value="{{ old('no_ref') ?? ($d->NO_REF ?? '') }}" required>
                           </div>
-                          <div class="form-group row">
-                            <label for="no_ref" class="col-sm-3 col-form-label">No Ref:</label>
-                            <div class="col-sm-8">
-                              <input type="text" class="form-control" id="no_ref" name="no_ref" value="{{ old('no_ref') ?? ($d->NO_REF ?? '') }}" required>
-                            </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="nominal" class="col-sm-3 col-form-label">Nominal:</label>
+                          <div class="col-sm-8">
+                            <input type="number" class="form-control" id="nominal" name="nominal" placeholder="0" value="{{ old('nominal') ?? ($d->DEBET ?? '') }}" required>
                           </div>
-                          <div class="form-group row">
-                            <label for="nominal" class="col-sm-3 col-form-label">Nominal:</label>
-                            <div class="col-sm-8">
-                              <input type="number" class="form-control" id="nominal" name="nominal" placeholder="0" value="{{ old('nominal') ?? ($d->DEBET ?? '') }}" required>
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="submit" id="SaveButton" class="btn form-control float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
-                              <i class="fa-solid fa-floppy-disk"></i> Simpan
-                            </button>
-                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" id="SaveButton" class="btn form-control float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan
+                          </button>
+                        </div>
                       </form>
                     </div>
                   </div>
                 </div>
-              </div>
-              </form>
-              </td>
-              </tr>
-              @endforeach
-              </tbody>
-              </table>
+      </div>
+      </form>
+      </td>
+      </tr>
+      @endforeach
+      </tbody>
+      </table>
 
       <!-- /.card-body -->
       <div class="card-footer clearfix">

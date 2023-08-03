@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Transaction;
+use Carbon\Carbon;
 
 class laporanTransaksiMasukController extends Controller
 {
@@ -28,6 +29,9 @@ class laporanTransaksiMasukController extends Controller
             $IN_ID_USER,
         ]);
 
+        $carbon_tgl_awal = Carbon::parse($IN_TANGGAL_AWAL);
+        $carbon_tgl_akhir = Carbon::parse($IN_TANGGAL_AKHIR);
+
         $resultsKas = DB::select('CALL 9_master_kas_get_data()');
 
         $dropdownOptionsKas = [];
@@ -38,6 +42,8 @@ class laporanTransaksiMasukController extends Controller
         return view('laporanTransaksiMasuk', [
             'user' => $user,
             'results' => $results,
+            'tgl_awal' => $carbon_tgl_awal,
+            'tgl_akhir' => $carbon_tgl_akhir,
             'dropdownOptionsKas' => $dropdownOptionsKas,
         ]);
     }
@@ -74,7 +80,6 @@ class laporanTransaksiMasukController extends Controller
         } else {
             // Example: After successful deletion
             return redirect()->route('laporanTransaksiMasuk.index')->with('success', 'Data berhasil dihapus.');
-
         }
     }
 
@@ -84,7 +89,7 @@ class laporanTransaksiMasukController extends Controller
             'tanggal' => 'required|date',
             // Add other validation rules for your input fields if needed
         ]);
-    
+
         $IN_TANGGAL = $request->input('tanggal');
         $IN_ID_COA = $request->input('debit');
         $IN_ID_KAS = $request->input('kas');
@@ -135,6 +140,7 @@ class laporanTransaksiMasukController extends Controller
             // Update successful
             $tanggalAwal = $request->input('tanggalA');
             $tanggalAkhir = $request->input('tanggalAK');
+
             return redirect()->route('laporanTransaksiMasuk.index', ['tanggalAwal' => $tanggalAwal, 'tanggalAkhir' => $tanggalAkhir])
                 ->with('success', 'Data has been updated successfully!');
         } else {

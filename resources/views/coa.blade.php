@@ -53,7 +53,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="submit" id="SaveButton" class="btn form-control float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
-                        <i class="fa-solid fa-floppy-disk"></i> Simpan
+                          <i class="fa-solid fa-floppy-disk"></i> Simpan
                         </button>
                       </div>
                   </form>
@@ -80,62 +80,62 @@
                 <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
                 <td>{{ isset($d->SALDO_NORMAL) ? $d->SALDO_NORMAL : '' }}</td>
                 <td>
-                <!-- Delete Button -->
-                @if ($d->LEVEL != 1)
+                  <!-- Delete Button -->
+                  @if ($d->LEVEL != 1)
                   <form action="{{ route('coa.delete', $d->ID) }}" method="post" style="display: inline-block;">
                     @csrf
                     @method('DELETE')
                     <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete()">Hapus</button>
                   </form>
-                @endif
+                  @endif
 
-                <!-- JavaScript -->
-                <script>
-                  // Function to handle the delete confirmation using SweetAlert
-                  function confirmDelete() {
+                  <!-- JavaScript -->
+                  <script>
+                    // Function to handle the delete confirmation using SweetAlert
+                    function confirmDelete() {
+                      swal({
+                        title: "Are you sure?",
+                        text: "Once deleted, you will not be able to recover this transaction!",
+                        icon: "warning",
+                        buttons: {
+                          cancel: {
+                            text: "Cancel",
+                            value: null,
+                            visible: true,
+                            className: "btn btn-secondary",
+                          },
+                          confirm: {
+                            text: "Delete",
+                            value: true,
+                            className: "btn btn-danger",
+                          },
+                        },
+                      }).then(function(willDelete) {
+                        // If user confirms deletion, submit the form
+                        if (willDelete) {
+                          // Find the form element and submit it
+                          var formElement = document.querySelector("form[action='{{ route('coa.delete', $d->ID) }}']");
+                          formElement.submit();
+                        }
+                      });
+                    }
+
+                    // Function to display SweetAlert success message after successful deletion
+                    @if(session('success'))
                     swal({
-                      title: "Are you sure?",
-                      text: "Once deleted, you will not be able to recover this transaction!",
-                      icon: "warning",
+                      title: "Berhasil!",
+                      text: "Data berhasil dihapus.",
+                      icon: "success",
                       buttons: {
-                        cancel: {
-                          text: "Cancel",
-                          value: null,
-                          visible: true,
-                          className: "btn btn-secondary",
-                        },
                         confirm: {
-                          text: "Delete",
+                          text: "OK",
                           value: true,
-                          className: "btn btn-danger",
-                        },
-                      },
-                    }).then(function (willDelete) {
-                      // If user confirms deletion, submit the form
-                      if (willDelete) {
-                        // Find the form element and submit it
-                        var formElement = document.querySelector("form[action='{{ route('coa.delete', $d->ID) }}']");
-                        formElement.submit();
+                          className: "btn btn-success"
+                        }
                       }
                     });
-                  }
-
-                  // Function to display SweetAlert success message after successful deletion
-                  @if (session('success'))
-                  swal({
-                    title: "Berhasil!",
-                    text: "Data berhasil dihapus.",
-                    icon: "success",
-                    buttons: {
-                      confirm: {
-                        text: "OK",
-                        value: true,
-                        className: "btn btn-success"
-                      }
-                    }
-                  });
-                  @endif
-                </script>
+                    @endif
+                  </script>
                 </td>
               </tr>
               @endforeach

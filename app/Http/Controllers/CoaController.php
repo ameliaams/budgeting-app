@@ -77,6 +77,12 @@ class CoaController extends Controller
         $keterangan = '';
         $idUser = auth()->user()->id;
 
+        $resultsCoa = DB::select('CALL 9_MASTER_COA_GET_DATA_BYLEVEL(?, ?)', [1, $idUser]);
+        $dropdownOptionsCoa = [];
+        foreach ($resultsCoa as $result) {
+            $dropdownOptionsCoa[] = $result;
+        }
+
         // Call the stored procedure using the DB::select() method
         $result = DB::statement('CALL 9_MASTER_COA_INS_NEW(?, ?, ?, ?, ?, ?)', [
             $id, $inKodeLevel1, $level, $namaCoa, $keterangan, $idUser

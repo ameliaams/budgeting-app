@@ -132,13 +132,14 @@
         <div class="form-group row">
           <label for="kas" class="col-sm-3 col-form-label">Level 1</label>
           <div class="col-sm-8">
-            <select class="custom-select form-control-border" id="level" name="level" >
-                @foreach ($dropdownOptionsCoa as $result)
-                    <option value="{{ old('level') == $result->ID ? 'selected' : '' }}">
-                        {{ $result->NAMA_COA }}
-                    </option>
-                @endforeach
+          <select class="custom-select form-control-border" id="level" name="level">
+              @foreach ($dropdownOptionsCoa as $result)
+                <option value="{{ $result->ID }}" {{ old('level') == $result->ID ? 'selected' : '' }}>
+                    {{ $result->NAMA_COA }}
+                </option>
+              @endforeach
             </select>
+
         </div>
         </div>
         <div class="form-group row">

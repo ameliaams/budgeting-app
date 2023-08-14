@@ -23,12 +23,9 @@ class kasMasukController extends Controller
     {
         $user = Auth::user();
 
-        $IN_SEARCH = '%%'; // Replace 'your_search_string' with the actual search string
-        //$NAMA_COA = ''; // Replace 'your_nama_coa_value' with the actual value
-        $IN_SALDO_NORMAL = 'd'; // Assuming the value does not exceed 5 characters
-        $IN_ID_USER = $userId = $user->id; // Assuming the value does not exceed 5 characters; // Assuming the value does not exceed 5 characters
-        
-        // Call the stored procedure using DB::select (COA GET DATA)
+        $IN_SEARCH = '%%'; 
+        $IN_SALDO_NORMAL = 'd';
+        $IN_ID_USER = $userId = $user->id;
         $resultsCoa = DB::select('CALL 9_MASTER_COA_GET_DATA_BY_SALDO_NORMAL(?, ?, ?)', [$IN_SEARCH, $IN_SALDO_NORMAL, $IN_ID_USER]);
 
         $dropdownOptionsCoa = [];
@@ -123,9 +120,6 @@ class kasMasukController extends Controller
         $results = DB::select("CALL GET_KODE_KWITANSI(?, ?, ?)",
             [$IN_JENIS_TRANSAKSI, str_replace('-', '', $IN_TANGGAL), $IN_ID_USER]);
 
-        // $results will contain the result of the stored procedure call
-        // The result will be an array of rows, but in this case, it will have only one row
-        // You can access the KODE_KWITANSI value as follows:
         $kodeKwitansi = $results[0]->KODE_KWITANSI;
 
         // Now you can use $kodeKwitansi as needed
@@ -144,10 +138,6 @@ public function getTahunAjaranAktif()
         // Call the stored procedure using DB::select
         $results = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$userId]);
 
-        // $results will contain the result of the stored procedure call
-        // The result will be an array of rows, but in this case, it will have only one row as you are using LIMIT 0,1 in the stored procedure
-        // You can access the values from the result as needed
-        // For example, to get the ID, you can do the following:
         $tahunAjaranAktifId = $results[0]->ID;
 
         // Now you can use $tahunAjaranAktifId or any other values as needed
@@ -168,9 +158,6 @@ public function someControllerMethod(Request $request)
 
     // Access the ID value from the result (assuming the stored procedure returns one row)
     $id = $results[0]->ID;
-
-    // Do something with the retrieved ID
-    // ...
 }
 
 }

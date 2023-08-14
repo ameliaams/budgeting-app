@@ -68,4 +68,27 @@ class CoaController extends Controller
             return redirect()->route('coa.index')->with('error', 'Failed to delete data.');
         }
     }
+
+    public function editData(Request $request, $id)
+    {
+        $inKodeLevel1 = $request->input('level');
+        $level = 2;
+        $namaCoa = $request->input('nama_akun');
+        $keterangan = '';
+        $idUser = auth()->user()->id;
+
+        // Call the stored procedure using the DB::select() method
+        $result = DB::statement('CALL 9_MASTER_COA_INS_NEW(?, ?, ?, ?, ?, ?)', [
+            $id, $inKodeLevel1, $level, $namaCoa, $keterangan, $idUser
+        ]);
+
+        if ($result) {
+            return redirect()->route('coa.index')->with('success', 'Data Berhasil Disimpan!');
+        } else {
+            // Operation failed or record with the given ID not found
+            return redirect()->route('coa.index')->with('error', 'Failed to update data.');
+        }
+    }
+
+
 }

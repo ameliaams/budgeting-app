@@ -27,6 +27,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/coa', [App\Http\Controllers\CoaController::class, 'index'])->name('coa.index');
 Route::post('/coa/add', [App\Http\Controllers\CoaController::class, 'addData'])->name('coa.add');
 Route::delete('/coa/delete/{id}', [App\Http\Controllers\CoaController::class, 'deleteData'])->name('coa.delete');
+Route::put('coa/{id}/update', [App\Http\Controllers\CoaController::class, 'editData'])->name('coa.update');
 
 Route::get('/rab', [App\Http\Controllers\RabController::class, 'index'])->name('rab.index');
 Route::post('/rab', [App\Http\Controllers\RabController::class, 'sync'])->name('rab.sync');

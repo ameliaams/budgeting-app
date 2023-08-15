@@ -21,6 +21,6 @@ class LaporanController extends Controller
         $idTahunAjaran = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
         $laporan = DB::select('CALL 9_MASTER_RAB_GET_DATA_REALISASI(?, ?)', [$idTahunAjaran[0]->ID, $idUser]);
 
-        return view('laporan', ['user' => $user, 'laporan' => $laporan]);
+        return view('laporan', ['user' => $user, 'idTahunAjaran' => $idTahunAjaran, 'laporan' => $laporan]);
     }
 }

@@ -79,7 +79,10 @@ class laporanTransaksiMasukController extends Controller
             ]);
         } else {
             // Example: After successful deletion
-            return redirect()->route('laporanTransaksiMasuk.index')->with('success', 'Data berhasil dihapus.');
+            // After successful deletion, set a session variable to indicate success
+    Session::flash('success', 'Data berhasil dihapus.');
+
+    return redirect()->route('laporanTransaksiMasuk.index');
         }
     }
 

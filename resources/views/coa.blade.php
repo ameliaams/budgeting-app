@@ -35,7 +35,7 @@
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                      <div class="form-group row">
+                    <div class="form-group row">
                         <label for="kas" class="col-sm-2 col-form-label">Level 1</label>
                         <div class="col-sm-5">
                           <select class="custom-select form-control-border" id="level" name="level" required>
@@ -70,7 +70,7 @@
                 <th style="width: 10px">COA NUMBER</th>
                 <th>NAMA COA</th>
                 <th style="width: 40px">SALDO NORMAL</th>
-                <th style="width: 50px">AKSI</th>
+                <th style="width: 130px">AKSI</th>
               </tr>
             </thead>
             <tbody>
@@ -81,61 +81,106 @@
                 <td>{{ isset($d->SALDO_NORMAL) ? $d->SALDO_NORMAL : '' }}</td>
                 <td>
                   <!-- Delete Button -->
-                  @if ($d->LEVEL != 1)
+                  @if ($d->LEVEL != 1 || $d->NAMA_COA == 'PENDAPATAN' || $d->NAMA_COA == 'PENGELUARAN')
+                  <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal{{ $d->ID }}">
+                  Edit
+                  </button>
+                  
                   <form action="{{ route('coa.delete', $d->ID) }}" method="post" style="display: inline-block;">
                     @csrf
                     @method('DELETE')
-                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete()">Hapus</button>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(event)">Delete</button>
                   </form>
                   @endif
 
-                  <!-- JavaScript -->
-                  <script>
-                    // Function to handle the delete confirmation using SweetAlert
-                    function confirmDelete() {
-                      swal({
-                        title: "Are you sure?",
-                        text: "Once deleted, you will not be able to recover this transaction!",
-                        icon: "warning",
-                        buttons: {
-                          cancel: {
-                            text: "Cancel",
-                            value: null,
-                            visible: true,
-                            className: "btn btn-secondary",
-                          },
-                          confirm: {
-                            text: "Delete",
-                            value: true,
-                            className: "btn btn-danger",
-                          },
-                        },
-                      }).then(function(willDelete) {
-                        // If user confirms deletion, submit the form
-                        if (willDelete) {
-                          // Find the form element and submit it
-                          var formElement = document.querySelector("form[action='{{ route('coa.delete', $d->ID) }}']");
-                          formElement.submit();
-                        }
-                      });
-                    }
+                  <!-- ... bagian JavaScript SweetAlert ... -->
+                <script>
+                  function confirmDelete(event) {
+                    // Mencegah aksi default dari tombol "Delete"
+                    event.preventDefault();
 
-                    // Function to display SweetAlert success message after successful deletion
-                    @if(session('success'))
-                    swal({
-                      title: "Berhasil!",
-                      text: "Data berhasil dihapus.",
-                      icon: "success",
-                      buttons: {
-                        confirm: {
-                          text: "OK",
-                          value: true,
-                          className: "btn btn-success"
-                        }
+                    // Tampilkan SweetAlert dengan pesan konfirmasi delete
+                    Swal.fire({
+                      title: 'Apakah Anda yakin?',
+                      text: 'Anda tidak dapat mengembalikan data ini setelah dihapus.',
+                      icon: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#d33',
+                      cancelButtonColor: '#3085d6',
+                      confirmButtonText: 'Ya, hapus!',
+                      cancelButtonText: 'Batal'
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        // Jika konfirmasi "Ya" di-klik, submit form untuk menghapus data
+                        event.target.closest('form').submit();
                       }
                     });
-                    @endif
-                  </script>
+                  }
+                </script>
+                <!-- FORM UPDATE COA -->
+<div class="modal fade" id="myModal{{ $d->ID }}">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form method="post" action="{{ route('coa.update', $d->ID) }}">
+        @csrf
+        @method('PUT')
+        <div class="modal-header">
+          <h4 class="modal-title">Update Master COA</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+        <div class="form-group row">
+          <label for="kas" class="col-sm-3 col-form-label">Level 1</label>
+          <div class="col-sm-8">
+          <select class="custom-select form-control-border" id="level" name="level">
+              @foreach ($dropdownOptionsCoa as $result)
+                <option value="{{ $result->ID }}" {{ old('level') == $result->ID ? 'selected' : '' }}>
+                    {{ $result->NAMA_COA }}
+                </option>
+              @endforeach
+            </select>
+
+        </div>
+        </div>
+        <div class="form-group row">
+          <label for="nama_coa" class="col-sm-3 col-form-label">Nama COA:</label>
+          <div class="col-sm-8">
+          <input type="text" class="form-control" id="nama_akun" name="nama_akun" value="{{ old('nama_akun', $d->NAMA_COA) }}" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+        <button type="submit" id="saveButtonUniqueID" class="btn form-control float-right SaveButton" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+          <i class="fa-solid fa-floppy-disk"></i> Simpan
+        </button>
+      </div>
+      </form>
+      <!-- ... bagian JavaScript SweetAlert ... -->
+      <script>
+        // Tangkap tombol "Simpan" dengan ID saveButtonUniqueID
+        const saveButton = document.getElementById('saveButtonUniqueID');
+
+        // Tambahkan event listener untuk menghandle submit form
+        saveButton.addEventListener('click', (event) => {
+          // Mencegah submit form agar halaman tidak direfresh
+          event.preventDefault();
+
+          // Tampilkan SweetAlert dengan pesan sukses
+          Swal.fire({
+            icon: 'success',
+            title: 'Sukses!',
+            text: 'Data berhasil disimpan.',
+            showConfirmButton: false,
+            timer: 1500 // Waktu (dalam milidetik) untuk menampilkan alert sebelum otomatis tertutup
+          });
+
+          // Submit form secara manual setelah menampilkan SweetAlert
+          event.target.closest('form').submit();
+        });
+      </script>
+    </div>
+  </div>
+</div>
+
                 </td>
               </tr>
               @endforeach

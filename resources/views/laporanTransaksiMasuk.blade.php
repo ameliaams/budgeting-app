@@ -26,13 +26,13 @@
               <div class="form-group row">
                 <label for="tanggal" class="col-sm-2 col-form-label">Tanggal Awal</label>
                 <div class="col-sm-10">
-                  <input type="date" class="form-control" id="tanggalA" name="tanggalA" value="{{ $tgl_awal->format('Y-m-d') }}" required>
+                  <input type="date" class="form-control" id="tanggalA" name="tanggalA" value="{{ old('tanggalA') }}" required>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="tanggal" class="col-sm-2 col-form-label">Tanggal Akhir</label>
                 <div class="col-sm-10">
-                  <input type="date" class="form-control" id="tanggalAK" name="tanggalAK" value="{{ $tgl_akhir->format('Y-m-d') }}" required>
+                  <input type="date" class="form-control" id="tanggalAK" name="tanggalAK" value="{{ old('tanggalAK') }}" required>
                 </div>
               </div>
               <div class="card-footer text-center">
@@ -57,7 +57,7 @@
               <th>TANGGAL</th>
               <th>NAMA COA</th>
               <th>KETERANGAN</th>
-              <th>NOMINAL DEBET</th>
+              <th>NOMINAL DEBIT</th>
               <th>AKSI</th>
             </tr>
           </thead>
@@ -75,56 +75,44 @@
                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal{{ $d->ID }}">
                   Edit
                 </button>
-                <!-- Add SweetAlert library to the head section of your HTML layout -->
-
-                <head>
-                  <!-- ... Other meta tags and CSS links ... -->
-                  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-                </head>
-
                 <!-- Delete Button -->
                 <form action="{{ route('laporanTransaksiMasuk.delete', $d->ID) }}" method="post" style="display: inline-block;">
                   @csrf
                   @method('DELETE')
-                  <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete()">Delete</button>
+                  <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(event)">Delete</button>
                 </form>
 
-                <!-- JavaScript -->
+                <!-- ... bagian JavaScript SweetAlert ... -->
                 <script>
-                  // Function to handle the delete confirmation using SweetAlert
-                  function confirmDelete() {
-                    swal({
-                      title: "Apakah Anda yakin?",
-                      text: "Sekali dihapus, Anda tidak akan dapat memulihkan transaksi ini!",
-                      icon: "warning",
-                      buttons: {
-                        cancel: {
-                          text: "Batal",
-                          value: null,
-                          visible: true,
-                          className: "btn btn-secondary",
-                        },
-                        confirm: {
-                          text: "Hapus",
-                          value: true,
-                          className: "btn btn-danger",
-                        },
-                      },
-                    }).then(function(willDelete) {
-                      // If user confirms deletion, submit the form
-                      if (willDelete) {
-                        // Find the form element and submit it
-                        var formElement = document.querySelector("form[action='{{ route('laporanTransaksiMasuk.delete', $d->ID) }}']");
-                        formElement.submit();
+                  function confirmDelete(event) {
+                    // Mencegah aksi default dari tombol "Delete"
+                    event.preventDefault();
+
+                    // Tampilkan SweetAlert dengan pesan konfirmasi delete
+                    Swal.fire({
+                      title: 'Apakah Anda yakin?',
+                      text: 'Anda tidak dapat mengembalikan data ini setelah dihapus.',
+                      icon: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#d33',
+                      cancelButtonColor: '#3085d6',
+                      confirmButtonText: 'Ya, hapus!',
+                      cancelButtonText: 'Batal'
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        // Jika konfirmasi "Ya" di-klik, submit form untuk menghapus data
+                        event.target.closest('form').submit();
                       }
                     });
                   }
+                </script>
 
-                  // Function to display SweetAlert success message after successful deletion
-                  @if(session('success'))
-                  swal({
+                <!-- Check for delete success and display the success message , masih tidak muncul-->
+                @if(session('success'))
+                <script>
+                  Swal.fire({
                     title: "Berhasil!",
-                    text: "Data berhasil dihapus.",
+                    text: "{{ session('success') }}",
                     icon: "success",
                     buttons: {
                       confirm: {
@@ -134,11 +122,10 @@
                       }
                     }
                   });
-                  @endif
                 </script>
+                @endif
 
-
-                <!-- FORM ADD COA -->
+                <!-- FORM UPDATE LAPORAN TRANSAKSI MASUK -->
                 <div class="modal fade" id="myModal{{ $d->ID }}">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -160,7 +147,7 @@
                         <div class="form-group row">
                           <label for="nama_coa" class="col-sm-3 col-form-label">Nama COA:</label>
                           <div class="col-sm-8">
-                            <input type="text" class="form-control" id="debit" name="debit" value="{{ old('debit', $d->NAMA_COA) }}" disabled required>
+                          <input type="text" class="form-control" id="debit" name="debit" value="{{ old('debit', $d->NAMA_COA) }}" disabled required>
                           </div>
                         </div>
                         <div class="form-group row">
@@ -194,10 +181,38 @@
                           </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="submit" id="SaveButton" class="btn form-control float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
-                            <i class="fa-solid fa-floppy-disk"></i> Simpan
-                          </button>
-                        </div>
+                        <button type="submit" id="saveButtonUniqueID" class="btn form-control float-right SaveButton" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+                          <i class="fa-solid fa-floppy-disk"></i> Simpan
+                        </button>
+                      </div>
+                      </form>
+                      <!-- ... bagian JavaScript SweetAlert ... -->
+                      <script>
+                        // Tangkap tombol "Simpan" dengan ID saveButtonUniqueID
+                        const saveButton = document.getElementById('saveButtonUniqueID');
+
+                        // Tambahkan event listener untuk menghandle submit form
+                        saveButton.addEventListener('click', (event) => {
+                          // Mencegah submit form agar halaman tidak direfresh
+                          event.preventDefault();
+
+                          // Tampilkan SweetAlert dengan pesan sukses
+                          Swal.fire({
+                            icon: 'success',
+                            title: 'Sukses!',
+                            text: 'Data berhasil disimpan.',
+                            showConfirmButton: false,
+                            timer: 1500 // Waktu (dalam milidetik) untuk menampilkan alert sebelum otomatis tertutup
+                          });
+
+                          // Submit form secara manual setelah menampilkan SweetAlert
+                          event.target.closest('form').submit();
+                        });
+                      </script>
+                    </div>
+                  </div>
+                </div>
+              </div>
                       </form>
                     </div>
                   </div>

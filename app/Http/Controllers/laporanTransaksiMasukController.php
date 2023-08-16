@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use App\Models\Transaction;
 use Carbon\Carbon;
 
@@ -32,7 +33,7 @@ class laporanTransaksiMasukController extends Controller
         $carbon_tgl_awal = Carbon::parse($IN_TANGGAL_AWAL);
         $carbon_tgl_akhir = Carbon::parse($IN_TANGGAL_AKHIR);
 
-        $resultsKas = DB::select('CALL 9_master_kas_get_data()');
+        $resultsKas = DB::select('CALL 9_master_kas_get_data(?)', [$IN_ID_USER]);
 
         $dropdownOptionsKas = [];
         foreach ($resultsKas as $result) {
@@ -53,14 +54,15 @@ class laporanTransaksiMasukController extends Controller
         $IN_TANGGAL_AWAL = $request->input('tanggalA');
         $IN_TANGGAL_AKHIR = $request->input('tanggalAK');
         $idUser = $user->id;
+        $tahunAjaranResult = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
+        $idTahunAjaran = $tahunAjaranResult[0]->ID;
 
         // Call the stored procedure
-        $delete = DB::statement('CALL 9_KAS_DEL_BYID(?)', [$id]);
+        $delete = DB::statement(' CALL 9_TRANSAKSI_KAS_DEL_BYID(?, ?, ?)', [$id, $idTahunAjaran, $idUser]);
 
         // Check the result
         if ($delete) {
-            $tahunAjaranResult = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
-            $idTahunAjaran = $tahunAjaranResult[0]->ID;
+
 
             $update = DB::statement("CALL 9_KAS_UPDATE_MASTER_RAB(?, ?, ?)", [$id, $idTahunAjaran, $idUser]);
 
@@ -80,9 +82,9 @@ class laporanTransaksiMasukController extends Controller
         } else {
             // Example: After successful deletion
             // After successful deletion, set a session variable to indicate success
-    Session::flash('success', 'Data berhasil dihapus.');
+            Session::flash('success', 'Data berhasil dihapus.');
 
-    return redirect()->route('laporanTransaksiMasuk.index');
+            return redirect()->route('laporanTransaksiMasuk.index');
         }
     }
 
@@ -93,8 +95,9 @@ class laporanTransaksiMasukController extends Controller
             // Add other validation rules for your input fields if needed
         ]);
 
+        // echo dd($request);
         $IN_TANGGAL = $request->input('tanggal');
-        $IN_ID_COA = $request->input('debit');
+        $IN_ID_COA = $request->input('no_ref');
         $IN_ID_KAS = $request->input('kas');
         $IN_JENIS_TRANSAKSI = 'D';
         $IN_KETERANGAN = $request->input('keterangan');
@@ -119,6 +122,9 @@ class laporanTransaksiMasukController extends Controller
         if (empty($IN_NOMINAL_PERUBAHAN)) {
             $IN_NOMINAL_PERUBAHAN = 0;
         }
+
+        // $tes = "CALL 9_TRANSAKSI_KAS_INS(" . $id . ", " . $IN_KODE_KWINTANSI . ", " . $IN_TANGGAL . ", " . $IN_ID_COA . ", " . $IN_ID_KAS . ", " . $IN_JENIS_TRANSAKSI . ", " . $IN_KETERANGAN . ", " . $IN_DEPARTEMEN . ", " . $IN_PENANGGUNG_JAWAB . ", " . $IN_NOMINAL . ", " . $IN_VERIFIKASI . ", " . $IN_NO_REF . ", " . $IN_ID_TAHUN_AJARAN . ", " . $IN_KODE_PENARIKAN_DANA . ", " . $IN_NOMINAL_PERUBAHAN . ", " . $IN_ID_USER . ")";
+        // echo dd($tes);
         // Call the store procedure
         $results = DB::statement('CALL 9_TRANSAKSI_KAS_INS(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             $id,

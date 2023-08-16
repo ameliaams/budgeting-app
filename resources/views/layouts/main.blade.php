@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>@yield ('title') | Budgeting</title> 
+  <title>@yield ('title') | Budgeting</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -43,33 +43,44 @@
 
   <!-- SweetAlert JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+  <script src="link-ke-sweetalert.min.js"></script>
 
-  
+
   <style>
     .level-one-row {
       background-color: #DCDCDC;
       color: #000;
       font-weight: bold;
     }
-    .alert-success {
-            background-color: #4CAF50; /* Warna hijau */
-            color: white; /* Warna teks putih */
-            padding: 10px; /* Jarak antara teks dan pinggiran div */
-            border-radius: 5px; /* Membuat sudut div menjadi melengkung */
-        }
 
-        /* Gaya untuk alert dengan teks merah */
-        .alert-danger {
-            background-color: #f44336; /* Warna merah */
-            color: white; /* Warna teks putih */
-            padding: 10px; /* Jarak antara teks dan pinggiran div */
-            border-radius: 5px; /* Membuat sudut div menjadi melengkung */
-        }
-        .swal-custom-size {
-          max-width: 100px;
-        }
+    .alert-success {
+      background-color: #4CAF50;
+      /* Warna hijau */
+      color: white;
+      /* Warna teks putih */
+      padding: 10px;
+      /* Jarak antara teks dan pinggiran div */
+      border-radius: 5px;
+      /* Membuat sudut div menjadi melengkung */
+    }
+
+    /* Gaya untuk alert dengan teks merah */
+    .alert-danger {
+      background-color: #f44336;
+      /* Warna merah */
+      color: white;
+      /* Warna teks putih */
+      padding: 10px;
+      /* Jarak antara teks dan pinggiran div */
+      border-radius: 5px;
+      /* Membuat sudut div menjadi melengkung */
+    }
+
+    .swal-custom-size {
+      max-width: 100px;
+    }
   </style>
-  
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -88,8 +99,8 @@
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-  <a href="/home" class="nav-link">Home</a>
-</li>
+          <a href="/home" class="nav-link">Home</a>
+        </li>
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link">Contact</a>
         </li>
@@ -118,7 +129,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
-          <i class="fa-solid fa-gear"></i>
+            <i class="fa-solid fa-gear"></i>
           </a>
         </li>
       </ul>
@@ -129,8 +140,8 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="home" class="brand-link">
-      <img src="https://drive.google.com/uc?id=13R7E34OIt03i6eiBszu53Zn3WIW9qt4Y" alt="LOGO" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Admin Budgeting</span>
+        <img src="https://drive.google.com/uc?id=13R7E34OIt03i6eiBszu53Zn3WIW9qt4Y" alt="LOGO" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">Admin Budgeting</span>
       </a>
 
 
@@ -138,18 +149,18 @@
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png" class="img-circle elevation-2" alt="User Image">
-        </div>
-        @if($user)
-        <div class="info">
-          <a class="d-block" style="font-weight: bold; font-size: 18px;">
-            {{ $user->username }}
-          </a>  
-        </div>
-        @endif
+          <div class="image">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png" class="img-circle elevation-2" alt="User Image">
+          </div>
+          @if($user)
+          <div class="info">
+            <a class="d-block" style="font-weight: bold; font-size: 18px;">
+              {{ $user->username }}
+            </a>
+          </div>
+          @endif
 
-      </div>
+        </div>
 
 
         <!-- SidebarSearch Form -->
@@ -187,26 +198,32 @@
                 </p>
               </a>
               <ul class="nav nav-treeview">
-        <li class="nav-item">
-            <a href="{{ asset('/coa') }}" class="nav-link {{ Request::is('coa') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Master COA</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ asset('/rab') }}" class="nav-link {{ Request::is('rab') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Master RAB</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ asset('/tahun') }}" class="nav-link {{ Request::is('tahun') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Master Tahun Anggaran</p>
-            </a>
-        </li>
-    </ul>
-</li>
+                <li class="nav-item">
+                  <a href="{{ asset('/coa') }}" class="nav-link {{ Request::is('coa') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Master COA</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ asset('/rab') }}" class="nav-link {{ Request::is('rab') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Master RAB</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ asset('/tahun') }}" class="nav-link {{ Request::is('tahun') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Master Tahun Anggaran</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ asset('/kas') }}" class="nav-link {{ Request::is('kas') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Master Kas</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
 
             <li class="nav-item {{ isActiveTransaksi() ? 'menu-open' : '' }}">
               <a href="javascript:void(0)" class="nav-link {{ isActiveTransaksi() ? 'active' : '' }}">
@@ -217,7 +234,7 @@
                 </p>
               </a>
               <ul class="nav nav-treeview">
-                <li class="nav-item" >
+                <li class="nav-item">
                   <a href="{{ asset('/kasMasuk') }}" class="nav-link {{ Request::is('kasMasuk') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Transaksi Masuk</p>
@@ -249,7 +266,7 @@
               </ul>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                <a href="{{ asset('/laporanTransaksiMasuk') }}" class="nav-link {{ Request::is('laporanTransaksiMasuk') ? 'active' : '' }}">
+                  <a href="{{ asset('/laporanTransaksiMasuk') }}" class="nav-link {{ Request::is('laporanTransaksiMasuk') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Laporan Kas Masuk</p>
                   </a>
@@ -257,7 +274,7 @@
               </ul>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                <a href="{{ asset('/laporanTransaksiKeluar') }}" class="nav-link {{ Request::is('laporanTransaksiKeluar') ? 'active' : '' }}">
+                  <a href="{{ asset('/laporanTransaksiKeluar') }}" class="nav-link {{ Request::is('laporanTransaksiKeluar') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Laporan Kas Keluar</p>
                   </a>

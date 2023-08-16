@@ -53,6 +53,7 @@
           <thead style="text-align: center;">
             <tr>
               <th>ID</th>
+              <th>ID COA</th>
               <th>KODE_KWITANSI</th>
               <th>TANGGAL</th>
               <th>NAMA COA</th>
@@ -65,6 +66,7 @@
             @foreach ($results as $d)
             <tr>
               <td>{{ isset($d->ID) ? $d->ID : '' }}</td>
+              <td>{{ isset($d->ID_COA) ? $d->ID_COA : '' }}</td>
               <td>{{ isset($d->KODE_KWITANSI) ? $d->KODE_KWITANSI : '' }}</td>
               <td>{{ isset($d->TANGGAL) ? $d->TANGGAL : '' }}</td>
               <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
@@ -107,6 +109,24 @@
                   }
                 </script>
 
+                <!-- Check for delete success and display the success message , masih tidak muncul-->
+                @if(session('success'))
+                <script>
+                  Swal.fire({
+                    title: "Berhasil!",
+                    text: "{{ session('success') }}",
+                    icon: "success",
+                    buttons: {
+                      confirm: {
+                        text: "OK",
+                        value: true,
+                        className: "btn btn-success"
+                      }
+                    }
+                  });
+                </script>
+                @endif
+
                 <!-- FORM UPDATE LAPORAN TRANSAKSI KELUAR -->
                 <div class="modal fade" id="myModal{{ $d->ID }}">
                   <div class="modal-dialog modal-dialog-centered">
@@ -125,48 +145,48 @@
                               <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ \Carbon\Carbon::parse($d->TANGGAL)->format('Y-m-d') }}" required>
                             </div>
                           </div>
-                        </div>
-                        <div class="form-group row">
-                          <label for="nama_coa" class="col-sm-3 col-form-label">Nama COA:</label>
-                          <div class="col-sm-8">
-                            <input type="text" class="form-control" id="kredit" name="kredit" value="{{ old('kredit', $d->NAMA_COA) }}" disabled required>
+                          <div class="form-group row">
+                            <label for="nama_coa" class="col-sm-3 col-form-label">Nama COA:</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="kredit" name="kredit" value="{{ old('kredit', $d->NAMA_COA) }}" disabled required>
+                            </div>
                           </div>
-                        </div>
-                        <div class="form-group row">
-                          <label for="kas" class="col-sm-3 col-form-label">Kas:</label>
-                          <div class="col-sm-8">
-                            <!-- Second Dropdown (Kas) -->
-                            <select class="custom-select form-control-border" id="kas" name="kas" required>
-                              @foreach ($dropdownOptionsKas as $option)
-                              <!-- Ganti (Kas) -->
-                              <option value="{{ $option->ID}}">{{ $option->NAMA_KAS}}</option>
-                              @endforeach
-                            </select>
+                          <div class="form-group row">
+                            <label for="kas" class="col-sm-3 col-form-label">Kas:</label>
+                            <div class="col-sm-8">
+                              <!-- Second Dropdown (Kas) -->
+                              <select class="custom-select form-control-border" id="kas" name="kas" required>
+                                @foreach ($dropdownOptionsKas as $option)
+                                <!-- Ganti (Kas) -->
+                                <option value="{{ $option->ID}}">{{ $option->NAMA_KAS}}</option>
+                                @endforeach
+                              </select>
+                            </div>
                           </div>
-                        </div>
-                        <div class="form-group row">
-                          <label for="keterangan" class="col-sm-3 col-form-label">Keterangan:</label>
-                          <div class="col-sm-8">
-                            <textarea id="keterangan" class="form-control" name="keterangan" rows="4" required>{{ old('keterangan', $d->KETERANGAN ?? '') }}</textarea>
+                          <div class="form-group row">
+                            <label for="keterangan" class="col-sm-3 col-form-label">Keterangan:</label>
+                            <div class="col-sm-8">
+                              <textarea id="keterangan" class="form-control" name="keterangan" rows="4" required>{{ old('keterangan', $d->KETERANGAN ?? '') }}</textarea>
+                            </div>
                           </div>
-                        </div>
-                        <div class="form-group row">
-                          <label for="no_ref" class="col-sm-3 col-form-label">No Ref:</label>
-                          <div class="col-sm-8">
-                            <input type="text" class="form-control" id="no_ref" name="no_ref" value="{{ old('no_ref') ?? ($d->NO_REF ?? '') }}" required>
+                          <div class="form-group row">
+                            <label for="no_ref" class="col-sm-3 col-form-label">No Ref:</label>
+                            <div class="col-sm-8">
+                              <input type="text" class="form-control" id="no_ref" name="no_ref" value="{{ old('no_ref') ?? ($d->ID_COA ?? '') }}" required>
+                            </div>
                           </div>
-                        </div>
-                        <div class="form-group row">
-                          <label for="nominal" class="col-sm-3 col-form-label">Nominal:</label>
-                          <div class="col-sm-8">
-                            <input type="number" class="form-control" id="nominal" name="nominal" placeholder="0" value="{{ old('nominal') ?? ($d->KREDIT ?? '') }}" required>
+                          <div class="form-group row">
+                            <label for="nominal" class="col-sm-3 col-form-label">Nominal:</label>
+                            <div class="col-sm-8">
+                              <input type="number" class="form-control" id="nominal" name="nominal" placeholder="0" value="{{ old('nominal') ?? ($d->KREDIT ?? '') }}" required>
+                            </div>
                           </div>
                         </div>
                         <div class="modal-footer">
-                        <button type="submit" id="saveButtonUniqueID" class="btn form-control float-right SaveButton" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
-                          <i class="fa-solid fa-floppy-disk"></i> Simpan
-                        </button>
-                      </div>
+                          <button type="submit" id="saveButtonUniqueID" class="btn form-control float-right SaveButton" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan
+                          </button>
+                        </div>
                       </form>
                       <!-- ... bagian JavaScript SweetAlert ... -->
                       <script>
@@ -194,30 +214,30 @@
                     </div>
                   </div>
                 </div>
-              </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
       </div>
       </form>
-      </td>
-      </tr>
-      @endforeach
-      </tbody>
-      </table>
-
-      <!-- /.card-body -->
-      <div class="card-footer clearfix">
-        <ul class="pagination pagination-sm m-0 float-right">
-          <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-        </ul>
-      </div>
     </div>
+  </div>
+  </div>
+  </div>
+  </form>
+  </td>
+  </tr>
+  @endforeach
+  </tbody>
+  </table>
+
+  <!-- /.card-body -->
+  <div class="card-footer clearfix">
+    <ul class="pagination pagination-sm m-0 float-right">
+      <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+    </ul>
+  </div>
+  </div>
   </div>
   </div>
   <!-- /.row -->

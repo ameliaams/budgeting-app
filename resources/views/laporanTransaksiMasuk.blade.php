@@ -53,6 +53,7 @@
           <thead style="text-align: center;">
             <tr>
               <th>ID</th>
+              <th>ID COA</th>
               <th>KODE_KWITANSI</th>
               <th>TANGGAL</th>
               <th>NAMA COA</th>
@@ -65,6 +66,7 @@
             @foreach ($results as $d)
             <tr>
               <td>{{ isset($d->ID) ? $d->ID : '' }}</td>
+              <td>{{ isset($d->ID_COA) ? $d->ID_COA : '' }}</td>
               <td>{{ isset($d->KODE_KWITANSI) ? $d->KODE_KWITANSI : '' }}</td>
               <td>{{ isset($d->TANGGAL) ? $d->TANGGAL : '' }}</td>
               <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
@@ -147,7 +149,7 @@
                         <div class="form-group row">
                           <label for="nama_coa" class="col-sm-3 col-form-label">Nama COA:</label>
                           <div class="col-sm-8">
-                          <input type="text" class="form-control" id="debit" name="debit" value="{{ old('debit', $d->NAMA_COA) }}" disabled required>
+                            <input type="text" class="form-control" id="debit" name="debit" value="{{ old('debit', $d->NAMA_COA) }}" disabled required>
                           </div>
                         </div>
                         <div class="form-group row">
@@ -171,7 +173,7 @@
                         <div class="form-group row">
                           <label for="no_ref" class="col-sm-3 col-form-label">No Ref:</label>
                           <div class="col-sm-8">
-                            <input type="text" class="form-control" id="no_ref" name="no_ref" value="{{ old('no_ref') ?? ($d->NO_REF ?? '') }}" required>
+                            <input type="text" class="form-control" id="no_ref" name="no_ref" value="{{ old('no_ref') ?? ($d->ID_COA ?? '') }}" required>
                           </div>
                         </div>
                         <div class="form-group row">
@@ -181,61 +183,60 @@
                           </div>
                         </div>
                         <div class="modal-footer">
-                        <button type="submit" id="saveButtonUniqueID" class="btn form-control float-right SaveButton" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
-                          <i class="fa-solid fa-floppy-disk"></i> Simpan
-                        </button>
-                      </div>
-                      </form>
-                      <!-- ... bagian JavaScript SweetAlert ... -->
-                      <script>
-                        // Tangkap tombol "Simpan" dengan ID saveButtonUniqueID
-                        const saveButton = document.getElementById('saveButtonUniqueID');
+                          <button type="submit" id="saveButtonUniqueID" class="btn form-control float-right SaveButton" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan
+                          </button>
+                        </div>
+                        <!-- ... bagian JavaScript SweetAlert ... -->
+                        <script>
+                          // Tangkap tombol "Simpan" dengan ID saveButtonUniqueID
+                          const saveButton = document.getElementById('saveButtonUniqueID');
 
-                        // Tambahkan event listener untuk menghandle submit form
-                        saveButton.addEventListener('click', (event) => {
-                          // Mencegah submit form agar halaman tidak direfresh
-                          event.preventDefault();
+                          // Tambahkan event listener untuk menghandle submit form
+                          saveButton.addEventListener('click', (event) => {
+                            // Mencegah submit form agar halaman tidak direfresh
+                            event.preventDefault();
 
-                          // Tampilkan SweetAlert dengan pesan sukses
-                          Swal.fire({
-                            icon: 'success',
-                            title: 'Sukses!',
-                            text: 'Data berhasil disimpan.',
-                            showConfirmButton: false,
-                            timer: 1500 // Waktu (dalam milidetik) untuk menampilkan alert sebelum otomatis tertutup
+                            // Tampilkan SweetAlert dengan pesan sukses
+                            Swal.fire({
+                              icon: 'success',
+                              title: 'Sukses!',
+                              text: 'Data berhasil disimpan.',
+                              showConfirmButton: false,
+                              timer: 1500 // Waktu (dalam milidetik) untuk menampilkan alert sebelum otomatis tertutup
+                            });
+
+                            // Submit form secara manual setelah menampilkan SweetAlert
+                            event.target.closest('form').submit();
                           });
-
-                          // Submit form secara manual setelah menampilkan SweetAlert
-                          event.target.closest('form').submit();
-                        });
-                      </script>
-                    </div>
-                  </div>
-                </div>
-              </div>
-                      </form>
+                        </script>
                     </div>
                   </div>
                 </div>
       </div>
       </form>
-      </td>
-      </tr>
-      @endforeach
-      </tbody>
-      </table>
-
-      <!-- /.card-body -->
-      <div class="card-footer clearfix">
-        <ul class="pagination pagination-sm m-0 float-right">
-          <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-        </ul>
-      </div>
     </div>
+  </div>
+  </div>
+  </div>
+  </form>
+  </td>
+  </tr>
+  @endforeach
+  </tbody>
+  </table>
+
+  <!-- /.card-body -->
+  <div class="card-footer clearfix">
+    <ul class="pagination pagination-sm m-0 float-right">
+      <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+    </ul>
+  </div>
+  </div>
   </div>
   </div>
   <!-- /.row -->

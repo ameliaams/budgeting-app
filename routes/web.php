@@ -24,6 +24,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
 
+// MASTER
 Route::get('/coa', [App\Http\Controllers\CoaController::class, 'index'])->name('coa.index');
 Route::post('/coa/add', [App\Http\Controllers\CoaController::class, 'addData'])->name('coa.add');
 Route::delete('/coa/delete/{id}', [App\Http\Controllers\CoaController::class, 'deleteData'])->name('coa.delete');
@@ -35,12 +36,19 @@ Route::post('/rab/update', [App\Http\Controllers\RabController::class, 'update']
 
 Route::get('/tahun', [App\Http\Controllers\TahunAnggaranController::class, 'index'])->name('tahun.index');
 
+Route::get('/kas', [App\Http\Controllers\kasController::class, 'index'])->name('kas.index');
+Route::post('/kas/add', [App\Http\Controllers\kasController::class, 'addData'])->name('kas.add');
+Route::delete('/kas/delete/{id}', [App\Http\Controllers\kasController::class, 'deleteData'])->name('kas.delete');
+Route::put('kas/{id}/update', [App\Http\Controllers\kasController::class, 'editData'])->name('kas.update');
+
+// TRANSAKSI
 Route::get('/kasMasuk', [App\Http\Controllers\kasMasukController::class, 'index'])->name('kasMasuk.index');
 Route::post('/kasMasuk/simpanData', [App\Http\Controllers\kasMasukController::class, 'simpanData'])->name('kasMasuk.simpanData');
 
 Route::get('/kasKeluar', [App\Http\Controllers\kasKeluarController::class, 'index'])->name('kasKeluar.index');
 Route::post('/kasKeluar/simpanData', [App\Http\Controllers\kasKeluarController::class, 'simpanData'])->name('kasKeluar.simpanData');
 
+// LAPORAN
 Route::get('/laporanRealisasi', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan.index');
 
 Route::get('/laporanTransaksiKeluar', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'index'])->name('laporanTransaksiKeluar.index');

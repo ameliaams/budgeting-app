@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 if (!function_exists('isActiveMaster')) {
     function isActiveMaster()
     {
-        return Request::is('coa') || Request::is('rab') || Request::is('tahun');
+        return Request::is('coa') || Request::is('rab') || Request::is('tahun') || Request::is('kas');
     }
 }
 
@@ -27,5 +27,6 @@ if (!function_exists('isActiveDashboard')) {
 if (!function_exists('isActiveLaporan')) {
     function isActiveLaporan()
     {
-        return Request::is('laporanRealisasi') || Request::is('laporanTransaksiMasuk') || Request::is('laporanTransaksiKeluar');    }
+        return Request::is('laporanRealisasi') || Request::is('laporanTransaksiMasuk') || Request::is('laporanTransaksiKeluar');
+    }
 }

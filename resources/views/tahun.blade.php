@@ -4,11 +4,8 @@
 
 @section('content')
 <style>
-  /* CSS untuk memberi warna pada header tabel */
   th {
     background-color: #778899;
-    /* Ganti dengan warna yang Anda inginkan */
-    /* tambahkan gaya lainnya seperti font-color, padding, dsb. sesuai kebutuhan */
   }
 </style>
 

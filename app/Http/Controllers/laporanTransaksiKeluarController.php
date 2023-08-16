@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use App\Models\Transaction;
 
 class laporanTransaksiKeluarController extends Controller
@@ -28,7 +29,7 @@ class laporanTransaksiKeluarController extends Controller
             $IN_ID_USER,
         ]);
         // Call the second stored procedure
-        $resultsKas = DB::select('CALL 9_master_kas_get_data()');
+        $resultsKas = DB::select('CALL 9_master_kas_get_data(?)', [$IN_ID_USER]);
 
         $dropdownOptionsKas = [];
         foreach ($resultsKas as $result) {
@@ -42,33 +43,31 @@ class laporanTransaksiKeluarController extends Controller
         ]);
     }
 
-
     public function deleteData(Request $request, $id)
     {
         $user = Auth::user();
         $IN_TANGGAL_AWAL = $request->input('tanggalA');
         $IN_TANGGAL_AKHIR = $request->input('tanggalAK');
         $idUser = $user->id;
+        $tahunAjaranResult = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
+        $idTahunAjaran = $tahunAjaranResult[0]->ID;
 
         // Call the stored procedure
-        $delete = DB::statement('CALL 9_KAS_DEL_BYID(?)', [$id]);
+        $delete = DB::statement(' CALL 9_TRANSAKSI_KAS_DEL_BYID(?, ?, ?)', [$id, $idTahunAjaran, $idUser]);
 
-        // Check the result and handle any success or error conditions
+        // Check the result
         if ($delete) {
-            // Delete successful
-            // Call the stored procedure to get the year value
-            $tahunAjaranResult = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
-            $idTahunAjaran = $tahunAjaranResult[0]->ID;
 
-            // Update data
+
             $update = DB::statement("CALL 9_KAS_UPDATE_MASTER_RAB(?, ?, ?)", [$id, $idTahunAjaran, $idUser]);
+
+            // After the update, retrieve the data based on the input dates
             $results = DB::select('CALL 9_TRANSAKSI_KAS_KELUAR_GET_DATA_BYTANGGAL(?, ?, ?)', [
                 $IN_TANGGAL_AWAL,
                 $IN_TANGGAL_AKHIR,
                 $idUser,
             ]);
 
-            // Return the view with the updated data and input dates
             return view('laporanTransaksiKeluar', [
                 'user' => $user,
                 'results' => $results,
@@ -76,15 +75,24 @@ class laporanTransaksiKeluarController extends Controller
                 'tgl_akhir' => $IN_TANGGAL_AKHIR,
             ]);
         } else {
-            // Delete failed
-            return redirect()->route('laporanTransaksiKeluar')->with('error', 'Failed to delete data.');
+            // Example: After successful deletion
+            // After successful deletion, set a session variable to indicate success
+            Session::flash('success', 'Data berhasil dihapus.');
+
+            return redirect()->route('laporanTransaksiKeluar.index');
         }
     }
 
     public function editData(Request $request, $id)
     {
+        $request->validate([
+            'tanggal' => 'required|date',
+            // Add other validation rules for your input fields if needed
+        ]);
+
+        //echo dd($request);
         $IN_TANGGAL = $request->input('tanggal');
-        $IN_ID_COA = $request->input('kredit');
+        $IN_ID_COA = $request->input('no_ref');
         $IN_ID_KAS = $request->input('kas');
         $IN_JENIS_TRANSAKSI = 'K';
         $IN_KETERANGAN = $request->input('keterangan');
@@ -99,11 +107,6 @@ class laporanTransaksiKeluarController extends Controller
         $IN_NOMINAL_PERUBAHAN = $request->input('IN_NOMINAL_PERUBAHAN');
         $IN_ID_USER = auth()->user()->id;
 
-        $request->validate([
-            'nominal' => 'required|numeric',
-            'tanggal' => 'required|date',
-        ]);
-
         $results = DB::select(
             "CALL GET_KODE_KWITANSI(?, ?, ?)",
             [$IN_JENIS_TRANSAKSI, $IN_TANGGAL, $IN_ID_USER]
@@ -114,6 +117,9 @@ class laporanTransaksiKeluarController extends Controller
         if (empty($IN_NOMINAL_PERUBAHAN)) {
             $IN_NOMINAL_PERUBAHAN = 0;
         }
+
+        // $tes = "CALL 9_TRANSAKSI_KAS_INS(" . $id . ", " . $IN_KODE_KWINTANSI . ", " . $IN_TANGGAL . ", " . $IN_ID_COA . ", " . $IN_ID_KAS . ", " . $IN_JENIS_TRANSAKSI . ", " . $IN_KETERANGAN . ", " . $IN_DEPARTEMEN . ", " . $IN_PENANGGUNG_JAWAB . ", " . $IN_NOMINAL . ", " . $IN_VERIFIKASI . ", " . $IN_NO_REF . ", " . $IN_ID_TAHUN_AJARAN . ", " . $IN_KODE_PENARIKAN_DANA . ", " . $IN_NOMINAL_PERUBAHAN . ", " . $IN_ID_USER . ")";
+        // echo dd($tes);
         // Call the store procedure
         $results = DB::statement('CALL 9_TRANSAKSI_KAS_INS(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             $id,
@@ -138,6 +144,7 @@ class laporanTransaksiKeluarController extends Controller
             // Update successful
             $tanggalAwal = $request->input('tanggalA');
             $tanggalAkhir = $request->input('tanggalAK');
+
             return redirect()->route('laporanTransaksiKeluar.index', ['tanggalAwal' => $tanggalAwal, 'tanggalAkhir' => $tanggalAkhir])
                 ->with('success', 'Data has been updated successfully!');
         } else {

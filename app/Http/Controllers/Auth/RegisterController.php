@@ -68,7 +68,7 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
         ]);
-        $data = DB::select('CALL 9_USER_INS_TAMBAHAN(12)');
+        $data = DB::select('CALL 9_USER_INS_TAMBAHAN()');
     }
     protected function registered()
     {

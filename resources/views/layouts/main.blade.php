@@ -250,7 +250,7 @@
             </li>
             <li class="nav-item {{ isActiveLaporan() ? 'menu-open' : '' }}">
               <a href="javascript:void(0)" class="nav-link {{ isActiveLaporan() ? 'active' : '' }}">
-                <i class="nav-icon fas fa-dollar-sign"></i>
+                <i class="nav-icon fas fa-book"></i>
                 <p>
                   Laporan
                   <i class="fas fa-angle-left right"></i>

@@ -96,7 +96,7 @@
       <!-- ./col -->
       <div class="col-lg-4 col-8">
         <!-- small box -->
-        <div class="small-box bg-secondary">
+        <div class="small-box bg-warning">
           <div class="inner">
             <h3>07</h3>
             <p>Laporan Realisai RAB</p>
@@ -110,7 +110,7 @@
       <!-- ./col -->
       <div class="col-lg-4 col-8">
         <!-- small box -->
-        <div class="small-box bg-dark">
+        <div class="small-box bg-secondary">
           <div class="inner">
             <h3>08</h3>
             <p>Laporan Transaksi Masuk</p>
@@ -134,6 +134,49 @@
             <i class="fas fa-arrow-up"></i>
           </div>
           <a href="laporanTransaksiKeluar" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-4 col-8">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>10</h3>
+            <p>Laporan Arus Kas</p>
+          </div>
+          <div class="icon">
+          <i class="fas fa-chart-line"></i>
+
+          </div>
+          <a href="/arusKas" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-4 col-8">
+        <!-- small box -->
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>11</h3>
+            <p>Laporan Total Kas</p>
+          </div>
+          <div class="icon">
+          <i class="fas fa-calculator"></i>
+          </div>
+          <a href="/laporanTotalKas" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <!-- ./col -->
+      <div class="col-lg-4 col-8">
+        <!-- small box -->
+        <div class="small-box bg-dark">
+          <div class="inner">
+            <h3>12</h3>
+            <p>Master Tahun Anggaran</p>
+          </div>
+          <div class="icon">
+            <i class="far fa-calendar-alt"></i>
+          </div>
+          <a href="/tahun" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->

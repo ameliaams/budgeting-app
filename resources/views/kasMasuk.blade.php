@@ -71,10 +71,10 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="no_ref" class="col-sm-2 col-form-label">No Ref:</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="no_ref" name="no_ref" required>
-                  </div>
+                    <label for="no_ref" class="col-sm-2 col-form-label">No Ref:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="no_ref" name="no_ref">
+                    </div>
                 </div>
                 
                 <div class="form-group row">
@@ -90,6 +90,17 @@
                                 <button type="button" id="deleteButton" class="btn btn-danger">Hapus</button>
                             </div>
                         </form>
+                        <script>
+                            document.getElementById("myForm").addEventListener("submit", function(event) {
+                                // Check if the No Ref field is empty
+                                var noRefField = document.getElementById("no_ref");
+                                if (noRefField.value.trim() === "") {
+                                    // If it's empty, set a default value (or you can choose to leave it empty)
+                                    noRefField.value = "";
+                                }
+                            });
+                        </script>
+
              <!-- Tampilan SweetAlert -->
               @if (session('success'))
                   <!-- Link eksternal untuk SweetAlert -->

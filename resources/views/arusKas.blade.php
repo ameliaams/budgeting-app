@@ -83,7 +83,21 @@
     </div>
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">LAPORAN ARUS KAS</h3>
+        <div class="row g-3">
+          <div class="col-sm-7">
+            <h3 class="card-title">LAPORAN ARUS KAS</h3>
+          </div>
+          <div class="col-sm">
+            <div>
+              <h5 style="padding: 10px;">TOTAL:</h5>
+            </div>
+          </div>
+          <div class="col-sm">
+            <a href="{{ route('laporanArus.cetak', ['tahun' => request('tahun'), 'bulan' => request('bulan'), 'kas' => request('kas')]) }}" class="btn btn-primary float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+                <i class="fa-solid fa-print"></i> Cetak
+            </a>
+          </div>
+        </div>
       </div>
       <!-- /.card-header -->
       <div class="card-body">
@@ -104,12 +118,11 @@
             <tr>
               <td>{{ isset($d->KODE_KWITANSI) ? $d->KODE_KWITANSI : '' }}</td>
               <td>{{ isset($d->TANGGAL) ? $d->TANGGAL : '' }}</td>
-              <td>{{ isset($d->JENIS_TRANSAKSI) ? $d->JENIS_TRANSAKSI : '' }}</td>
+              <td>{{ isset($d->KET_TRANSAKSI) ? $d->KET_TRANSAKSI : '' }}</td>
               <td style="text-align: right;">@money(isset($d->DEBET) && $d->DEBET !== '' ? floatval($d->DEBET) : 0)</td>
               <td style="text-align: right;">@money(isset($d->KREDIT) && $d->KREDIT !== '' ? floatval($d->KREDIT) : 0)</td>
               <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
               <td>{{ isset($d->KETERANGAN) ? $d->KETERANGAN : '' }}</td>
-              <td style="text-align: center;">
             </tr>
             @endforeach
           </tbody>

@@ -51,15 +51,20 @@ Route::post('/kasKeluar/simpanData', [App\Http\Controllers\kasKeluarController::
 
 // LAPORAN
 Route::get('/laporanRealisasi', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan.index');
+Route::get('/laporanRealisasi/cetak', [App\Http\Controllers\LaporanController::class, 'cetak'])->name('laporan.cetak');
 
 Route::get('/laporanTransaksiKeluar', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'index'])->name('laporanTransaksiKeluar.index');
 Route::delete('/laporanTransaksiKeluar/delete/{id}', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'deleteData'])->name('laporanTransaksiKeluar.delete');
 Route::put('laporanTransaksiKeluar/{id}/update', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'editData'])->name('laporanTransaksiKeluar.update');
+Route::get('/laporanTransaksiKeluar/cetak', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'cetak'])->name('laporanKeluar.cetak');
 
 Route::get('/laporanTransaksiMasuk', [App\Http\Controllers\laporanTransaksiMasukController::class, 'index'])->name('laporanTransaksiMasuk.index');
 Route::delete('/laporanTransaksiMasuk/delete/{id}', [App\Http\Controllers\laporanTransaksiMasukController::class, 'deleteData'])->name('laporanTransaksiMasuk.delete');
 Route::put('laporanTransaksiMasuk/{id}/update', [App\Http\Controllers\laporanTransaksiMasukController::class, 'editData'])->name('laporanTransaksiMasuk.update');
+Route::get('/laporanTransaksiMasuk/cetak', [App\Http\Controllers\laporanTransaksiMasukController::class, 'cetak'])->name('laporanMasuk.cetak');
 
 Route::get('/arusKas', [App\Http\Controllers\arusKasController::class, 'index'])->name('arusKas.index');
+Route::get('/arusKas/cetak', [App\Http\Controllers\arusKasController::class, 'cetak'])->name('laporanArus.cetak');
 
 Route::get('/laporanTotalKas', [App\Http\Controllers\totalKasController::class, 'index'])->name('laporanTotalKas.index');
+Route::get('/laporanTotalKas/cetak', [App\Http\Controllers\totalKasController::class, 'cetak'])->name('laporanTotal.cetak');

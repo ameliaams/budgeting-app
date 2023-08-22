@@ -17,7 +17,10 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">Laporan Realisasi RAB</h3>
-          </div>
+            <div class="card-footer clearfix">
+            <a href="{{ route('laporan.cetak') }}" class="btn btn-primary float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+              <i class="fa-solid fa-print"></i> Cetak</a>
+            </div>
           <!-- /.card-header -->
           <div class="card-body">
             <table class="table table-bordered">

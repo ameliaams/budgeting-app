@@ -148,34 +148,29 @@
                               </div>
                             </div>
                             <div class="modal-footer">
-                              <button type="submit" id="saveButtonUniqueID" class="btn form-control float-right SaveButton" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
-                                <i class="fa-solid fa-floppy-disk"></i> Simpan
-                              </button>
-                            </div>
-                        </form>
-                        <!-- ... bagian JavaScript SweetAlert ... -->
+                        <button type="submit" id="saveButtonUniqueID" class="btn form-control float-right SaveButton" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+                          <i class="fa-solid fa-floppy-disk"></i> Simpan
+                        </button>
+                      </div>
+                      </form>
+
+                      <!-- ... bagian JavaScript SweetAlert ... -->
+                      @if(session('success'))
                       <script>
-                        // Tangkap tombol "Simpan" dengan ID saveButtonUniqueID
-                        const saveButton = document.getElementById('saveButtonUniqueID');
-
-                        // Tambahkan event listener untuk menghandle submit form
-                        saveButton.addEventListener('click', (event) => {
-                          // Mencegah submit form agar halaman tidak direfresh
-                          event.preventDefault();
-
-                          // Tampilkan SweetAlert dengan pesan sukses
-                          Swal.fire({
-                            icon: 'success',
-                            title: 'Sukses!',
-                            text: 'Data berhasil disimpan.',
-                            showConfirmButton: false,
-                            timer: 1500 // Waktu (dalam milidetik) untuk menampilkan alert sebelum otomatis tertutup
-                          });
-
-                          // Submit form secara manual setelah menampilkan SweetAlert
-                          event.target.closest('form').submit();
+                        Swal.fire({
+                          title: "Berhasil!",
+                          text: "Data berhasil disimpan.",
+                          icon: "success",
+                          buttons: {
+                            confirm: {
+                              text: "OK",
+                              value: true,
+                              className: "btn btn-success"
+                            }
+                          }
                         });
                       </script>
+                      @endif
                       </div>
                     </div>
                   </div>

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use PDF;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class totalKasController extends Controller
 {
@@ -24,5 +27,28 @@ class totalKasController extends Controller
         $results = DB::select('CALL LAPORAN_TOTAL_KAS(?, ?, ?)', [$IN_TAHUN, $IN_BULAN, $id_user]);
     
         return view('laporanTotalKas', ['user' => $user, 'results' => $results]);
+    }
+    public function cetak(Request $request)
+    {
+        $user = Auth::user();
+        $IN_TAHUN = $request->input('tahun');
+        $IN_BULAN = $request->input('bulan');
+        $id_user = Auth::user()->id; 
+    
+        // Panggil stored procedure dengan parameter
+        $results = DB::select('CALL LAPORAN_TOTAL_KAS(?, ?, ?)', [$IN_TAHUN, $IN_BULAN, $id_user]);
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Times New Roman');
+        $dompdf = new Dompdf($pdfOptions);
+    
+        $pdf = PDF::loadView('pdf.cetakTotal', [
+            'user' => $user,
+            'results' => $results,
+            'tahun' => $IN_TAHUN,
+            'bulan' => $IN_BULAN,
+        ]);
+    
+        return $pdf->stream();
     }
 }

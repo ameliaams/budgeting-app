@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Models\Transaction;
+use PDF;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class laporanTransaksiKeluarController extends Controller
 {
@@ -186,4 +189,42 @@ class laporanTransaksiKeluarController extends Controller
             return null;
         }
     }
+
+    public function cetak(Request $request)
+{
+    $user = Auth::user();
+    $IN_TANGGAL_AWAL = $request->input('tanggalA');
+    $IN_TANGGAL_AKHIR = $request->input('tanggalAK');
+    $IN_ID_USER = auth()->user()->id;
+
+    // Call Store Procedure
+    $results = DB::select('CALL 9_TRANSAKSI_KAS_KELUAR_GET_DATA_BYTANGGAL(?, ?, ?)', [
+        $IN_TANGGAL_AWAL,
+        $IN_TANGGAL_AKHIR,
+        $IN_ID_USER,
+    ]);
+
+    // Call the second stored procedure
+    $resultsKas = DB::select('CALL 9_master_kas_get_data(?)', [$IN_ID_USER]);
+
+    $dropdownOptionsKas = [];
+    foreach ($resultsKas as $result) {
+        $dropdownOptionsKas[] = $result;
+    }
+
+    $pdfOptions = new Options();
+    $pdfOptions->set('defaultFont', 'Times New Roman');
+    $dompdf = new Dompdf($pdfOptions);
+
+    $pdf = PDF::loadView('pdf.transaksiKeluar', [
+        'user' => $user,
+        'results' => $results,
+        'dropdownOptionsKas' => $dropdownOptionsKas,
+        'IN_TANGGAL_AWAL' => $IN_TANGGAL_AWAL,
+        'IN_TANGGAL_AKHIR' => $IN_TANGGAL_AKHIR,
+    ]);
+
+    return $pdf->stream();
+}
+
 }

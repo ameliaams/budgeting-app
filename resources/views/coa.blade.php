@@ -75,13 +75,13 @@
             </thead>
             <tbody>
               @foreach ($data as $d)
-              <tr class="{{ isset($d->LEVEL) && $d->LEVEL == 1 ? 'level-one-row' : '' }}" data-widget="expandable-table" aria-expanded="false">
+              <tr class="{{ isset($d->LEVEL) && $d->LEVEL == 1 ? 'level-one-row' : ($d->LEVEL == '' ? 'level-null' : '') }}" data-widget="expandable-table" aria-expanded="false">
                 <td>{{ isset($d->COA_NUMBER) ? $d->COA_NUMBER : '' }}</td>
                 <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
                 <td>{{ isset($d->SALDO_NORMAL) ? $d->SALDO_NORMAL : '' }}</td>
                 <td>
                   <!-- Delete Button -->
-                  @if ($d->LEVEL != 1 || $d->NAMA_COA == 'PENDAPATAN' || $d->NAMA_COA == 'PENGELUARAN')
+                  @if ($d->LEVEL != 1 && $d->LEVEL != '')
                   <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal{{ $d->ID }}">
                     Edit
                   </button>
@@ -154,23 +154,23 @@
                       </div>
                       </form>
 
-                      <!-- ... bagian JavaScript SweetAlert ... -->
-                      @if(session('success'))
-                      <script>
-                        Swal.fire({
-                          title: "Berhasil!",
-                          text: "Data berhasil disimpan.",
-                          icon: "success",
-                          buttons: {
-                            confirm: {
-                              text: "OK",
-                              value: true,
-                              className: "btn btn-success"
-                            }
-                          }
-                        });
-                      </script>
-                      @endif
+                      <!-- Check for delete success and display the success message , masih tidak muncul-->
+                @if(session('success'))
+                <script>
+                  Swal.fire({
+                    title: "Berhasil!",
+                    text: "{{ session('success') }}",
+                    icon: "success",
+                    buttons: {
+                      confirm: {
+                        text: "OK",
+                        value: true,
+                        className: "btn btn-success"
+                      }
+                    }
+                  });
+                </script>
+                @endif
                       </div>
                     </div>
                   </div>

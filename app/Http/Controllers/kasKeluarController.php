@@ -29,7 +29,7 @@ class kasKeluarController extends Controller
         $IN_ID_USER = $userId = $user->id; // Assuming the value does not exceed 5 characters; // Assuming the value does not exceed 5 characters
 
         // Call the stored procedure using DB::select (COA GET DATA)
-        $resultsCoa = DB::select('CALL 9_MASTER_COA_GET_DATA_BY_SALDO_NORMAL(?, ?, ?)', [$IN_SEARCH, $IN_SALDO_NORMAL, $IN_ID_USER]);
+        $resultsCoa = DB::select('CALL 9_MASTER_COA_GET_DATA_BY_SALDO_NORMAL_LVL2(?, ?, ?)', [$IN_SEARCH, $IN_SALDO_NORMAL, $IN_ID_USER]);
 
         $dropdownOptionsCoa = [];
         foreach ($resultsCoa as $result) {

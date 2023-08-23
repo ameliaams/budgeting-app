@@ -26,7 +26,7 @@ class kasMasukController extends Controller
         $IN_SEARCH = '%%';
         $IN_SALDO_NORMAL = 'd';
         $IN_ID_USER = auth()->user()->id;
-        $resultsCoa = DB::select('CALL 9_MASTER_COA_GET_DATA_BY_SALDO_NORMAL(?, ?, ?)', [$IN_SEARCH, $IN_SALDO_NORMAL, $IN_ID_USER]);
+        $resultsCoa = DB::select('CALL 9_MASTER_COA_GET_DATA_BY_SALDO_NORMAL_LVL2(?, ?, ?)', [$IN_SEARCH, $IN_SALDO_NORMAL, $IN_ID_USER]);
 
         $dropdownOptionsCoa = [];
         foreach ($resultsCoa as $result) {

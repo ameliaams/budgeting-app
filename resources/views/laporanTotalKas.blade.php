@@ -79,7 +79,7 @@
           </div>
           <div class="col-sm">
             <div>
-              <h5 style="padding: 10px;">TOTAL:</h5>
+            <h5>TOTAL: @money($totalVar)</h5>
             </div>
           </div>
           <div class="col-sm">
@@ -104,7 +104,7 @@
             <tr>
               <td>{{ isset($d->KODE) ? $d->KODE : '' }}</td>
               <td>{{ isset($d->NAMA_KAS) ? $d->NAMA_KAS : '' }}</td>
-              <td>{{ isset($d->TOTAL) ? $d->TOTAL : '' }}</td>
+              <td style="text-align: right;">@money(isset($d->TOTAL) && $d->TOTAL !== '' ? floatval($d->TOTAL) : 0)</td>
             </tr>
             @endforeach
           </tbody>

@@ -33,10 +33,17 @@ class arusKasController extends Controller
             $dropdownOptionsKas[] = $result;
         }
 
+        $totalVar = 0;
+        foreach ($results as $total) {
+            $totalVar += $total->DEBET - $total->KREDIT;
+        }
+        //echo dd($totalVar);
+
         return view('arusKas', [
             'user' => $user,
             'results' => $results,
             'dropdownOptionsKas' => $dropdownOptionsKas,
+            'totalVar' => $totalVar,
         ]);
     }
 
@@ -56,6 +63,11 @@ class arusKasController extends Controller
             $dropdownOptionsKas[] = $result;
         }
 
+        $totalVar = 0;
+        foreach ($results as $total) {
+            $totalVar += $total->DEBET - $total->KREDIT;
+        }
+
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Times New Roman');
         $dompdf = new Dompdf($pdfOptions);
@@ -67,6 +79,7 @@ class arusKasController extends Controller
             'tahun' => $IN_TAHUN,
             'bulan' => $IN_BULAN,
             'kas' => $IN_ID_KAS,
+            'totalVar' => $totalVar,
         ]);
     
         return $pdf->stream();

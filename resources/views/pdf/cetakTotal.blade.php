@@ -77,10 +77,10 @@
             <td>{{ isset($d->TOTAL) ? $d->TOTAL : '' }}</td>
             </tr>
             @endforeach
-            <tr class="total-row">
-            <td colspan="2" style="text-align: right;">Total :</td>
-            <td></td>
-            </tr>
+            <tr class="total-row" style="background-color: yellow">
+                                <td colspan="2" style="text-align: right;">Total :</td>
+                                <td colspan="1" style="text-align: right;">@money(($totalVar))</td>
+                            </tr>
             </tbody>
         </table>
     </div>

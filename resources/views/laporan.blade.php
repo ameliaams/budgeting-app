@@ -35,7 +35,7 @@
               </thead>
               <tbody>
                 @foreach ($laporan as $lapor)
-                <tr class="{{ isset($d->LEVEL) && $d->LEVEL == 1 ? 'level-one-row' : '' }}" data-widget="expandable-table" aria-expanded="false">
+                <tr class="{{ isset($lapor->LEVEL) && $lapor->LEVEL == 1 ? 'level-one-row' : ($lapor->LEVEL == '' ? 'level-null' : '') }}" data-widget="expandable-table" aria-expanded="false">
                   <td>{{ isset($lapor->COA_NUMBER) ? $lapor->COA_NUMBER : '' }}</td>
                   <td>{{ isset($lapor->NAMA_COA) ? $lapor->NAMA_COA : '' }}</td>
                   <td>{{ isset($lapor->SALDO_NORMAL) ? $lapor->SALDO_NORMAL : '' }}</td>

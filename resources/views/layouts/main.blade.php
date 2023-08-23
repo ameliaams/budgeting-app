@@ -285,7 +285,7 @@
               </ul>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{ asset('/arusKas') }}" class="nav-link {{ Request::is('laporanTransaksiKeluar') ? 'active' : '' }}">
+                  <a href="{{ asset('/arusKas') }}" class="nav-link {{ Request::is('arusKas') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Laporan Arus Kas</p>
                   </a>

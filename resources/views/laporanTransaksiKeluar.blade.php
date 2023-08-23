@@ -39,14 +39,19 @@
                 <button type="submit" class="btn btn-danger w-100">Cari</button>
               </div>
             </div>
-          </form>
         </div>
       </div>
     </div>
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">LAPORAN KAS KELUAR</h3>
+        <div class="card-footer clearfix">
+          <a href="{{ route('laporanKeluar.cetak', ['tanggalA' => request('tanggalA'), 'tanggalAK' => request('tanggalAK')]) }}" class="btn btn-primary float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+              <i class="fa-solid fa-print"></i> Cetak
+          </a>
       </div>
+      </div>
+      </form>
       <!-- /.card-header -->
       <div class="card-body">
         <table class="table table-bordered">

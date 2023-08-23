@@ -73,7 +73,21 @@
     </div>
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">LAPORAN TOTAL KAS</h3>
+        <div class="row g-3">
+          <div class="col-sm-7">
+            <h3 class="card-title">LAPORAN TOTAL KAS</h3>
+          </div>
+          <div class="col-sm">
+            <div>
+              <h5 style="padding: 10px;">TOTAL:</h5>
+            </div>
+          </div>
+          <div class="col-sm">
+            <a href="{{ route('laporanTotal.cetak', ['tahun' => request('tahun'), 'bulan' => request('bulan'), 'kas' => request('kas')]) }}" class="btn btn-primary float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+                <i class="fa-solid fa-print"></i> Cetak
+            </a>
+          </div>
+        </div>
       </div>
       <!-- /.card-header -->
       <div class="card-body">

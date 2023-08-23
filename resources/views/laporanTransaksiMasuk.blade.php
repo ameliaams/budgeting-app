@@ -188,69 +188,53 @@
                           </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="submit" id="saveButtonUniqueID" class="btn form-control float-right SaveButton" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
-                            <i class="fa-solid fa-floppy-disk"></i> Simpan
-                          </button>
-                        </div>
-                        <!-- ... bagian JavaScript SweetAlert ... -->
-                        <script>
-                          // Tangkap tombol "Simpan" dengan ID saveButtonUniqueID
-                          const saveButton = document.getElementById('saveButtonUniqueID');
+                        <button type="submit" id="saveButtonUniqueID" class="btn form-control float-right SaveButton" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+                          <i class="fa-solid fa-floppy-disk"></i> Simpan
+                        </button>
+                      </div>
+                      </form>
 
-                          // Tambahkan event listener untuk menghandle submit form
-                          saveButton.addEventListener('click', (event) => {
-                            // Mencegah submit form agar halaman tidak direfresh
-                            event.preventDefault();
-
-                            // Tampilkan SweetAlert dengan pesan sukses
-                            Swal.fire({
-                              icon: 'success',
-                              title: 'Sukses!',
-                              text: 'Data berhasil disimpan.',
-                              showConfirmButton: false,
-                              timer: 1500 // Waktu (dalam milidetik) untuk menampilkan alert sebelum otomatis tertutup
-                            });
-
-                            // Submit form secara manual setelah menampilkan SweetAlert
-                            event.target.closest('form').submit();
-                          });
-                        </script>
+                      <!-- Check for delete success and display the success message , masih tidak muncul-->
+                @if(session('success'))
+                <script>
+                  Swal.fire({
+                    title: "Berhasil!",
+                    text: "{{ session('success') }}",
+                    icon: "success",
+                    buttons: {
+                      confirm: {
+                        text: "OK",
+                        value: true,
+                        className: "btn btn-success"
+                      }
+                    }
+                  });
+                </script>
+                @endif
+                      </div>
                     </div>
                   </div>
-                </div>
+                </td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer clearfix">
+          <ul class="pagination pagination-sm m-0 float-right">
+            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+          </ul>
+        </div>
       </div>
-      </form>
+      <!-- /.card -->
     </div>
   </div>
   </div>
-  </div>
-  </form>
-  </td>
-  </tr>
-  @endforeach
-  </tbody>
-  </table>
-
-  <!-- /.card-body -->
-  <div class="card-footer clearfix">
-    <ul class="pagination pagination-sm m-0 float-right">
-      <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-    </ul>
-  </div>
-  </div>
-  </div>
-  </div>
-  <!-- /.row -->
-  </div><!-- /.container-fluid -->
 </section>
-<!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
-
-
+<!-- /.content -->
 @endsection

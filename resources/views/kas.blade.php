@@ -58,7 +58,7 @@
                           <i class="fa-solid fa-floppy-disk"></i> Simpan
                         </button>
                       </div>
-                  </form>
+                      </form>
                 </div>
               </div>
             </div>
@@ -117,6 +117,7 @@
                       });
                     }
                   </script>
+                  
                   <!-- FORM UPDATE COA -->
                   <div class="modal fade" id="myModal{{ $d->ID }}">
                     <div class="modal-dialog modal-dialog-centered">
@@ -148,34 +149,29 @@
                               </div>
                             </div>
                             <div class="modal-footer">
-                              <button type="submit" id="saveButtonUniqueID" class="btn form-control float-right SaveButton" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
-                                <i class="fa-solid fa-floppy-disk"></i> Simpan
-                              </button>
-                            </div>
-                        </form>
-                        <!-- ... bagian JavaScript SweetAlert ... -->
-                        <script>
-                          // Tangkap tombol "Simpan" dengan ID saveButtonUniqueID
-                          const saveButton = document.getElementById('saveButtonUniqueID');
+                        <button type="submit" id="saveButtonUniqueID" class="btn form-control float-right SaveButton" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+                          <i class="fa-solid fa-floppy-disk"></i> Simpan
+                        </button>
+                      </div>
+                      </form>
 
-                          // Tambahkan event listener untuk menghandle submit form
-                          saveButton.addEventListener('click', (event) => {
-                            // Mencegah submit form agar halaman tidak direfresh
-                            event.preventDefault();
-
-                            // Tampilkan SweetAlert dengan pesan sukses
-                            Swal.fire({
-                              icon: 'success',
-                              title: 'Sukses!',
-                              text: 'Data berhasil disimpan.',
-                              showConfirmButton: false,
-                              timer: 1500 // Waktu (dalam milidetik) untuk menampilkan alert sebelum otomatis tertutup
-                            });
-
-                            // Submit form secara manual setelah menampilkan SweetAlert
-                            event.target.closest('form').submit();
-                          });
-                        </script>
+                      <!-- Check for delete success and display the success message , masih tidak muncul-->
+                @if(session('success'))
+                <script>
+                  Swal.fire({
+                    title: "Berhasil!",
+                    text: "{{ session('success') }}",
+                    icon: "success",
+                    buttons: {
+                      confirm: {
+                        text: "OK",
+                        value: true,
+                        className: "btn btn-success"
+                      }
+                    }
+                  });
+                </script>
+                @endif
                       </div>
                     </div>
                   </div>

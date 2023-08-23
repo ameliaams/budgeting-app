@@ -37,7 +37,7 @@
               </thead>
               <tbody>
                 @foreach ($data as $d)
-                <tr class="{{ isset($d->LEVEL) && $d->LEVEL == 1 ? 'level-one-row' : '' }}" data-widget="expandable-table" aria-expanded="false">
+                <tr class="{{ isset($d->LEVEL) && $d->LEVEL == 1 ? 'level-one-row' : ($d->LEVEL == '' ? 'level-null' : '') }}" data-widget="expandable-table" aria-expanded="false">
                   <td>{{ isset($d->COA_NUMBER) ? $d->COA_NUMBER : '' }}</td>
                   <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
                   <td>{{ isset($d->SALDO_NORMAL) ? $d->SALDO_NORMAL : '' }}</td>
@@ -73,8 +73,9 @@
       cell.addEventListener('dblclick', function() {
         // Check if the parent row has the 'level-one-row' class (LEVEL = 1)
         const isLevelOneRow = cell.closest('tr').classList.contains('level-one-row');
+        const isLevelNull = cell.closest('tr').classList.contains('level-null');
 
-        if (!isLevelOneRow) {
+        if (!isLevelOneRow && !isLevelNull) {
           cell.contentEditable = true;
           cell.focus();
         }

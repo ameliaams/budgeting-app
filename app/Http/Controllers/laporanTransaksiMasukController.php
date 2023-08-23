@@ -103,7 +103,7 @@ class laporanTransaksiMasukController extends Controller
         $IN_TANGGAL = $request->input('tanggal');
         $IN_ID_COA = $request->input('no_ref');
         $IN_ID_KAS = $request->input('kas');
-        $IN_JENIS_TRANSAKSI = 'D';
+        $IN_JENIS_TRANSAKSI = 'M';
         $IN_KETERANGAN = $request->input('keterangan');
         $IN_NO_REF = $request->input('no_ref');
         $IN_NOMINAL = $request->input('nominal');
@@ -165,7 +165,7 @@ class laporanTransaksiMasukController extends Controller
 
     public function getKodeKwitansi(Request $request)
     {
-        $IN_JENIS_TRANSAKSI = 'D';
+        $IN_JENIS_TRANSAKSI = 'M';
         $IN_TANGGAL = $request->input('tanggal');
         $IN_ID_USER = auth()->user()->id;
 

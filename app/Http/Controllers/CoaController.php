@@ -29,7 +29,7 @@ class CoaController extends Controller
             $dropdownOptionsCoa[] = $result;
         }
 
-        return view('coa', [
+        return view('coa', [ 
             'user' => $user,
             'data' => $data,
             'dropdownOptionsCoa' => $dropdownOptionsCoa

@@ -84,12 +84,9 @@
                                 <td>{{ isset($d->KETERANGAN) ? $d->KETERANGAN : '' }}</td>
                             </tr>
                             @endforeach
-                            <tr class="total-row">
-                                <td colspan="3" style="text-align: right;">Total :</td>
-                                <td style="text-align: right;"></td>
-                                <td style="text-align: right;"></td>
-                                <td></td>
-                                <td></td>
+                            <tr class="total-row" style="background-color: yellow">
+                                <td colspan="6" style="text-align: right;">Total :</td>
+                                <td colspan="1" style="text-align: right;">@money(($totalVar))</td>
                             </tr>
                         </tbody>
                     </table>

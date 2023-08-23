@@ -25,8 +25,18 @@ class totalKasController extends Controller
     
         // Panggil stored procedure dengan parameter
         $results = DB::select('CALL LAPORAN_TOTAL_KAS(?, ?, ?)', [$IN_TAHUN, $IN_BULAN, $id_user]);
-    
-        return view('laporanTotalKas', ['user' => $user, 'results' => $results]);
+
+        $totalVar = 0;
+        foreach ($results as $total) {
+            $totalVar += $total->TOTAL ;
+        }
+        //echo dd($totalVar);
+        
+
+        return view('laporanTotalKas',
+        ['user' => $user,
+        'totalVar' => $totalVar, 
+        'results' => $results]);
     }
     public function cetak(Request $request)
     {
@@ -38,6 +48,11 @@ class totalKasController extends Controller
         // Panggil stored procedure dengan parameter
         $results = DB::select('CALL LAPORAN_TOTAL_KAS(?, ?, ?)', [$IN_TAHUN, $IN_BULAN, $id_user]);
 
+        $totalVar = 0;
+        foreach ($results as $total) {
+            $totalVar += $total->TOTAL ;
+        }
+
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Times New Roman');
         $dompdf = new Dompdf($pdfOptions);
@@ -47,6 +62,7 @@ class totalKasController extends Controller
             'results' => $results,
             'tahun' => $IN_TAHUN,
             'bulan' => $IN_BULAN,
+            'totalVar' => $totalVar, 
         ]);
     
         return $pdf->stream();

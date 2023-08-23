@@ -89,7 +89,7 @@
           </div>
           <div class="col-sm">
             <div>
-              <h5 style="padding: 10px;">TOTAL:</h5>
+              <h5>TOTAL: @money($totalVar)</h5>
             </div>
           </div>
           <div class="col-sm">
@@ -114,7 +114,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($results as $d)
+          @foreach ($results as $d)
             <tr>
               <td>{{ isset($d->KODE_KWITANSI) ? $d->KODE_KWITANSI : '' }}</td>
               <td>{{ isset($d->TANGGAL) ? $d->TANGGAL : '' }}</td>

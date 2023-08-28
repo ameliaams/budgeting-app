@@ -13,6 +13,33 @@
 <section class="content">
   <div class="container-fluid">
     <div class="row">
+      <!-- left column -->
+      <div class="col-md-8 mx-auto">
+        <!-- general form elements -->
+        <div class="card card-danger">
+          <div class="card-header">
+            <h3 class="card-title">Laporan Total Kas</h3>
+          </div>
+          <form action="{{ route('rab.index') }}" method="get">
+            @csrf
+            <div class="card-body">
+              <div class="form-group row">
+                <label for="tahun" class="col-sm-2 col-form-label">Tahun</label>
+                <div class="col-sm-10">
+                <select class="form-control" id="tahun" name="tahun">
+                @foreach ($dropdownOptionsTahun as $option)
+                    <option value="{{ $option->ID }}">{{ $option->NAMA_BULAN }} - {{ $option->TAHUN }}</option>
+                @endforeach
+                </select>
+                </div>
+              </div>
+              <div class="card-footer text-center">
+                <button type="submit" class="btn btn-danger w-100">Cari</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
       <div class="col-12">
         <div class="card">
           <div class="card-header">

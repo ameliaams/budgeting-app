@@ -13,14 +13,41 @@
 <section class="content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12">
-        <div class="card">
+      <!-- left column -->
+      <div class="col-md-8 mx-auto">
+        <!-- general form elements -->
+        <div class="card card-danger">
           <div class="card-header">
-            <h3 class="card-title">Laporan Realisasi RAB</h3>
-            <div class="card-footer clearfix">
-            <a href="{{ route('laporan.cetak') }}" class="btn btn-primary float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
-              <i class="fa-solid fa-print"></i> Cetak</a>
+            <h3 class="card-title">Laporan Total Kas</h3>
+          </div>
+          <form action="{{ route('laporan.index') }}" method="get">
+            @csrf
+            <div class="card-body">
+              <div class="form-group row">
+                <label for="tahun" class="col-sm-2 col-form-label">Tahun</label>
+                <div class="col-sm-10">
+                <select class="form-control" id="tahun" name="tahun">
+                @foreach ($dropdownOptionsTahun as $option)
+                    <option value="{{ $option->ID }}">{{ $option->NAMA_BULAN }} - {{ $option->TAHUN }}</option>
+                @endforeach
+                </select>
+                </div>
+              </div>
+              <div class="card-footer text-center">
+                <button type="submit" class="btn btn-danger w-100">Cari</button>
+              </div>
             </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Laporan Realisasi RAB</h3>
+              <div class="card-footer clearfix">
+              <a href="{{ route('laporan.cetak', ['tahun' => $idTahunAjaran]) }}" class="btn btn-primary float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+                <i class="fa-solid fa-print"></i> Cetak</a>
+              </div>
+        </form>
           <!-- /.card-header -->
           <div class="card-body">
             <table class="table table-bordered">
@@ -34,28 +61,22 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach ($laporan as $lapor)
-                <tr class="{{ isset($lapor->LEVEL) && $lapor->LEVEL == 1 ? 'level-one-row' : ($lapor->LEVEL == '' ? 'level-null' : '') }}" data-widget="expandable-table" aria-expanded="false">
+              @foreach ($laporan as $lapor)
+              <tr class="{{ isset($lapor->LEVEL) && $lapor->LEVEL == 1 ? 'level-one-row' : ($lapor->LEVEL == '' ? 'level-null' : '') }}" data-widget="expandable-table" aria-expanded="false">
                   <td>{{ isset($lapor->COA_NUMBER) ? $lapor->COA_NUMBER : '' }}</td>
                   <td>{{ isset($lapor->NAMA_COA) ? $lapor->NAMA_COA : '' }}</td>
                   <td>{{ isset($lapor->SALDO_NORMAL) ? $lapor->SALDO_NORMAL : '' }}</td>
                   <td style="text-align: right;">@money(isset($lapor->NOMINAL) ? $lapor->NOMINAL : '')</td>
                   <td style="text-align: right;">@money(isset($lapor->REALISASI) ? $lapor->REALISASI : '')</td>
-                </tr>
-                @endforeach
+              </tr>
+              @endforeach
               </tbody>
             </table>
           </div>
           <!-- /.card-body -->
           <div class="card-footer clearfix">
-            <ul class="pagination pagination-sm m-0 float-right">
-              <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-            </ul>
-          </div>
+    {{ $laporan->appends(['tahun' => $idTahunAjaran])->links() }}
+</div>
         </div>
         <!-- /.card -->
       </div><!-- /.container-fluid -->

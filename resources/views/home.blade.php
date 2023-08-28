@@ -138,7 +138,7 @@
       </div>
       <div class="col-lg-4 col-8">
         <!-- small box -->
-        <div class="small-box bg-info">
+        <div class="small-box bg-dark">
           <div class="inner">
             <h3>10</h3>
             <p>Laporan Arus Kas</p>
@@ -162,21 +162,6 @@
           <i class="fas fa-calculator"></i>
           </div>
           <a href="/laporanTotalKas" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
-      <!-- ./col -->
-      <div class="col-lg-4 col-8">
-        <!-- small box -->
-        <div class="small-box bg-dark">
-          <div class="inner">
-            <h3>12</h3>
-            <p>Master Tahun Anggaran</p>
-          </div>
-          <div class="icon">
-            <i class="far fa-calendar-alt"></i>
-          </div>
-          <a href="/tahun" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->

@@ -66,7 +66,7 @@
               <div class="form-group row">
                 <label for="kas" class="col-sm-2 col-form-label">Kas:</label>
                  <div class="col-sm-10">
-                 <select class="custom-select form-control-border" id="kas" name="kas" required>
+                 <select class="form-control" id="kas" name="kas" required>
                     @foreach ($dropdownOptionsKas as $option)
                     <option value="{{ $option->ID}}">{{ $option->NAMA_KAS}}</option>
                     @endforeach

@@ -28,16 +28,24 @@ class RabController extends Controller
         $user = Auth::user();
 
         $idUser = $user->id;
-        $idTahunAjaran = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
+        $idTahunAjaran = $request->input('tahun');
+
+        //echo dd($idTahunAjaran);
+        //$idTahunAjaran = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
+        $tahun = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_DATA(?)', [$idUser]);
+        $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran, $idUser]);
+
+        //echo dd($tahun);
 
         //echo dd($idTahunAjaran[0]->ID);
+        $dropdownsOptionsTahun = [];
+        foreach ($tahun as $result) {
+            // Assuming you have a property named NAMA_KAS in the results
+            $dropdownOptionsTahun[] = $result;
+        }
 
-        // Call the stored procedure and fetch the data
-        $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran[0]->ID, $idUser]);
-
-        return view('rab', ['user' => $user, 'data' => $data]);
+        return view('rab', ['user' => $user, 'data' => $data, 'tahun' => $tahun, 'dropdownOptionsTahun' => $dropdownOptionsTahun,]);
     }
-
 
     public function update(Request $request)
     {

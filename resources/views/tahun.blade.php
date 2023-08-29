@@ -18,6 +18,12 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">MASTER TAHUN ANGGARAN</h3>
+            <form method="post" action="{{ route('tahun.tutup') }}">
+                @csrf
+                <input type="hidden" name="userId" value="{{ $user->ID }}">
+                <button type="submit" class="btn btn-danger form-control float-right" data-toggle="modal" data-target="#myModal" style="width: 120px; border-radius: 20px; color: #FFF;">
+                  Tutup</button>
+            </form>
           </div>
           <!-- /.card-header -->
           <div class="card-body">

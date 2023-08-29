@@ -43,7 +43,8 @@
 
   <!-- SweetAlert JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
-  <script src="link-ke-sweetalert.min.js"></script>
+  <!-- <script src="link-ke-sweetalert.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -86,6 +87,7 @@
     .swal-custom-size {
       max-width: 100px;
     }
+    
   </style>
 
 </head>
@@ -303,6 +305,14 @@
                   </a>
                 </li>
               </ul>
+            </li>
+            <li class="nav-item">
+            <a href="{{ asset('/ubah') }}" class="nav-link {{ Request::is('ubah') ? 'active' : '' }}">
+              <i class="fas fa-edit"></i>
+                <p>
+                  Ubah Password
+                </p>
+              </a>
             </li>
         </nav>
         <!-- /.sidebar-menu -->

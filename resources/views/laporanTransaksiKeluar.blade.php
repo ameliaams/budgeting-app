@@ -68,7 +68,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($results as $d)
+            @foreach ($paginator as $d)
             <tr>
               <td>{{ isset($d->ID) ? $d->ID : '' }}</td>
               <td>{{ isset($d->ID_COA) ? $d->ID_COA : '' }}</td>
@@ -109,34 +109,22 @@
                       if (result.isConfirmed) {
                         // Jika konfirmasi "Ya" di-klik, submit form untuk menghapus data
                         event.target.closest('form').submit();
+                        // Display a simple success message after successful submission
+                        Swal.fire({
+                                title: 'Berhasil!',
+                                text: 'Data berhasil dihapus.',
+                                icon: 'success'
+                              });
                       }
                     });
                   }
                 </script>
 
-                <!-- Check for delete success and display the success message , masih tidak muncul-->
-                @if(session('success'))
-                <script>
-                  Swal.fire({
-                    title: "Berhasil!",
-                    text: "{{ session('success') }}",
-                    icon: "success",
-                    buttons: {
-                      confirm: {
-                        text: "OK",
-                        value: true,
-                        className: "btn btn-success"
-                      }
-                    }
-                  });
-                </script>
-                @endif
-
                 <!-- FORM UPDATE LAPORAN TRANSAKSI KELUAR -->
                 <div class="modal fade" id="myModal{{ $d->ID }}">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
-                      <form method="post" action="{{ route('laporanTransaksiKeluar.update', $d->ID) }}">
+                      <form id="myForm{{ $d->ID }}" method="post" action="{{ route('laporanTransaksiKeluar.update', $d->ID) }}">
                         @csrf
                         @method('PUT')
                         <div class="modal-header">
@@ -188,29 +176,42 @@
                           </div>
                         </div>
                         <div class="modal-footer">
-                        <button type="submit" id="saveButtonUniqueID" class="btn form-control float-right SaveButton" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
-                          <i class="fa-solid fa-floppy-disk"></i> Simpan
-                        </button>
-                      </div>
+                          <button type="submit" id="saveButtonUniqueID{{ $d->ID }}" class="btn form-control float-right SaveButton" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan
+                          </button>
+                        </div>
                       </form>
 
-                      <!-- Check for delete success and display the success message , masih tidak muncul-->
-                @if(session('success'))
-                <script>
-                  Swal.fire({
-                    title: "Berhasil!",
-                    text: "{{ session('success') }}",
-                    icon: "success",
-                    buttons: {
-                      confirm: {
-                        text: "OK",
-                        value: true,
-                        className: "btn btn-success"
-                      }
-                    }
-                  });
-                </script>
-                @endif
+                     <!-- JavaScript SweetAlert -->
+                     <script>
+                        document.getElementById('saveButtonUniqueID{{ $d->ID }}').addEventListener('click', function(event) {
+                          event.preventDefault();
+
+                          // Display SweetAlert for confirmation
+                          Swal.fire({
+                            title: 'Konfirmasi',
+                            text: 'Anda yakin ingin menyimpan data?',
+                            icon: 'question',
+                            showCancelButton: true,
+                            confirmButtonColor: '#4169E1',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Ya, simpan',
+                            cancelButtonText: 'Batal'
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              // If confirmed, submit the form
+                              document.getElementById('myForm{{ $d->ID }}').submit();
+
+                              // Display a simple success message after successful submission
+                              Swal.fire({
+                                title: 'Berhasil!',
+                                text: 'Data berhasil disimpan.',
+                                icon: 'success'
+                              });
+                            }
+                          });
+                        });
+                      </script>
                       </div>
                     </div>
                   </div>
@@ -221,15 +222,9 @@
           </table>
         </div>
         <!-- /.card-body -->
-        <div class="card-footer clearfix">
-          <ul class="pagination pagination-sm m-0 float-right">
-            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-          </ul>
-        </div>
+        <div class="pagination">
+        {{ $paginator->appends(['tanggalA' => $IN_TANGGAL_AWAL, 'tanggalAK' => $IN_TANGGAL_AKHIR])->links() }}
+</div>
       </div>
       <!-- /.card -->
     </div>

@@ -36,6 +36,7 @@ Route::post('/rab', [App\Http\Controllers\RabController::class, 'sync'])->name('
 Route::post('/rab/update', [App\Http\Controllers\RabController::class, 'update'])->name('rab.update');
 
 Route::get('/tahun', [App\Http\Controllers\TahunAnggaranController::class, 'index'])->name('tahun.index');
+Route::post('/tahun/tutup', [App\Http\Controllers\TahunAnggaranController::class, 'tutup'])->name('tahun.tutup');
 
 Route::get('/kas', [App\Http\Controllers\kasController::class, 'index'])->name('kas.index');
 Route::post('/kas/add', [App\Http\Controllers\kasController::class, 'addData'])->name('kas.add');
@@ -68,3 +69,6 @@ Route::get('/arusKas/cetak', [App\Http\Controllers\arusKasController::class, 'ce
 
 Route::get('/laporanTotalKas', [App\Http\Controllers\totalKasController::class, 'index'])->name('laporanTotalKas.index');
 Route::get('/laporanTotalKas/cetak', [App\Http\Controllers\totalKasController::class, 'cetak'])->name('laporanTotal.cetak');
+
+//ubah password
+Route::get('/ubah', [App\Http\Controllers\ubahController::class, 'index'])->name('ubah.index');

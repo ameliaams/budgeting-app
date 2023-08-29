@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use PDF;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Paginator;
+
 
 class LaporanController extends Controller
 {
@@ -17,28 +21,43 @@ class LaporanController extends Controller
     }
 
     public function index(Request $request)
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
+    $idUser = $user->id;
+    $idTahunAjaran = $request->input('tahun');
 
-        $idUser = $user->id;
-        $idTahunAjaran = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
-        $laporan = DB::select('CALL 9_MASTER_RAB_GET_DATA_REALISASI(?, ?)', [$idTahunAjaran[0]->ID, $idUser]);
+    $results = DB::select('CALL 9_MASTER_RAB_GET_DATA_REALISASI(?, ?)', [$idTahunAjaran, $idUser]);
 
-        return view('laporan', ['user' => $user, 'idTahunAjaran' => $idTahunAjaran, 'laporan' => $laporan]);
+    $tahun = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_DATA(?)', [$idUser]);
+    $dropdownOptionsTahun = [];
+    foreach ($tahun as $result) {
+        $dropdownOptionsTahun[] = $result;
     }
     
-    public function cetak()
+    return view('laporan', [
+        'user' => $user,
+        'idTahunAjaran' => $idTahunAjaran,
+        'results' => $results,
+        'dropdownOptionsTahun' => $dropdownOptionsTahun
+    ]);
+}
+
+    public function cetak(Request $request)
     {
         $user = Auth::user();
         $idUser = $user->id;
-        $idTahunAjaran = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
-        $laporan = DB::select('CALL 9_MASTER_RAB_GET_DATA_REALISASI(?, ?)', [$idTahunAjaran[0]->ID, $idUser]);
+        $idTahunAjaran = $request->input('tahun');
+        
+        $laporan = DB::select('CALL 9_MASTER_RAB_GET_DATA_REALISASI(?, ?)', [$idTahunAjaran, $idUser]);
+        $tahun = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_DATA(?)', [$idUser]);
+
 
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Arial');
         $dompdf = new Dompdf($pdfOptions);
 
         $pdf = PDF::loadView('pdf.cetak', ['user' => $user, 'idTahunAjaran' => $idTahunAjaran, 'laporan' => $laporan]);
+
         return $pdf->stream();
     }
 }

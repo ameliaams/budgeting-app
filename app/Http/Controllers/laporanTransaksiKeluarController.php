@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use PDF;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 class laporanTransaksiKeluarController extends Controller
 {
@@ -25,24 +28,40 @@ class laporanTransaksiKeluarController extends Controller
         $IN_TANGGAL_AKHIR = $request->input('tanggalAK');
         $IN_ID_USER = auth()->user()->id;
 
-        // Call Store Procedure
-        $results = DB::select('CALL 9_TRANSAKSI_KAS_KELUAR_GET_DATA_BYTANGGAL(?, ?, ?)', [
+        $page = $request->query('page', 1);
+        $perPage = 10;
+
+        $results = DB::select('CALL 9_TRANSAKSI_KAS_KELUAR_GET_DATA_BYTANGGAL (?, ?, ?)', [
             $IN_TANGGAL_AWAL,
             $IN_TANGGAL_AKHIR,
-            $IN_ID_USER,
+            $IN_ID_USER
         ]);
-        // Call the second stored procedure
+
+        $resultsCollection = collect($results); 
+
+        $total = $resultsCollection->count();
+
+        $paginator = new LengthAwarePaginator(
+            $resultsCollection->forPage($page, $perPage),
+            $total,
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        $carbon_tgl_awal = Carbon::parse($IN_TANGGAL_AWAL);
+        $carbon_tgl_akhir = Carbon::parse($IN_TANGGAL_AKHIR);
+
         $resultsKas = DB::select('CALL 9_master_kas_get_data(?)', [$IN_ID_USER]);
 
-        $dropdownOptionsKas = [];
-        foreach ($resultsKas as $result) {
-            $dropdownOptionsKas[] = $result;
-        }
+        $dropdownOptionsKas = collect($resultsKas); 
 
         return view('laporanTransaksiKeluar', [
             'user' => $user,
-            'results' => $results,
             'dropdownOptionsKas' => $dropdownOptionsKas,
+            'paginator' => $paginator, 
+            'IN_TANGGAL_AWAL' => $IN_TANGGAL_AWAL,
+            'IN_TANGGAL_AKHIR' => $IN_TANGGAL_AKHIR
         ]);
     }
 

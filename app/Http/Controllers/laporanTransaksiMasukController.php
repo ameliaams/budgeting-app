@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use PDF;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 
 class laporanTransaksiMasukController extends Controller
@@ -27,31 +29,43 @@ class laporanTransaksiMasukController extends Controller
         $IN_TANGGAL_AKHIR = $request->input('tanggalAK');
         $IN_ID_USER = auth()->user()->id;
 
-        // Call store procedure
-        $results = DB::select('CALL 9_TRANSAKSI_KAS_MASUK_GET_DATA_BYTANGGAL(?, ?, ?)', [
+        $page = $request->query('page', 1);
+        $perPage = 10;
+
+        $results = DB::select('CALL 9_TRANSAKSI_KAS_MASUK_GET_DATA_BYTANGGAL (?, ?, ?)', [
             $IN_TANGGAL_AWAL,
             $IN_TANGGAL_AKHIR,
-            $IN_ID_USER,
+            $IN_ID_USER
         ]);
+
+        $resultsCollection = collect($results); 
+
+        $total = $resultsCollection->count();
+
+        $paginator = new LengthAwarePaginator(
+            $resultsCollection->forPage($page, $perPage),
+            $total,
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
 
         $carbon_tgl_awal = Carbon::parse($IN_TANGGAL_AWAL);
         $carbon_tgl_akhir = Carbon::parse($IN_TANGGAL_AKHIR);
 
         $resultsKas = DB::select('CALL 9_master_kas_get_data(?)', [$IN_ID_USER]);
 
-        $dropdownOptionsKas = [];
-        foreach ($resultsKas as $result) {
-            $dropdownOptionsKas[] = $result;
-        }
+        $dropdownOptionsKas = collect($resultsKas); 
 
         return view('laporanTransaksiMasuk', [
             'user' => $user,
-            'results' => $results,
-            'tgl_awal' => $carbon_tgl_awal,
-            'tgl_akhir' => $carbon_tgl_akhir,
             'dropdownOptionsKas' => $dropdownOptionsKas,
+            'paginator' => $paginator, 
+            'IN_TANGGAL_AWAL' => $IN_TANGGAL_AWAL,
+            'IN_TANGGAL_AKHIR' => $IN_TANGGAL_AKHIR
         ]);
     }
+    
     public function deleteData(Request $request, $id)
     {
         $user = Auth::user();

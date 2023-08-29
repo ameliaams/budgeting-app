@@ -87,6 +87,7 @@
     .swal-custom-size {
       max-width: 100px;
     }
+    
   </style>
 
 </head>
@@ -304,6 +305,14 @@
                   </a>
                 </li>
               </ul>
+            </li>
+            <li class="nav-item">
+            <a href="{{ asset('/ubah') }}" class="nav-link {{ Request::is('ubah') ? 'active' : '' }}">
+              <i class="fas fa-edit"></i>
+                <p>
+                  Ubah Password
+                </p>
+              </a>
             </li>
         </nav>
         <!-- /.sidebar-menu -->

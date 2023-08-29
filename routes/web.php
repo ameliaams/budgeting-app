@@ -69,3 +69,6 @@ Route::get('/arusKas/cetak', [App\Http\Controllers\arusKasController::class, 'ce
 
 Route::get('/laporanTotalKas', [App\Http\Controllers\totalKasController::class, 'index'])->name('laporanTotalKas.index');
 Route::get('/laporanTotalKas/cetak', [App\Http\Controllers\totalKasController::class, 'cetak'])->name('laporanTotal.cetak');
+
+//ubah password
+Route::get('/ubah', [App\Http\Controllers\ubahController::class, 'index'])->name('ubah.index');

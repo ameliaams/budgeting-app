@@ -68,7 +68,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($results as $d)
+            @foreach ($paginator as $d)
             <tr>
               <td>{{ isset($d->ID) ? $d->ID : '' }}</td>
               <td>{{ isset($d->ID_COA) ? $d->ID_COA : '' }}</td>
@@ -222,15 +222,9 @@
           </table>
         </div>
         <!-- /.card-body -->
-        <div class="card-footer clearfix">
-          <ul class="pagination pagination-sm m-0 float-right">
-            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-          </ul>
-        </div>
+        <div class="pagination">
+        {{ $paginator->appends(['tanggalA' => $IN_TANGGAL_AWAL, 'tanggalAK' => $IN_TANGGAL_AKHIR])->links() }}
+</div>
       </div>
       <!-- /.card -->
     </div>

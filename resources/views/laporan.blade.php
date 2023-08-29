@@ -74,9 +74,6 @@
             </table>
           </div>
           <!-- /.card-body -->
-          <div class="card-footer clearfix">
-    {{ $laporan->appends(['tahun' => $idTahunAjaran])->links() }}
-</div>
         </div>
         <!-- /.card -->
       </div><!-- /.container-fluid -->

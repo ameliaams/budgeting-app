@@ -16,7 +16,7 @@
       <!-- left column -->
       <div class="col-md-8 mx-auto">
         <!-- general form elements -->
-        <div class="card card-danger">
+        <div class="card card-warning">
           <div class="card-header">
             <h3 class="card-title">Laporan Total Kas</h3>
           </div>
@@ -34,7 +34,7 @@
                 </div>
               </div>
               <div class="card-footer text-center">
-                <button type="submit" class="btn btn-danger w-100">Cari</button>
+                <button type="submit" class="btn btn-warning w-100">Cari</button>
               </div>
             </div>
           </div>

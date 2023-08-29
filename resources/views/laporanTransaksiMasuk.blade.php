@@ -223,8 +223,16 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer clearfix">
-        {{ $paginator->appends(['tanggalA' => $IN_TANGGAL_AWAL, 'tanggalAK' => $IN_TANGGAL_AKHIR])->links() }}
-</div>
+          <ul class="pagination pagination-sm m-0 float-right">
+              <li class="page-item"><a class="page-link" href="{{ $paginator->previousPageUrl() }}"><i class="fas fa-chevron-left"></i></a></li>
+              @for ($i = 1; $i <= $paginator->lastPage(); $i++)
+                  <li class="page-item{{ $paginator->currentPage() === $i ? ' active' : '' }}">
+                      <a class="page-link" href="{{ $paginator->url($i) }}">{{ $i }}</a>
+                  </li>
+              @endfor
+              <li class="page-item"><a class="page-link" href="{{ $paginator->nextPageUrl() }}"><i class="fas fa-chevron-right"></i></a></li>
+          </ul>
+      </div>
       </div>
       <!-- /.card -->
     </div>

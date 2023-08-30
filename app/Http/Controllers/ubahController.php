@@ -16,21 +16,19 @@ class ubahController extends Controller
 
     public function index(Request $request)
     {
-        $user = Auth::user();
-        $oldPassword = $request->input('passwordLama');
-        $newPassword = $request->input('passwordBaru');
-    
-        $tableExists = DB::table('information_schema.tables')
-                ->where('table_schema', '=', 'budgeting_db')
-                ->where('table_name', '=', 'Users')
-                ->exists();
+        $id_user = auth()->user()->id;
+        $username = auth()->user()->username;
+        $newPassword = $request->input('new_password');
 
-        if ($tableExists) {
-            // Call the stored procedure
-            DB::statement("CALL Ubah_Password('$username', '$oldPassword', '$newPassword')");
-        } else {
-            // Handle the absence of the table
-        }
+        // Call the stored procedure using the DB facade
+        $result = DB::select('CALL Ubah_Password(?, ?, ?)', [
+            $id_user,
+            $username,
+            $newPassword
+        ]);
+
+        // The $result variable contains the result from the stored procedure
+        // You can check the result and take appropriate actions
 
         return view('ubah', ['user' => $user]);
     }

@@ -26,7 +26,7 @@ class LaporanController extends Controller
     $idUser = $user->id;
     $idTahunAjaran = $request->input('tahun');
 
-    $results = DB::select('CALL 9_MASTER_RAB_GET_DATA_REALISASI(?, ?)', [$idTahunAjaran, $idUser]);
+    $laporan = DB::select('CALL 9_MASTER_RAB_GET_DATA_REALISASI(?, ?)', [$idTahunAjaran, $idUser]);
 
     $tahun = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_DATA(?)', [$idUser]);
     $dropdownOptionsTahun = [];
@@ -37,7 +37,7 @@ class LaporanController extends Controller
     return view('laporan', [
         'user' => $user,
         'idTahunAjaran' => $idTahunAjaran,
-        'results' => $results,
+        'laporan' => $laporan,
         'dropdownOptionsTahun' => $dropdownOptionsTahun
     ]);
 }

@@ -40,7 +40,6 @@ class laporanTransaksiKeluarController extends Controller
         $resultsCollection = collect($results); 
 
         $total = $resultsCollection->count();
-
         $paginator = new LengthAwarePaginator(
             $resultsCollection->forPage($page, $perPage),
             $total,

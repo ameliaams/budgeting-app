@@ -34,6 +34,9 @@ Route::put('coa/{id}/update', [App\Http\Controllers\CoaController::class, 'editD
 Route::get('/rab', [App\Http\Controllers\RabController::class, 'index'])->name('rab.index');
 Route::post('/rab', [App\Http\Controllers\RabController::class, 'sync'])->name('rab.sync');
 Route::post('/rab/update', [App\Http\Controllers\RabController::class, 'update'])->name('rab.update');
+Route::post('/rab', function () {
+    return redirect()->back();
+})->name('refresh');
 
 Route::get('/tahun', [App\Http\Controllers\TahunAnggaranController::class, 'index'])->name('tahun.index');
 Route::post('/tahun/tutup', [App\Http\Controllers\TahunAnggaranController::class, 'tutup'])->name('tahun.tutup');

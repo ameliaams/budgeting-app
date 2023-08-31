@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 
 class ubahController extends Controller
@@ -18,19 +19,25 @@ class ubahController extends Controller
     {
         $id_user = auth()->user()->id;
         $username = auth()->user()->username;
-        $newPassword = $request->input('new_password');
-
+        $newPassword =   Hash::make($request->input('passwordBaru')) ;
+        $oldPassword =   Hash::make($request->input('passwordLama')) ;
         // Call the stored procedure using the DB facade
-        $result = DB::select('CALL Ubah_Password(?, ?, ?)', [
+
+        $tes = "CALL Ubah_Password(" . $id_user . ", " . $username . ", " . $newPassword . ", " . $oldPassword . ")";
+        //echo dd($tes);
+        $result = DB::select('CALL Ubah_Password(?, ?, ?, ?)', [
             $id_user,
             $username,
-            $newPassword
+            $newPassword,
+            $oldPassword
         ]);
+
+        
 
         // The $result variable contains the result from the stored procedure
         // You can check the result and take appropriate actions
 
-        return view('ubah', ['user' => $user]);
+        return view('ubah', ['result' => $result]);
     }
 }
 

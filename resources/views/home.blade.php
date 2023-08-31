@@ -166,8 +166,7 @@
       </div>
       <!-- ./col -->
        <!-- ./col -->
-       <div class="col-lg-4 col-8">
-        <!-- small box -->
+       <!-- <div class="col-lg-4 col-8">
         <div class="small-box bg-dark">
           <div class="inner">
             <h3>12</h3>
@@ -179,7 +178,7 @@
           </div>
           <a href="/ubah" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
-      </div>
+      </div> -->
       <!-- ./col -->
     </div>
     <!-- /.row -->

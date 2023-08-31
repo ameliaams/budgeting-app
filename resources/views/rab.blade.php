@@ -27,30 +27,31 @@
                 <label for="tahun" class="col-sm-2 col-form-label">Tahun</label>
                 <div class="col-sm-10">
                 <select class="form-control" id="tahun" name="tahun">
-                @foreach ($dropdownOptionsTahun as $option)
-                    <option value="{{ $option->ID }}">{{ $option->NAMA_BULAN }} - {{ $option->TAHUN }}</option>
-                @endforeach
-                </select>
+                  @foreach ($dropdownOptionsTahun as $option)
+                      <option value="{{ $option->ID }}"
+                      @if ($option->ID == old('tahun', $option->ID))
+                          selected="selected"
+                      @endif>
+                      {{ $option->NAMA_BULAN }} - {{ $option->TAHUN }}</option>
+                  @endforeach
+                  </select>
                 </div>
               </div>
               <div class="card-footer text-center">
                 <button type="submit" class="btn btn-warning w-100">Cari</button>
               </div>
             </div>
-          </form>
         </div>
       </div>
       <div class="col-12">
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">MASTER RAB</h3>
-            <form method="post" action="{{ route('rab.sync') }}">
-              @csrf
-              <button type="submit" id="syncButton" class="btn form-control float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
-                <i class="fas fa-arrows-rotate"></i> Sync
-              </button>
-            </form>
+            <button id="reloadButton" class="btn btn-primary float-right">
+    Sync
+</button>
           </div>
+          </form>
           <!-- /.card-header -->
           <div class="card-body">
             <table class="table table-bordered">
@@ -77,15 +78,6 @@
             </table>
           </div>
           <!-- /.card-body -->
-          <div class="card-footer clearfix">
-            <ul class="pagination pagination-sm m-0 float-right">
-              <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-            </ul>
-          </div>
         </div>
         <!-- /.card -->
       </div><!-- /.container-fluid -->
@@ -190,5 +182,24 @@
         console.error('Error:', error);
       });
   }
+
+  // reload button
+  const tahunSelect = document.getElementById('tahun');
+    const reloadButton = document.getElementById('reloadButton');
+
+    tahunSelect.addEventListener('change', function () {
+        const selectedTahun = tahunSelect.value;
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('tahun', selectedTahun);
+        
+        // Update the URL and reload the page
+        window.location.href = currentUrl;
+    });
+
+    reloadButton.addEventListener('click', function () {
+        // Reload the page
+        window.location.reload();
+    });
 </script>
+
 @endsection

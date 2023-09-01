@@ -24,8 +24,9 @@ class LaporanController extends Controller
 {
     $user = Auth::user();
     $idUser = $user->id;
-    $idTahunAjaran = $request->input('tahun');
 
+    $selectedTahun = session('selected_tahun', null);
+    $idTahunAjaran = $request->input('tahun', $selectedTahun);
     $laporan = DB::select('CALL 9_MASTER_RAB_GET_DATA_REALISASI(?, ?)', [$idTahunAjaran, $idUser]);
 
     $tahun = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_DATA(?)', [$idUser]);
@@ -33,6 +34,7 @@ class LaporanController extends Controller
     foreach ($tahun as $result) {
         $dropdownOptionsTahun[] = $result;
     }
+    session(['selected_tahun' => $idTahunAjaran]);
     
     return view('laporan', [
         'user' => $user,

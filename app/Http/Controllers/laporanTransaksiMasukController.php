@@ -83,7 +83,9 @@ class laporanTransaksiMasukController extends Controller
 
 
             $update = DB::statement("CALL 9_KAS_UPDATE_MASTER_RAB(?, ?, ?)", [$id, $idTahunAjaran, $idUser]);
-
+            
+            $page = $request->query('page', 1);
+            $perPage = 10;
             // After the update, retrieve the data based on the input dates
             $results = DB::select('CALL 9_TRANSAKSI_KAS_MASUK_GET_DATA_BYTANGGAL(?, ?, ?)', [
                 $IN_TANGGAL_AWAL,
@@ -91,11 +93,24 @@ class laporanTransaksiMasukController extends Controller
                 $idUser,
             ]);
 
+            $resultsCollection = collect($results); 
+
+            $total = $resultsCollection->count();
+
+            $paginator = new LengthAwarePaginator(
+                $resultsCollection->forPage($page, $perPage),
+                $total,
+                $perPage,
+                $page,
+                ['path' => $request->url(), 'query' => $request->query()]
+            );
+
             return view('laporanTransaksiMasuk', [
                 'user' => $user,
                 'results' => $results,
-                'tgl_awal' => $IN_TANGGAL_AWAL,
-                'tgl_akhir' => $IN_TANGGAL_AKHIR,
+                'paginator' => $paginator, 
+                'IN_TANGGAL_AWAL' => $IN_TANGGAL_AWAL,
+                'IN_TANGGAL_AKHIR' => $IN_TANGGAL_AKHIR
             ]);
         } else {
             // Example: After successful deletion

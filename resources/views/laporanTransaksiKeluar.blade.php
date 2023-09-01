@@ -26,13 +26,13 @@
               <div class="form-group row">
                 <label for="tanggal" class="col-sm-2 col-form-label">Tanggal Awal</label>
                 <div class="col-sm-10">
-                  <input type="date" class="form-control" id="tanggalA" name="tanggalA" value="{{ old('tanggalA') }}" required>
+                  <input type="date" class="form-control" id="tanggalA" name="tanggalA" value="{{ old('tanggalA', request('tanggalA')) }}" required>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="tanggal" class="col-sm-2 col-form-label">Tanggal Akhir</label>
                 <div class="col-sm-10">
-                  <input type="date" class="form-control" id="tanggalAK" name="tanggalAK" value="{{ old('tanggalAK') }}" required>
+                  <input type="date" class="form-control" id="tanggalAK" name="tanggalAK" value="{{ old('tanggalAK', request('tanggalAK')) }}" required>
                 </div>
               </div>
               <div class="card-footer text-center">
@@ -58,7 +58,6 @@
           <thead style="text-align: center;">
             <tr>
               <th>ID</th>
-              <th>ID COA</th>
               <th>KODE_KWITANSI</th>
               <th>TANGGAL</th>
               <th>NAMA COA</th>
@@ -71,7 +70,6 @@
             @foreach ($paginator as $d)
             <tr>
               <td>{{ isset($d->ID) ? $d->ID : '' }}</td>
-              <td>{{ isset($d->ID_COA) ? $d->ID_COA : '' }}</td>
               <td>{{ isset($d->KODE_KWITANSI) ? $d->KODE_KWITANSI : '' }}</td>
               <td>{{ isset($d->TANGGAL) ? $d->TANGGAL : '' }}</td>
               <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>

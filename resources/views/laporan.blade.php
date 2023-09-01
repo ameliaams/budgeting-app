@@ -28,7 +28,11 @@
                 <div class="col-sm-10">
                 <select class="form-control" id="tahun" name="tahun">
                 @foreach ($dropdownOptionsTahun as $option)
-                    <option value="{{ $option->ID }}">{{ $option->NAMA_BULAN }} - {{ $option->TAHUN }}</option>
+                    <option value="{{ $option->ID }}"
+                      @if ($option->ID == session('selected_tahun'))
+                            selected="selected"
+                        @endif>
+                        {{ $option->NAMA_BULAN }} - {{ $option->TAHUN }}</option>
                 @endforeach
                 </select>
                 </div>

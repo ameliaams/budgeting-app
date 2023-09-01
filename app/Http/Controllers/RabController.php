@@ -24,27 +24,29 @@ class RabController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(Request $request)
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
+    $idUser = $user->id;
+    
+    $selectedTahun = session('selected_tahun', null);
+    $idTahunAjaran = $request->input('tahun', $selectedTahun);
+    $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran, $idUser]);
+    $tahun = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_DATA(?)', [$idUser]);
 
-        $idUser = $user->id;
-        $idTahunAjaran = $request->input('tahun');
-
-        //echo dd($idTahunAjaran);
-        //$idTahunAjaran = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
-        $tahun = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_DATA(?)', [$idUser]);
-        $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran, $idUser]);
-
-        //echo dd($tahun);
-
-        //echo dd($idTahunAjaran[0]->ID);
-        $dropdownOptionsTahun = [];
-        foreach ($tahun as $result) {
-            $dropdownOptionsTahun[] = $result;
-        }
-
-        return view('rab', ['user' => $user, 'data' => $data, 'tahun' => $tahun, 'dropdownOptionsTahun' => $dropdownOptionsTahun]);
+    $dropdownOptionsTahun = [];
+    foreach ($tahun as $result) {
+        $dropdownOptionsTahun[] = $result;
     }
+
+    session(['selected_tahun' => $idTahunAjaran]);
+    return view('rab', [
+        'user' => $user,
+        'data' => $data,
+        'tahun' => $tahun,
+        'dropdownOptionsTahun' => $dropdownOptionsTahun,
+        'selectedTahun' => $idTahunAjaran, // Anda dapat menggunakan $selectedTahun dalam view
+    ]);
+}
 
     public function update(Request $request)
     {

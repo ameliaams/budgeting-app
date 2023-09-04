@@ -24,28 +24,29 @@ class RabController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(Request $request)
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
+    $idUser = $user->id;
+    
+    $selectedTahun = session('selected_tahun', null);
+    $idTahunAjaran = $request->input('tahun', $selectedTahun);
+    $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran, $idUser]);
+    $tahun = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_DATA(?)', [$idUser]);
 
-        $idUser = $user->id;
-        $idTahunAjaran = $request->input('tahun');
-
-        //echo dd($idTahunAjaran);
-        //$idTahunAjaran = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
-        $tahun = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_DATA(?)', [$idUser]);
-        $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran, $idUser]);
-
-        //echo dd($tahun);
-
-        //echo dd($idTahunAjaran[0]->ID);
-        $dropdownsOptionsTahun = [];
-        foreach ($tahun as $result) {
-            // Assuming you have a property named NAMA_KAS in the results
-            $dropdownOptionsTahun[] = $result;
-        }
-
-        return view('rab', ['user' => $user, 'data' => $data, 'tahun' => $tahun, 'dropdownOptionsTahun' => $dropdownOptionsTahun,]);
+    $dropdownOptionsTahun = [];
+    foreach ($tahun as $result) {
+        $dropdownOptionsTahun[] = $result;
     }
+
+    session(['selected_tahun' => $idTahunAjaran]);
+    return view('rab', [
+        'user' => $user,
+        'data' => $data,
+        'tahun' => $tahun,
+        'dropdownOptionsTahun' => $dropdownOptionsTahun,
+        'selectedTahun' => $idTahunAjaran, // Anda dapat menggunakan $selectedTahun dalam view
+    ]);
+}
 
     public function update(Request $request)
     {
@@ -84,11 +85,23 @@ class RabController extends Controller
         $user = Auth::user();
 
         $idUser = $user->id;
-        $idTahunAjaran = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
+        $idTahunAjaran = $request->input('tahun');
         // Call the stored procedure and fetch the data
+        $tes = "CALL UPD_TOTAL_NOMINAL_RAB_ALL(" . $idUser . ", " . $idTahunAjaran[0]->ID . ")";
+
+        echo dd($tes);
+
         $data = DB::select('CALL UPD_TOTAL_NOMINAL_RAB_ALL(?, ?)', [$idUser, $idTahunAjaran[0]->ID]);
         $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran[0]->ID, $idUser]);
+        $tahun = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_DATA(?)', [$idUser]);
 
-        return view('rab', ['user' => $user, 'data' => $data]);
+        $dropdownOptionsTahun = [];
+        foreach ($tahun as $result) {
+            // Assuming you have a property named NAMA_KAS in the results
+            $dropdownOptionsTahun[] = $result;
+        }
+
+        // echo dd($dropdownOptionsTahun)
+        return view('rab', ['user' => $user, 'data' => $data, 'tahun' => $tahun, 'dropdownOptionsTahun' => $dropdownOptionsTahun,]);
     }
 }

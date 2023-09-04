@@ -32,6 +32,7 @@ class CoaController extends Controller
         return view('coa', [ 
             'user' => $user,
             'data' => $data,
+            '$resultsCoa' => $resultsCoa,
             'dropdownOptionsCoa' => $dropdownOptionsCoa
         ]);
     }
@@ -88,7 +89,8 @@ class CoaController extends Controller
             $id, $inKodeLevel1, $level, $namaCoa, $keterangan, $idUser
         ]);
 
-        if ($result) {
+        if (!empty($result)) {
+            $dta = $resultsCoa[0];
             return redirect()->route('coa.index')->with('success', 'Data Berhasil Disimpan!');
         } else {
             // Operation failed or record with the given ID not found

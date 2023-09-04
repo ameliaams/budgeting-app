@@ -28,7 +28,7 @@
             <div class="modal fade" id="myModal">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                  <form method="post" action="{{ route('kas.add') }}">
+                <form id="myForm" method="post" action="{{ route('kas.add') }}">
                     @csrf
                     <div class="modal-header">
                       <h4 class="modal-title">Tambah Data KAS</h4>
@@ -58,7 +58,26 @@
                           <i class="fa-solid fa-floppy-disk"></i> Simpan
                         </button>
                       </div>
-                      </form>
+                    </form>
+
+                  <!-- ... bagian JavaScript SweetAlert ... -->
+                  <script>
+                  document.getElementById('SaveButton').addEventListener('click', function(event) {
+                    event.preventDefault();
+
+                    // Display SweetAlert for success
+                    Swal.fire({
+                      title: 'Berhasil!',
+                      text: 'Data berhasil disimpan.',
+                      icon: 'success'
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        // If confirmed, submit the form
+                        document.getElementById('myForm').submit();
+                      }
+                    });
+                  });
+                  </script>
                 </div>
               </div>
             </div>
@@ -123,8 +142,8 @@
                       });
                     }
                   </script>
-                  <!-- Check for delete success and display the success message , masih tidak muncul
-                        @if(session('success'))
+                  <!-- Check for delete success and display the success message , masih tidak muncul -->
+                        <!-- @if(session('success'))
                         <script>
                           Swal.fire({
                             title: "Berhasil!",
@@ -208,8 +227,7 @@
                           });
                         });
                       </script>
-
-                      
+  
                       </div>
                     </div>
                   </div>

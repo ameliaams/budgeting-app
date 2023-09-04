@@ -28,7 +28,7 @@
             <div class="modal fade" id="myModal">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                  <form method="post" action="{{ route('coa.add') }}">
+                  <form id="myForm" method="post" action="{{ route('coa.add') }}">
                     @csrf
                     <div class="modal-header">
                       <h4 class="modal-title">Tambah Data COA</h4>
@@ -38,7 +38,7 @@
                       <div class="form-group row">
                         <label for="kas" class="col-sm-2 col-form-label">Level 1</label>
                         <div class="col-sm-5">
-                          <select class="custom-select form-control-border" id="level" name="level" required>
+                        <select class="custom-select form-control-border" id="level" name="level" required>
                             @foreach ($dropdownOptionsCoa as $result)
                             <option value="{{ $result->ID }}">{{ $result->NAMA_COA }}</option>
                             @endforeach
@@ -56,6 +56,26 @@
                           <i class="fa-solid fa-floppy-disk"></i> Simpan
                         </button>
                       </div>
+                    </form>
+
+                  <!-- ... bagian JavaScript SweetAlert ... -->
+                  <script>
+                  document.getElementById('SaveButton').addEventListener('click', function(event) {
+                    event.preventDefault();
+
+                    // Display SweetAlert for success
+                    Swal.fire({
+                      title: 'Berhasil!',
+                      text: 'Data berhasil disimpan.',
+                      icon: 'success'
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        // If confirmed, submit the form
+                        document.getElementById('myForm').submit();
+                      }
+                    });
+                  });
+                  </script>
                   </form>
                 </div>
               </div>
@@ -113,27 +133,17 @@
                         if (result.isConfirmed) {
                           // Jika konfirmasi "Ya" di-klik, submit form untuk menghapus data
                           event.target.closest('form').submit();
+                          // Display a simple success message after successful submission
+                        Swal.fire({
+                                title: 'Berhasil!',
+                                text: 'Data berhasil dihapus.',
+                                icon: 'success'
+                              });
                         }
                       });
                     }
                   </script>
-                  <!-- Check for delete success and display the success message , masih tidak muncul -->
-                        @if(session('success'))
-                        <script>
-                          Swal.fire({
-                            title: "Berhasil!",
-                            text: "{{ session('success') }}",
-                            icon: "success",
-                            buttons: {
-                              confirm: {
-                                text: "OK",
-                                value: true,
-                                className: "btn btn-success"
-                              }
-                            }
-                          });
-                        </script>
-                        @endif
+                  
                   <!-- FORM UPDATE COA -->
                   <div class="modal fade" id="myModal{{ $d->ID }}">
                     <div class="modal-dialog modal-dialog-centered">
@@ -146,18 +156,15 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                           </div>
                           <div class="modal-body">
-                            <div class="form-group row">
-                              <label for="kas" class="col-sm-3 col-form-label">Level 1</label>
-                              <div class="col-sm-8">
-                                <select class="custom-select form-control-border" id="level" name="level">
-                                  @foreach ($dropdownOptionsCoa as $result)
-                                  <option value="{{ $result->ID }}" {{ old('level') == $result->ID ? 'selected' : '' }}>
-                                    {{ $result->NAMA_COA }}
-                                  </option>
-                                  @endforeach
-                                </select>
+                              <div class="form-group row">
+                                <label for="nama_coa" class="col-sm-3 col-form-label">Level 1</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="level" name="level" 
+                                        value="{{ old('level', $d->KODE_LEVEL_1 === '' ? $d->NAMA_COA : $d->NAMA_COA . ' - ' . $d->KODE_LEVEL_1) }}" 
+                                        disabled 
+                                        required>
+                                </div>
                               </div>
-                            </div>
                             <div class="form-group row">
                               <label for="nama_coa" class="col-sm-3 col-form-label">Nama COA:</label>
                               <div class="col-sm-8">
@@ -211,17 +218,6 @@
             </tbody>
           </table>
         </div>
-        <!-- /.card-body -->
-        <div class="card-footer clearfix">
-          <ul class="pagination pagination-sm m-0 float-right">
-            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-          </ul>
-        </div>
-      </div>
       <!-- /.card -->
     </div>
   </div>

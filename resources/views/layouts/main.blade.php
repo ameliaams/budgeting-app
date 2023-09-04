@@ -161,14 +161,13 @@
           <div class="image">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png" class="img-circle elevation-2" alt="User Image">
           </div>
-          @if($user)
-          <div class="info">
-            <a class="d-block" style="font-weight: bold; font-size: 18px;">
-              {{ $user->username }}
-            </a>
-          </div>
+          @if(isset($user))
+              <div class="info">
+                  <a class="d-block" style="font-weight: bold; font-size: 18px;">
+                      {{ $user->username }}
+                  </a>
+              </div>
           @endif
-
         </div>
 
 
@@ -306,14 +305,14 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
             <a href="{{ asset('/ubah') }}" class="nav-link {{ Request::is('ubah') ? 'active' : '' }}">
               <i class="fas fa-edit"></i>
                 <p>
                   Ubah Password
                 </p>
               </a>
-            </li>
+            </li> -->
         </nav>
         <!-- /.sidebar-menu -->
       </div>
@@ -347,7 +346,7 @@
       <strong>Copyright &copy; 2023 <a href="#">Budgeting</a>.</strong>
       All rights reserved.
       <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 3.2.0
+        <b>Version</b> 1.0
       </div>
     </footer>
 

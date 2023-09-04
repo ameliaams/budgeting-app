@@ -27,30 +27,30 @@
                 <label for="tahun" class="col-sm-2 col-form-label">Tahun</label>
                 <div class="col-sm-10">
                 <select class="form-control" id="tahun" name="tahun">
-                @foreach ($dropdownOptionsTahun as $option)
-                    <option value="{{ $option->ID }}">{{ $option->NAMA_BULAN }} - {{ $option->TAHUN }}</option>
-                @endforeach
+                    @foreach ($dropdownOptionsTahun as $option)
+                        <option value="{{ $option->ID }}"
+                        @if ($option->ID == session('selected_tahun'))
+                            selected="selected"
+                        @endif>
+                        {{ $option->NAMA_BULAN }} - {{ $option->TAHUN }}</option>
+                    @endforeach
                 </select>
+
                 </div>
               </div>
               <div class="card-footer text-center">
                 <button type="submit" class="btn btn-warning w-100">Cari</button>
               </div>
             </div>
-          </form>
         </div>
       </div>
       <div class="col-12">
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">MASTER RAB</h3>
-            <form method="post" action="{{ route('rab.sync') }}">
-              @csrf
-              <button type="submit" id="syncButton" class="btn form-control float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
-                <i class="fas fa-arrows-rotate"></i> Sync
-              </button>
-            </form>
+            <button id="reloadButton" class="btn btn-primary float-right"><i class="fas fa-sync-alt"></i> Sync</button>
           </div>
+          </form>
           <!-- /.card-header -->
           <div class="card-body">
             <table class="table table-bordered">
@@ -77,15 +77,6 @@
             </table>
           </div>
           <!-- /.card-body -->
-          <div class="card-footer clearfix">
-            <ul class="pagination pagination-sm m-0 float-right">
-              <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-            </ul>
-          </div>
         </div>
         <!-- /.card -->
       </div><!-- /.container-fluid -->
@@ -97,6 +88,8 @@
     const editableCells = document.querySelectorAll('.editable');
 
     editableCells.forEach((cell) => {
+      let originalValue; // To store the original value of the cell
+      
       cell.addEventListener('dblclick', function() {
         // Check if the parent row has the 'level-one-row' class (LEVEL = 1)
         const isLevelOneRow = cell.closest('tr').classList.contains('level-one-row');
@@ -105,6 +98,7 @@
         if (!isLevelOneRow && !isLevelNull) {
           cell.contentEditable = true;
           cell.focus();
+          originalValue = cell.textContent; // Store the original value
         }
       });
 
@@ -121,8 +115,22 @@
           cell.contentEditable = false;
         }
       });
+
+      cell.addEventListener('blur', function() {
+        if (originalValue !== cell.textContent) {
+          const id = cell.getAttribute('data-id');
+          const column = cell.getAttribute('data-column');
+          const value = cell.textContent;
+
+          // Call the function to save the changes to the database using AJAX
+          saveData(id, column, value);
+        }
+
+        cell.contentEditable = false;
+      });
     });
-  });
+});
+
 
   function saveData(id, column, value) {
     fetch('/rab/update', {
@@ -145,50 +153,30 @@
         console.error('Error:', error);
       });
   }
+</script>
 
-  // Sync Function
-  document.getElementById('syncButton').addEventListener('click', function() {
-    // Call the function to sync the data
-    syncData();
-  });
+@endsection
 
-  function syncData() {
-    // Perform the AJAX request to update the data
-    fetch('/rab/update', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': '{{ csrf_token() }}',
-        },
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response from the server
-        if (data.success) {
-          // Update successful
-          // Refresh the table content
-          const tableBody = document.querySelector('.table tbody');
-          tableBody.innerHTML = '';
+@section('scripts')
+<script>
+  //reload button
+       const reloadButton = document.getElementById('reloadButton');
 
-          data.data.forEach((d) => {
-            const row = `
-                            <tr class="${d.LEVEL == 1 ? 'level-one-row' : ''}">
-                                <td>${d.COA_NUMBER}</td>
-                                <td>${d.NAMA_COA}</td>
-                                <td>${d.SALDO_NORMAL}</td>
-                                <td class="editable" data-column="NOMINAL" data-id="${d.ID}">${d.NOMINAL}</td>
-                            </tr>
-                        `;
-            tableBody.insertAdjacentHTML('beforeend', row);
-          });
-        } else {
-          // Update failed
-          console.error(data.message);
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }
+reloadButton.addEventListener('click', function () {
+    // Set the target tahun value based on your logic or condition
+    const targetTahun = "9"; // Example: You can change this based on your logic
+
+    // Get the value of the "tahun" parameter from the URL
+    const tahunParam = new URLSearchParams(window.location.search).get('tahun');
+
+    // Check if the "tahun" parameter matches the target tahun
+    if (tahunParam === targetTahun) {
+        // Refresh the page
+        location.reload();
+    } else {
+        alert("This button can only be used for the specific tahun value.");
+    }
+        });
+
 </script>
 @endsection

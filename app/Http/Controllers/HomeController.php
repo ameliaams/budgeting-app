@@ -27,13 +27,23 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+        $idUser = auth()->user()->id;
+        $idTahunAjaran = DB::select('CALL 9_MASTER_TAHUN_AJARAN_GET_TAHUN_AKTIF(?)', [$idUser]);
 
-        $idTahunAjaran = 10;
-        $idUser = 11;
-        // Call the stored procedure
-        $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran, $idUser]);
+        $results = DB::select('CALL CHART_PENDAPATAN(?, ?)', [$idTahunAjaran[0]->ID, $idUser]);
+        $dataArray = [];
+        foreach ($results as $result) {
+            $dataArray[] = (array)$result;
+        }
 
-        return view('home', ['user' => $user, 'data' => $data]);
+        $data1 = DB::select('CALL CHART_PENGELUARAN(?, ?)', [$idTahunAjaran[0]->ID, $idUser]);
+        $dataArray2 = [];
+        foreach ($data1 as $result) {
+            $dataArray2[] = (array)$result;
+        }
+        $data = DB::select('CALL 9_MASTER_RAB_GET_DATA(?, ?)', [$idTahunAjaran[0]->ID, $idUser]);
+
+        return view('home', ['user' => $user, 'data' => $data, 'dataArray' => $dataArray, 'dataArray2' => $dataArray2]);
     }
 
     public function update(Request $request)

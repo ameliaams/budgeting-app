@@ -305,6 +305,14 @@
                 </li>
               </ul>
             </li>
+            <li class="nav-item {{ isActiveLaporan() ? 'menu-open' : '' }}">
+            <a href="{{ asset('/chart') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-chart-line"></i> 
+                <p>
+                  Diagram
+                </p>
+              </a>
+            </li>
             <!-- <li class="nav-item">
             <a href="{{ asset('/ubah') }}" class="nav-link {{ Request::is('ubah') ? 'active' : '' }}">
               <i class="fas fa-edit"></i>

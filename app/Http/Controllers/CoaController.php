@@ -72,7 +72,7 @@ class CoaController extends Controller
 
     public function editData(Request $request, $id)
     {
-        $inKodeLevel1 = $request->input('level');
+        $inKodeLevel1 = $request->get('level');
         $level = 2;
         $namaCoa = $request->input('nama_akun');
         $keterangan = '';
@@ -90,13 +90,10 @@ class CoaController extends Controller
         ]);
 
         if (!empty($result)) {
-            $dta = $resultsCoa[0];
             return redirect()->route('coa.index')->with('success', 'Data Berhasil Disimpan!');
         } else {
             // Operation failed or record with the given ID not found
             return redirect()->route('coa.index')->with('error', 'Failed to update data.');
         }
     }
-
-
 }

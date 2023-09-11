@@ -36,7 +36,7 @@
                     </div>
                     <div class="modal-body">
                       <div class="form-group row">
-                        <label for="kas" class="col-sm-2 col-form-label">Level 1</label>
+                        <label for="level" class="col-sm-2 col-form-label">Level 1</label>
                         <div class="col-sm-5">
                         <select class="custom-select form-control-border" id="level" name="level" required>
                             @foreach ($dropdownOptionsCoa as $result)
@@ -159,10 +159,7 @@
                               <div class="form-group row">
                                 <label for="nama_coa" class="col-sm-3 col-form-label">Level 1</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="level" name="level" 
-                                        value="{{ old('level', $d->KODE_LEVEL_1 === '' ? $d->NAMA_COA : $d->NAMA_COA . ' - ' . $d->KODE_LEVEL_1) }}" 
-                                        disabled 
-                                        required>
+                                      <input type="text" class="form-control" id="level" name="level" value="{{ old('level', $d->COA_HEADER ) }}" disabled>
                                 </div>
                               </div>
                             <div class="form-group row">

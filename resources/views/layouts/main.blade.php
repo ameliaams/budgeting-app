@@ -306,7 +306,7 @@
               </ul>
             </li>
             <li class="nav-item {{ isActiveLaporan() ? 'menu-open' : '' }}">
-            <a href="{{ asset('/chart') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
+            <a href="{{ asset('/chart') }}" class="nav-link {{ Request::is('chart') ? 'active' : '' }}">
             <i class="nav-icon fas fa-chart-line"></i> 
                 <p>
                   Diagram

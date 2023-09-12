@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'CHART')
+@section('title', 'Chart')
 
 @section('content')
 
@@ -144,7 +144,7 @@
         datasets: [
             {
                 data: realisasi1,
-                backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                backgroundColor: ['#f56954', '#00a65a', '#f39c12'],
             }
         ]
     };
@@ -170,7 +170,7 @@
         datasets: [
             {
                 label: 'Pemasukkan',
-                backgroundColor: 'rgba(60,141,188,0.9)',
+                backgroundColor: ['#f56954', '#00a65a', '#f39c12'],
                 borderColor: 'rgba(60,141,188,0.8)',
                 pointRadius: false,
                 pointColor: '#3b8bba',
@@ -207,7 +207,7 @@
         datasets: [
             {
                 data: realisasi2,
-                backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#451952', '#D2DE32', '#952323'],
             }
         ]
     };
@@ -233,7 +233,7 @@
         datasets: [
             {
                 label: 'Pengeluaran',
-                backgroundColor: 'rgba(60,141,188,0.9)',
+                backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#451952', '#D2DE32', '#952323'],
                 borderColor: 'rgba(60,141,188,0.8)',
                 pointRadius: false,
                 pointColor: '#3b8bba',

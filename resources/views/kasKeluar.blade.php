@@ -68,7 +68,7 @@
                 <div class="form-group row">
                   <label for="keterangan" class="col-sm-2 col-form-label">Keterangan:</label>
                   <div class="col-sm-10">
-                    <textarea id="keterangan" class="form-control" name="keterangan" rows="4" required></textarea>
+                    <textarea id="keterangan" class="form-control" name="keterangan" rows="4"></textarea>
                   </div>
                 </div>
 

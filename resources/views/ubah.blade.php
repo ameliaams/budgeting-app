@@ -30,20 +30,20 @@
                   <div class="form-group row">
                     <label for="passwordLama" class="col-sm-3 col-form-label">Password Lama</label>
                     <div class="col-sm-8">
-                      <input type="password" class="form-control" id="passwordLama" placeholder="Password Lama">
+                      <input type="password" class="form-control" id="passwordLama" name="passwordLama" placeholder="Password Lama">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="passwordBaru" class="col-sm-3 col-form-label">Password Baru</label>
                     <div class="col-sm-8">
-                      <input type="password" class="form-control" id="passwordBaru" placeholder="Password Baru">
+                      <input type="password" class="form-control" id="passwordBaru" name="passwordBaru" placeholder="Password Baru">
                       
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="inputPassword" class="col-sm-3 col-form-label">Konfirmasi Password </label>
                     <div class="col-sm-8">
-                      <input type="password" class="form-control" id="inputPassword" placeholder="Konfirmasi Password">
+                      <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Konfirmasi Password">
                     </div>
                   </div>
                 </div>

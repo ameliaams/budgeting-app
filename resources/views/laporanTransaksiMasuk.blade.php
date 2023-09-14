@@ -57,7 +57,6 @@
         <table class="table table-bordered">
           <thead style="text-align: center;">
             <tr>
-              <th>ID</th>
               <th>KODE_KWITANSI</th>
               <th>TANGGAL</th>
               <th>NAMA COA</th>
@@ -69,7 +68,6 @@
           <tbody>
             @foreach ($paginator as $d)
             <tr>
-              <td>{{ isset($d->ID) ? $d->ID : '' }}</td>
               <td>{{ isset($d->KODE_KWITANSI) ? $d->KODE_KWITANSI : '' }}</td>
               <td>{{ isset($d->TANGGAL) ? $d->TANGGAL : '' }}</td>
               <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>

@@ -24,8 +24,10 @@ class laporanTransaksiKeluarController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $IN_TANGGAL_AWAL = $request->input('tanggalA');
-        $IN_TANGGAL_AKHIR = $request->input('tanggalAK');
+        $tglAwalSelected = session('tglAwal', null);
+        $tglAkhirSelected = session('tglAkhir', null);
+        $IN_TANGGAL_AWAL = $request->input('tanggalA', $tglAwalSelected);
+        $IN_TANGGAL_AKHIR = $request->input('tanggalAK', $tglAkhirSelected);
         $IN_ID_USER = auth()->user()->id;
 
         $page = $request->query('page', 1);
@@ -48,13 +50,15 @@ class laporanTransaksiKeluarController extends Controller
             ['path' => $request->url(), 'query' => $request->query()]
         );
 
-        $carbon_tgl_awal = Carbon::parse($IN_TANGGAL_AWAL);
-        $carbon_tgl_akhir = Carbon::parse($IN_TANGGAL_AKHIR);
+        // $carbon_tgl_awal = Carbon::parse($IN_TANGGAL_AWAL);
+        // $carbon_tgl_akhir = Carbon::parse($IN_TANGGAL_AKHIR);
 
         $resultsKas = DB::select('CALL 9_master_kas_get_data(?)', [$IN_ID_USER]);
 
         $dropdownOptionsKas = collect($resultsKas); 
 
+        session(['tglAwal' => $IN_TANGGAL_AWAL]);
+        session(['tglAkhir' => $IN_TANGGAL_AKHIR]);
         return view('laporanTransaksiKeluar', [
             'user' => $user,
             'dropdownOptionsKas' => $dropdownOptionsKas,

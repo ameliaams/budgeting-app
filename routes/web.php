@@ -75,6 +75,7 @@ Route::get('/laporanTotalKas/cetak', [App\Http\Controllers\totalKasController::c
 
 //ubah password
 Route::get('/ubah', [App\Http\Controllers\ubahController::class, 'index'])->name('ubah.index');
+Route::post('/ubah', [App\Http\Controllers\ubahController::class, 'changePassword'])->name('ubah.changePassword');
 
 //Login with google
 Route::get('auth/google', [App\Http\Controllers\GoogleController::class, 'redirectToGoogle'])->name('google.login');
@@ -82,3 +83,7 @@ Route::get('auth/google/callback', [App\Http\Controllers\GoogleController::class
 
 //Diagram
 Route::get('/chart', [App\Http\Controllers\chartController::class, 'index'])->name('chart.index');
+
+//Calendar
+Route::get('/kalender', [App\Http\Controllers\kalenderController::class, 'index'])->name('kalender.index');
+

@@ -7,6 +7,12 @@
   th {
     background-color: #778899;
   }
+  @media screen and (max-width: 767px) {
+    /* Aturan CSS untuk mobile di sini */
+    table {
+      font-size: 10px; /* Contoh perubahan ukuran font untuk mobile */ 
+    }
+  }
 </style>
 
 <!-- Main content -->
@@ -24,7 +30,7 @@
             @csrf
             <div class="card-body">
               <div class="form-group row">
-                <label for="tahun" class="col-sm-2 col-form-label">Tahun</label>
+                <label for="tanggal" class="col-sm-2 col-form-label">Tahun</label>
                 <div class="col-sm-10">
                   <select class="form-control" id="tahun" name="tahun">
                     <?php
@@ -37,10 +43,11 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="bulan" class="col-sm-2 col-form-label">Bulan</label>
+                <label for="tanggal" class="col-sm-2 col-form-label">Bulan</label>
                 <div class="col-sm-10">
                   <select class="form-control" id="bulan" name="bulan">
                     <?php
+                     $currentMonth = date("m");
                       $bulanOptions = array(
                         "01" => "Januari",
                         "02" => "Februari",
@@ -57,7 +64,12 @@
                       );
 
                       foreach ($bulanOptions as $value => $label) {
+                        if ($currentMonth == $value) {
+                          echo "<option value=\"$value\" selected>$label</option>";
+                        }else {
                         echo "<option value=\"$value\">$label</option>";
+                        }
+                      
                       }
                     ?>
                   </select>

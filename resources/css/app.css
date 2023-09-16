@@ -1,31 +1,7 @@
-/* Gaya CSS untuk perangkat desktop (lebar layar minimal 768px) */
-@media screen and (min-width: 768px) {
-    /* Aturan CSS untuk desktop di sini */
-    body {
-      font-size: 16px; /* Contoh perubahan ukuran font untuk desktop */
-    }
-    .header {
-      background-color: #333; /* Contoh perubahan warna latar belakang header untuk desktop */
-    }
-  }
-  
-  /* Gaya CSS untuk perangkat mobile (lebar layar maksimal 767px) */
-  @media screen and (max-width: 767px) {
-    /* Aturan CSS untuk mobile di sini */
-    body {
-      font-size: 14px; /* Contoh perubahan ukuran font untuk mobile */
-    }
-    .header {
-      background-color: #555; /* Contoh perubahan warna latar belakang header untuk mobile */
-    }
-  }
-
+/* Di dalam file CSS Anda */
+@media (max-width: 768px) {
+  /* Tambahkan gaya CSS untuk mengecilkan font di sini */
   body {
-    overflow-y: scroll;
+      font-size: 5px; /* Ubah ukuran font sesuai kebutuhan Anda */
   }
-  
-  /* Tampilkan scrollbar horizontal */
-  body {
-    overflow-x: scroll;
-  }
-  
+}

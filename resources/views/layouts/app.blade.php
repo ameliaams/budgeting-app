@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="{{asset('Admin/dist/css')}}/adminlte.min.css">
   <!-- icon -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  
 
 </head>
 <body class="hold-transition login-page">

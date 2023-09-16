@@ -89,7 +89,10 @@
     .swal-custom-size {
       max-width: 100px;
     }
-    
+
+    [data-toggle="toggle"] {
+	display: none;
+}
   </style>
 
 </head>

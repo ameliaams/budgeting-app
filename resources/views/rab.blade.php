@@ -7,6 +7,12 @@
   th {
     background-color: #778899;
   }
+  @media screen and (max-width: 767px) {
+    /* Aturan CSS untuk mobile di sini */
+    table {
+      font-size: 12px; /* Contoh perubahan ukuran font untuk mobile */
+    }
+  }
 </style>
 
 <!-- Main content -->

@@ -19,8 +19,10 @@ class arusKasController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $IN_TAHUN = $request->input('tahun');
-        $IN_BULAN = $request->input('bulan');
+        $selectedTahun = session('selected_tahun', null);
+        $selectedBulan = session('selected_bulan', null);
+        $IN_TAHUN = $request->input('tahun', $selectedTahun);
+        $IN_BULAN = $request->input('bulan', $selectedBulan);
         $IN_ID_KAS = $request->input('kas');
         $IN_ID_USER = auth()->user()->id;
 
@@ -28,22 +30,28 @@ class arusKasController extends Controller
         $results = DB::select('CALL LAPORAN_ARUS_KAS(?, ?, ?)', [$IN_TAHUN, $IN_BULAN, $IN_ID_KAS]);
 
         $resultsKas = DB::select('CALL 9_master_kas_get_data(?)', [$IN_ID_USER]);
+        
         $dropdownOptionsKas = [];
         foreach ($resultsKas as $result) {
             $dropdownOptionsKas[] = $result;
         }
-
+        
         $totalVar = 0;
         foreach ($results as $total) {
             $totalVar += $total->DEBET - $total->KREDIT;
         }
         //echo dd($totalVar);
 
+        session(['selected_tahun' => $IN_TAHUN]);
+        session(['selected_bulan' => $IN_BULAN]);
+    
         return view('arusKas', [
             'user' => $user,
             'results' => $results,
             'dropdownOptionsKas' => $dropdownOptionsKas,
             'totalVar' => $totalVar,
+            'IN_TAHUN' => $IN_TAHUN,
+            'IN_BULAN' => $IN_BULAN
         ]);
     }
 

@@ -87,3 +87,6 @@ Route::get('/chart', [App\Http\Controllers\chartController::class, 'index'])->na
 //Calendar
 Route::get('/kalender', [App\Http\Controllers\kalenderController::class, 'index'])->name('kalender.index');
 
+// Collapse table
+Route::get('/collapse', [App\Http\Controllers\collapseController::class, 'index'])->name('collapse.index');
+

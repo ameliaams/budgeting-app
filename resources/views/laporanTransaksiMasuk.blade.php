@@ -7,6 +7,12 @@
   th {
     background-color: #778899;
   }
+  @media screen and (max-width: 767px) {
+    /* Aturan CSS untuk mobile di sini */
+    table {
+      font-size: 9px; /* Contoh perubahan ukuran font untuk mobile */ 
+    }
+  }
 </style>
 
 <!-- Main content -->
@@ -57,7 +63,6 @@
         <table class="table table-bordered">
           <thead style="text-align: center;">
             <tr>
-              <th>ID</th>
               <th>KODE_KWITANSI</th>
               <th>TANGGAL</th>
               <th>NAMA COA</th>
@@ -69,7 +74,6 @@
           <tbody>
             @foreach ($paginator as $d)
             <tr>
-              <td>{{ isset($d->ID) ? $d->ID : '' }}</td>
               <td>{{ isset($d->KODE_KWITANSI) ? $d->KODE_KWITANSI : '' }}</td>
               <td>{{ isset($d->TANGGAL) ? $d->TANGGAL : '' }}</td>
               <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>

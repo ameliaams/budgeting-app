@@ -47,6 +47,8 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- fullCalendar -->
+  <link rel="stylesheet" href="{{ asset('admin/plugins/fullcalendar/main.css') }}">
 
   <style>
     .level-one-row {
@@ -87,12 +89,16 @@
     .swal-custom-size {
       max-width: 100px;
     }
-    
+
+    [data-toggle="toggle"] {
+	display: none;
+}
   </style>
 
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+  
   <div class="wrapper">
 
     <!-- Preloader
@@ -313,6 +319,14 @@
                 </p>
               </a>
             </li>
+            <li class="nav-item {{ isActiveLaporan() ? 'menu-open' : '' }}">
+            <a href="{{ asset('/kalender') }}" class="nav-link {{ Request::is('kalender') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-calendar"></i> 
+                <p>
+                  Kalender
+                </p>
+              </a>
+            </li>
             <!-- <li class="nav-item">
             <a href="{{ asset('/ubah') }}" class="nav-link {{ Request::is('ubah') ? 'active' : '' }}">
               <i class="fas fa-edit"></i>
@@ -401,6 +415,9 @@
   <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="{{ asset('admin/dist/js/pages/dashboard.js') }}"></script>
+  <!-- fullCalendar 2.2.5 -->
+<script src="{{ asset('admin/plugins/moment/moment.min.js') }}"></script>
+<script src="{{ asset('admin/plugins/fullcalendar/main.js') }}"></script>
 </body>
 
 </html>

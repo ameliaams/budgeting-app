@@ -41,6 +41,7 @@
                 <div class="col-sm-10">
                   <select class="form-control" id="bulan" name="bulan">
                     <?php
+                      $currentMonth = date("m");
                       $bulanOptions = array(
                         "01" => "Januari",
                         "02" => "Februari",
@@ -57,7 +58,11 @@
                       );
 
                       foreach ($bulanOptions as $value => $label) {
+                        if ($currentMonth == $value) {
+                          echo "<option value=\"$value\" selected>$label</option>";
+                        }else {
                         echo "<option value=\"$value\">$label</option>";
+                        }
                       }
                     ?>
                   </select>

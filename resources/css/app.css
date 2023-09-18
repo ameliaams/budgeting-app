@@ -1,0 +1,7 @@
+/* Di dalam file CSS Anda */
+@media (max-width: 768px) {
+  /* Tambahkan gaya CSS untuk mengecilkan font di sini */
+  body {
+      font-size: 5px; /* Ubah ukuran font sesuai kebutuhan Anda */
+  }
+}

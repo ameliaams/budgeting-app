@@ -15,29 +15,31 @@ class ubahController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $id_user = auth()->user()->id;
-        $username = auth()->user()->username;
-        $newPassword =   Hash::make($request->input('passwordBaru')) ;
-        $oldPassword =   Hash::make($request->input('passwordLama')) ;
-        // Call the stored procedure using the DB facade
+        return view('ubah');
+    }
 
-        $tes = "CALL Ubah_Password(" . $id_user . ", " . $username . ", " . $newPassword . ", " . $oldPassword . ")";
-        //echo dd($tes);
-        $result = DB::select('CALL Ubah_Password(?, ?, ?, ?)', [
-            $id_user,
-            $username,
-            $newPassword,
-            $oldPassword
-        ]);
+    public function changePassword(Request $request)
+    {
+        $user = Auth::user();
+        $oldPasswordInput = $request->input('passwordLama');
+    
+        // Check if the provided old password matches the stored hashed password
+        if (Hash::check($oldPasswordInput, $user->password)) {
+            $newPassword = $request->input('passwordBaru');
 
-        
-
-        // The $result variable contains the result from the stored procedure
-        // You can check the result and take appropriate actions
-
-        return view('ubah', ['result' => $result]);
+            DB::select('CALL UBAH_PASSWORD(?, ?, ?, ?)', [
+                $user->id,
+                $user->username,
+                $newPassword,
+                $oldPasswordInput,
+            ]);
+    
+            return redirect()->route('ubah.index')->with('success', 'Password changed successfully');
+        } else {
+            return redirect()->route('ubah.index')->with('error', 'Old password is incorrect');
+        }
     }
 }
 

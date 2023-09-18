@@ -64,7 +64,6 @@
                 <tr>
                   <th style="width: 10px">COA NUMBER</th>
                   <th>NAMA COA</th>
-                  <th style="width: 40px">SALDO NORMAL</th>
                   <th>NOMINAL</th>
                 </tr>
               </thead>
@@ -73,7 +72,6 @@
                 <tr class="{{ isset($d->LEVEL) && $d->LEVEL == 1 ? 'level-one-row' : ($d->LEVEL == '' ? 'level-null' : '') }}" data-widget="expandable-table" aria-expanded="false">
                   <td>{{ isset($d->COA_NUMBER) ? $d->COA_NUMBER : '' }}</td>
                   <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
-                  <td>{{ isset($d->SALDO_NORMAL) ? $d->SALDO_NORMAL : '' }}</td>
                   <td class="editable" data-column="NOMINAL" data-id="{{ isset($d->ID) ? $d->ID : '' }}" style="text-align: right;">
                       @money(isset($d->NOMINAL) ? $d->NOMINAL : '')
                   </td>

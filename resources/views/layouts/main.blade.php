@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@yield ('title') | Budgeting</title>
-
+  
+  <script src="{{ asset('js/app.js') }}"></script> <!-- Ini adalah aset yang dihasilkan dari kompilasi Anda -->
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -199,7 +200,6 @@
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Dashboard
-
                 </p>
               </a>
             </li>
@@ -238,7 +238,6 @@
                 </li>
               </ul>
             </li>
-
             <li class="nav-item {{ isActiveTransaksi() ? 'menu-open' : '' }}">
               <a href="javascript:void(0)" class="nav-link {{ isActiveTransaksi() ? 'active' : '' }}">
                 <i class="nav-icon fas fa-dollar-sign"></i>
@@ -324,6 +323,14 @@
             <i class="nav-icon fas fa-calendar"></i> 
                 <p>
                   Kalender
+                </p>
+              </a>
+            </li>
+            <li class="nav-item {{ isActiveLaporan() ? 'menu-open' : '' }}">
+            <a href="{{ asset('/collapse') }}" class="nav-link {{ Request::is('kalender') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-hashtag"></i> 
+                <p>
+                  Collapse
                 </p>
               </a>
             </li>
@@ -418,6 +425,7 @@
   <!-- fullCalendar 2.2.5 -->
 <script src="{{ asset('admin/plugins/moment/moment.min.js') }}"></script>
 <script src="{{ asset('admin/plugins/fullcalendar/main.js') }}"></script>
+
 </body>
 
 </html>

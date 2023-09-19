@@ -51,7 +51,7 @@
             </div>
             <!-- /.card -->
           </div>
-          <div class="col-lg-4 col-8">
+          <div class="col-lg-4 col-8 mx-auto">
         <!-- small box -->
         <div class="small-box bg-success">
           <div class="inner">
@@ -66,7 +66,7 @@
         </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-4 col-8">
+      <div class="col-lg-4 col-8 mx-auto">
         <!-- small box -->
         <div class="small-box bg-warning">
           <div class="inner">
@@ -81,7 +81,7 @@
       </div>
       <!-- ./col -->
       <!-- ./col -->
-      <div class="col-lg-4 col-8">
+      <div class="col-lg-4 col-8 mx-auto">
         <!-- small box -->
         <div class="small-box bg-info">
           <div class="inner">
@@ -94,7 +94,7 @@
           <a href="/tahun" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
-      <div class="col-lg-4 col-8">
+      <div class="col-lg-4 col-8 mx-auto">
         <!-- small box -->
         <div class="small-box bg-white">
           <div class="inner">
@@ -107,7 +107,7 @@
           <a href="/kas" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
-      <div class="col-lg-4 col-8">
+      <div class="col-lg-4 col-8 mx-auto">
         <!-- small box -->
         <div class="small-box bg-primary">
           <div class="inner">
@@ -122,7 +122,7 @@
       </div>
       <!-- ./col -->
       <!-- ./col -->
-      <div class="col-lg-4 col-8">
+      <div class="col-lg-4 col-8 mx-auto">
         <!-- small box -->
         <div class="small-box bg-danger">
           <div class="inner">
@@ -137,7 +137,7 @@
       </div>
       <!-- ./col -->
       <!-- ./col -->
-      <div class="col-lg-4 col-8">
+      <div class="col-lg-4 col-8 mx-auto">
         <!-- small box -->
         <div class="small-box bg-warning">
           <div class="inner">
@@ -151,7 +151,7 @@
         </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-4 col-8">
+      <div class="col-lg-4 col-8 mx-auto">
         <!-- small box -->
         <div class="small-box bg-secondary">
           <div class="inner">
@@ -166,7 +166,7 @@
       </div>
       <!-- ./col -->
       <!-- ./col -->
-      <div class="col-lg-4 col-8">
+      <div class="col-lg-4 col-8 mx-auto">
         <!-- small box -->
         <div class="small-box bg-white">
           <div class="inner">
@@ -179,7 +179,7 @@
           <a href="laporanTransaksiKeluar" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
-      <div class="col-lg-4 col-8">
+      <div class="col-lg-4 col-8 mx-auto">
         <!-- small box -->
         <div class="small-box bg-info">
           <div class="inner">
@@ -194,7 +194,7 @@
         </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-4 col-8">
+      <div class="col-lg-4 col-8 mx-auto">
         <!-- small box -->
         <div class="small-box bg-success">
           <div class="inner">
@@ -209,7 +209,7 @@
       </div>
       <!-- ./col -->
        <!-- ./col -->
-       <!-- <div class="col-lg-4 col-8">
+       <!-- <div class="col-lg-4 col-8 mx-auto">
         <div class="small-box bg-dark">
           <div class="inner">
             <h3>12</h3>

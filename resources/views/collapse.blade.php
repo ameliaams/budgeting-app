@@ -9,7 +9,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-body">
-            <table class="table table-bordered">
+          <table class="table table-bordered">
               <thead style="text-align: center;">
                 <tr>
                   <th>BULAN</th>
@@ -18,30 +18,32 @@
                   <th>PEMASUKAN</th>
                 </tr>
               </thead>
-              <tbody>
-              <tbody class="labels">
-                @foreach($data as $d)
-                @if($d->PEMASUKAN == "")
-                <tr>
-                  <td colspan="2">
-                    <label for="{{ $d->NAMA_BULAN }}">{{ isset($d->NAMA_BULAN) ? $d->NAMA_BULAN : '' }}</label>
+              @foreach($data as $d)
+              @if($d->PEMASUKAN == "")
+              <tbody class="labels level-null">
+                <tr >
+                  <td colspan="4">
+                    <label for="{{ $d->NAMA_BULAN }}">{{ $d->NAMA_BULAN }}</label>
                     <input type="checkbox" name="{{ $d->NAMA_BULAN }}" id="{{ $d->NAMA_BULAN }}" data-toggle="toggle">
                   </td>
                 </tr>
+              </tbody>
+              @endif
+              @if($d->KETERANGAN == "AWAL")
+              <tbody class="hide">
                 @endif
-</tbody>
-                @if($d->PEMASUKAN != "")
-                <tbody class="hide">
+              @if($d->PEMASUKAN != "")
                 <tr>
                   <td>{{ isset($d->BULAN) ? $d->BULAN : '' }}</td>
                   <td>{{ isset($d->NAMA_BULAN) ? $d->NAMA_BULAN : '' }}</td>
                   <td>{{ isset($d->PENGELUARAN) ? $d->PENGELUARAN : '' }}</td>
                   <td>{{ isset($d->PEMASUKAN) ? $d->PEMASUKAN : '' }}</td>
                 </tr>
-                @endif
-                @endforeach
+              @endif
+              @if($d->KETERANGAN == "AKHIR")
               </tbody>
-              </tbody>
+              @endif
+              @endforeach
             </table>
           </div>
         </div>
@@ -50,11 +52,14 @@
   </div>
 </section>
 
-<script>
+  <script>
   $(document).ready(function() {
-    $('[data-toggle="toggle"]').change(function() {
-      $(this).parents('tr').next('tr.hide').toggle();
-    });
-  });
+	$('[data-toggle="toggle"]').change(function(){
+		$(this).parents().next('.hide').toggle();
+	});
+});
 </script>
+
+
+
 @endsection

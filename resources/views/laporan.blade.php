@@ -10,7 +10,7 @@
   @media screen and (max-width: 767px) {
     /* Aturan CSS untuk mobile di sini */
     table {
-      font-size: 11px; /* Contoh perubahan ukuran font untuk mobile */
+      font-size: 9px; /* Contoh perubahan ukuran font untuk mobile */
     }
   }
 </style>
@@ -65,7 +65,6 @@
                 <tr>
                   <th style="width: 10px">COA NUMBER</th>
                   <th>NAMA COA</th>
-                  <th style="width: 40px">SALDO NORMAL</th>
                   <th>NOMINAL</th>
                   <th>REALISASI</th>
                 </tr>
@@ -75,7 +74,6 @@
               <tr class="{{ isset($lapor->LEVEL) && $lapor->LEVEL == 1 ? 'level-one-row' : ($lapor->LEVEL == '' ? 'level-null' : '') }}" data-widget="expandable-table" aria-expanded="false">
                   <td>{{ isset($lapor->COA_NUMBER) ? $lapor->COA_NUMBER : '' }}</td>
                   <td>{{ isset($lapor->NAMA_COA) ? $lapor->NAMA_COA : '' }}</td>
-                  <td>{{ isset($lapor->SALDO_NORMAL) ? $lapor->SALDO_NORMAL : '' }}</td>
                   <td style="text-align: right;">@money(isset($lapor->NOMINAL) ? $lapor->NOMINAL : '')</td>
                   <td style="text-align: right;">@money(isset($lapor->REALISASI) ? $lapor->REALISASI : '')</td>
               </tr>

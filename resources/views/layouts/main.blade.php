@@ -276,32 +276,24 @@
                     <p>Laporan Realisasi RAB</p>
                   </a>
                 </li>
-              </ul>
-              <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="{{ asset('/laporanTransaksiMasuk') }}" class="nav-link {{ Request::is('laporanTransaksiMasuk') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Laporan Kas Masuk</p>
                   </a>
                 </li>
-              </ul>
-              <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="{{ asset('/laporanTransaksiKeluar') }}" class="nav-link {{ Request::is('laporanTransaksiKeluar') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Laporan Kas Keluar</p>
                   </a>
                 </li>
-              </ul>
-              <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="{{ asset('/arusKas') }}" class="nav-link {{ Request::is('arusKas') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Laporan Arus Kas</p>
                   </a>
                 </li>
-              </ul>
-              <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="{{ asset('/laporanTotalKas') }}" class="nav-link {{ Request::is('laporanTotalKas') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
@@ -310,7 +302,7 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item {{ isActiveLaporan() ? 'menu-open' : '' }}">
+            <li class="nav-item {{ isActiveDiagram() ? 'menu-open' : '' }}">
             <a href="{{ asset('/chart') }}" class="nav-link {{ Request::is('chart') ? 'active' : '' }}">
             <i class="nav-icon fas fa-chart-line"></i> 
                 <p>
@@ -318,7 +310,7 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item {{ isActiveLaporan() ? 'menu-open' : '' }}">
+            <li class="nav-item {{ isActiveCalendar() ? 'menu-open' : '' }}">
             <a href="{{ asset('/kalender') }}" class="nav-link {{ Request::is('kalender') ? 'active' : '' }}">
             <i class="nav-icon fas fa-calendar"></i> 
                 <p>
@@ -326,8 +318,8 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item {{ isActiveLaporan() ? 'menu-open' : '' }}">
-            <a href="{{ asset('/collapse') }}" class="nav-link {{ Request::is('kalender') ? 'active' : '' }}">
+            <li class="nav-item {{ isActiveCollapse() ? 'menu-open' : '' }}">
+            <a href="{{ asset('/collapse') }}" class="nav-link {{ Request::is('collapse') ? 'active' : '' }}">
             <i class="nav-icon fas fa-hashtag"></i> 
                 <p>
                   Collapse
@@ -386,6 +378,20 @@
     <!-- /.control-sidebar -->
   </div>
   <!-- ./wrapper -->
+
+  <script>
+  function toggleSubmenu() {
+    const submenu = this.querySelector('.nav-treeview');
+    if (submenu) {
+      submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+    }
+  }
+
+  const menuItems = document.querySelectorAll('.nav-item');
+  menuItems.forEach((item) => {
+    item.addEventListener('click', toggleSubmenu);
+  });
+</script>
 
   <!-- jQuery -->
   <script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>

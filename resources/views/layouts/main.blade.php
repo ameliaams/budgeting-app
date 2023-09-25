@@ -248,13 +248,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{ asset('/kasMasuk') }}" class="nav-link {{ Request::is('kasMasuk') ? 'active' : '' }}">
+                  <a href="{{ asset('/masuk') }}" class="nav-link {{ Request::is('kasMasuk') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Transaksi Masuk</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{ asset('/kasKeluar') }}" class="nav-link {{ Request::is('kasKeluar') ? 'active' : '' }}">
+                  <a href="{{ asset('/keluar') }}" class="nav-link {{ Request::is('kasKeluar') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Transaksi Keluar</p>
                   </a>

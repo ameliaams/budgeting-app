@@ -83,9 +83,7 @@
               <td style="text-align: right;">@money(isset($d->KREDIT) && $d->KREDIT !== '' ? floatval($d->KREDIT) : 0)</td>
               <td style="text-align: center;">
                 <!-- Edit Button -->
-                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal{{ $d->ID }}">
-                  Edit
-                </button>
+                <a href="{{ route('laporanTransaksiKeluar.updateKelompok', $d->ID) }}" type="button" class="btn btn-sm btn-primary">Edit</a>
                 <!-- Delete Button -->
                 <form action="{{ route('laporanTransaksiKeluar.delete', $d->ID) }}" method="post" style="display: inline-block;">
                   @csrf

@@ -3,6 +3,17 @@
 @section('title', 'Collapse Table')
 
 @section('content')
+<style>
+  th {
+    background-color: #778899;
+  }
+  @media screen and (max-width: 767px) {
+    /* Aturan CSS untuk mobile di sini */
+    table {
+      font-size: 12px; /* Contoh perubahan ukuran font untuk mobile */
+    }
+  }
+</style>
 <section class="content">
   <div class="container-fluid">
     <div class="row">
@@ -20,7 +31,7 @@
               </thead>
               @foreach($data as $d)
               @if($d->PEMASUKAN == "")
-              <tbody class="labels level-null">
+              <tbody class="labels level-one-row">
                 <tr >
                   <td colspan="4">
                     <label for="{{ $d->NAMA_BULAN }}">{{ $d->NAMA_BULAN }}</label>
@@ -54,12 +65,13 @@
 
   <script>
   $(document).ready(function() {
-	$('[data-toggle="toggle"]').change(function(){
-		$(this).parents().next('.hide').toggle();
-	});
+  $('[data-toggle="toggle"]').each(function() {
+    $(this).prop('checked', true);
+    $(this).parents().next('.hide').toggle();
+  });
+  $('[data-toggle="toggle"]').change(function() {
+    $(this).parents().next('.hide').toggle();
+  });
 });
 </script>
-
-
-
 @endsection

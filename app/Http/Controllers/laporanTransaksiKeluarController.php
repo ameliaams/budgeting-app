@@ -42,7 +42,7 @@ class laporanTransaksiKeluarController extends Controller
         $resultsCollection = collect($results); 
 
         $total = $resultsCollection->count();
-        $paginator = new LengthAwarePaginator(
+        $paginator = new LengthAwarePaginator( 
             $resultsCollection->forPage($page, $perPage),
             $total,
             $perPage,
@@ -261,6 +261,106 @@ class laporanTransaksiKeluarController extends Controller
     ]);
 
     return $pdf->stream();
+}
+public function updateKelompok(Request $request, $id)
+    {
+        $user = Auth::user();
+        $IN_TANGGAL = $request->input('tanggal');
+        $IN_ID_COA = $request->input('no_ref');
+        $IN_ID_KAS = $request->input('kas');
+        $IN_JENIS_TRANSAKSI = 'K';
+        $IN_KETERANGAN = $request->input('keterangan');
+        $IN_NO_REF = $request->input('no_ref');
+        $IN_NOMINAL = $request->input('nominal');
+        $IN_KODE_KWINTANSI = $this->getKodeKwitansi($request);
+        $IN_DEPARTEMEN = '';
+        $IN_PENANGGUNG_JAWAB = '';
+        $IN_VERIFIKASI = '1';
+        $IN_ID_TAHUN_AJARAN = $this->getTahunAjaranAktif();
+        $IN_KODE_PENARIKAN_DANA = '';
+        $IN_NOMINAL_PERUBAHAN = $request->input('IN_NOMINAL_PERUBAHAN');
+        $IN_ID_USER = auth()->user()->id;
+        
+        $kodeKwitansi = DB::select(
+            "CALL GET_KODE_KWITANSI_BY_ID_TRANSAKSI(?)",
+            [$id]
+        );
+
+        $results = DB::select('CALL 9_TRANSAKSI_KAS_GET_DATA_BYKODE_KWITANSI(?)', [$kodeKwitansi[0]->KODE_KWITANSI]);
+        //echo dd($results);
+
+            return view('editKeluar', [
+                'user' => $user,
+                'results' => $results,
+                'kodeKwitansi' => $kodeKwitansi
+            ]);
+    }
+
+    public function editDatanew(Request $request)
+{
+    $IN_TANGGAL = $request->input('tanggal');
+    $IN_ID_KAS = $request->input('kas');
+    $IN_JENIS_TRANSAKSI = 'K';
+    $IN_KETERANGAN = $request->input('keterangan');
+    $IN_NO_REF = $request->input('no_ref');
+    $IN_NOMINAL = $request->input('nominal');
+    $IN_ID = '';
+    $IN_KODE_KWINTANSI = $this->getKodeKwitansi($request);
+    $IN_DEPARTEMEN = '';
+    $IN_PENANGGUNG_JAWAB = '';
+    $IN_VERIFIKASI = '1';
+    $IN_ID_TAHUN_AJARAN = $this->getTahunAjaranAktif();
+    $IN_KODE_PENARIKAN_DANA = '';
+    $IN_NOMINAL_PERUBAHAN = $request->input('IN_NOMINAL_PERUBAHAN');
+    $IN_ID_USER = auth()->user()->id;
+
+    $resultsKas = DB::select('CALL 9_master_kas_get_data(?)', [$IN_ID_USER]);
+
+    $dropdownOptionsKas = collect($resultsKas);
+
+    $idCoaArray = $request->input('kredit');
+    $keteranganArray = $request->input('keterangan');
+    $nominalArray = $request->input('nominal');
+    
+    $idTransaksi = $request->input('id');
+
+    $numEntries = count($idCoaArray);
+
+    for ($key = 0; $key < $numEntries; $key++) {
+        $IN_ID = $idTransaksi[$key];
+        $IN_ID_COA = $idCoaArray[$key];
+        $IN_KETERANGAN = $keteranganArray[$key];
+        $IN_NOMINAL = $nominalArray[$key];
+
+        // Call the stored procedure to save the COA entry
+        $results = DB::statement('CALL 9_TRANSAKSI_KAS_INS(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+            $IN_ID,
+            $IN_KODE_KWINTANSI,
+            $IN_TANGGAL,
+            $IN_ID_COA,
+            $IN_ID_KAS,
+            $IN_JENIS_TRANSAKSI,
+            $IN_KETERANGAN, // Use the current value from the loop
+            $IN_DEPARTEMEN,
+            $IN_PENANGGUNG_JAWAB,
+            $IN_NOMINAL, // Use the current value from the loop
+            $IN_VERIFIKASI,
+            $IN_NO_REF,
+            $IN_ID_TAHUN_AJARAN,
+            $IN_KODE_PENARIKAN_DANA,
+            0, // Assuming $IN_NOMINAL_PERUBAHAN is not needed here
+            $IN_ID_USER,
+        ]);
+    }
+    $resultsKas = DB::select('CALL 9_master_kas_get_data(?)', [$IN_ID_USER]);
+
+    $dropdownOptionsKas = [];
+    foreach ($resultsKas as $result) {
+        $dropdownOptionsKas[] = $result;
+    }
+
+    // Redirect back with a success message
+    return redirect()->route('laporanTransaksiKeluar.index', ['dropdownOptionsKas' => $dropdownOptionsKas,])->with('success', 'Data Berhasil Disimpan!');
 }
 
 }

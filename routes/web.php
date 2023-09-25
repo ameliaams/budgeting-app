@@ -90,3 +90,17 @@ Route::get('/kalender', [App\Http\Controllers\kalenderController::class, 'index'
 // Collapse table
 Route::get('/collapse', [App\Http\Controllers\collapseController::class, 'index'])->name('collapse.index');
 
+//example
+Route::get('/keluar', [App\Http\Controllers\keluarController::class, 'index'])->name('keluar.index');
+Route::post('/keluar/simpanData', [App\Http\Controllers\keluarController::class, 'simpanData'])->name('keluar.simpanData');
+Route::get('/laporanTransaksiKeluar/updateKelompok/{id}', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'updateKelompok'])->name('laporanTransaksiKeluar.updateKelompok');
+//Route::post('/keluar/editNew', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'editNew'])->name('keluar.editNew');
+Route::post('/keluar/editData', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'editDatanew'])->name('keluar.editData');
+
+
+Route::get('/masuk', [App\Http\Controllers\masukController::class, 'index'])->name('masuk.index');
+Route::post('/masuk/simpanData', [App\Http\Controllers\masukController::class, 'simpanData'])->name('masuk.simpanData');
+//Route::get('/masuk/edit/{no_kwitansi}', [App\Http\Controllers\laporanTransaksiMasukController::class, 'editButton'])->name('masuk.editButton');
+Route::get('/laporanTransaksiMasuk/updateKelompok/{id}', [App\Http\Controllers\laporanTransaksiMasukController::class, 'updateKelompok'])->name('laporanTransaksiMasuk.updateKelompok');
+//Route::post('/masuk/editNew', [App\Http\Controllers\laporanTransaksiMasukController::class, 'editNew'])->name('masuk.editNew');
+Route::post('/masuk/editData', [App\Http\Controllers\laporanTransaksiMasukController::class, 'editDatanew'])->name('masuk.editData');

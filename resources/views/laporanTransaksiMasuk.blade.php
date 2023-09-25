@@ -74,16 +74,14 @@
           <tbody>
             @foreach ($paginator as $d)
             <tr>
-              <td>{{ isset($d->KODE_KWITANSI) ? $d->KODE_KWITANSI : '' }}</td>
+              <td >{{ isset($d->KODE_KWITANSI) ? $d->KODE_KWITANSI : '' }}</td>
               <td>{{ isset($d->TANGGAL) ? $d->TANGGAL : '' }}</td>
               <td>{{ isset($d->NAMA_COA) ? $d->NAMA_COA : '' }}</td>
               <td>{{ isset($d->KETERANGAN) ? $d->KETERANGAN : '' }}</td>
               <td style="text-align: right;">@money(isset($d->DEBET) && $d->DEBET !== '' ? floatval($d->DEBET) : 0)</td>
               <td style="text-align: center;">
                 <!-- Edit Button -->
-                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal{{ $d->ID }}">
-                  Edit
-                </button>
+                <a href="{{ route('laporanTransaksiMasuk.updateKelompok', $d->ID) }}" type="button" class="btn btn-sm btn-primary">Edit</a>
                 <!-- Delete Button -->
                 <form action="{{ route('laporanTransaksiMasuk.delete', $d->ID) }}" method="post" style="display: inline-block;">
                   @csrf
@@ -144,7 +142,7 @@
                         <div class="form-group row">
                           <label for="nama_coa" class="col-sm-3 col-form-label">Nama COA:</label>
                           <div class="col-sm-8">
-                            <input type="text" class="form-control" id="debit" name="debit" value="{{ old('debit', $d->NAMA_COA) }}" disabled required>
+                            <input type="text" class="form-control" id="debet" name="debet" value="{{ old('debet', $d->NAMA_COA) }}" disabled required>
                           </div>
                         </div>
                         <div class="form-group row">

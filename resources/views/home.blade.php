@@ -51,6 +51,7 @@
             </div>
             <!-- /.card -->
           </div>
+          
           <div class="col-lg-4 col-8 mx-auto">
         <!-- small box -->
         <div class="small-box bg-success">
@@ -207,6 +208,7 @@
           <a href="/laporanTotalKas" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
+      
       <!-- ./col -->
        <!-- ./col -->
        <!-- <div class="col-lg-4 col-8 mx-auto">
@@ -227,6 +229,7 @@
     <!-- /.row -->
     <!-- Main row -->
     <div class="row">
+      
 
     </div>
     <!-- /.row (main row) -->

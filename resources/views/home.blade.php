@@ -57,7 +57,7 @@
         <div class="small-box bg-success">
           <div class="inner">
             <h3>01</h3>
-            <p>Master COA</p>
+            <p>Master Kategori Transaksi</p>
           </div>
           <div class="icon">
             <i class="fas fa-chart-bar"></i>
@@ -87,7 +87,7 @@
         <div class="small-box bg-info">
           <div class="inner">
             <h3>03</h3>
-            <p>Master Tahun Anggaran</p>
+            <p>Closing Bulanan</p>
           </div>
           <div class="icon">
             <i class="far fa-calendar-alt"></i>

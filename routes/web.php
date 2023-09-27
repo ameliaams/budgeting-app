@@ -96,7 +96,7 @@ Route::post('/keluar/simpanData', [App\Http\Controllers\keluarController::class,
 Route::get('/laporanTransaksiKeluar/updateKelompok/{id}', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'updateKelompok'])->name('laporanTransaksiKeluar.updateKelompok');
 //Route::post('/keluar/editNew', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'editNew'])->name('keluar.editNew');
 Route::post('/keluar/editData', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'editDatanew'])->name('keluar.editData');
-
+Route::get('/keluar/cetak/{id}', [App\Http\Controllers\laporanTransaksiKeluarController::class, 'cetakSatu'])->name('keluar.print');
 
 Route::get('/masuk', [App\Http\Controllers\masukController::class, 'index'])->name('masuk.index');
 Route::post('/masuk/simpanData', [App\Http\Controllers\masukController::class, 'simpanData'])->name('masuk.simpanData');
@@ -104,3 +104,4 @@ Route::post('/masuk/simpanData', [App\Http\Controllers\masukController::class, '
 Route::get('/laporanTransaksiMasuk/updateKelompok/{id}', [App\Http\Controllers\laporanTransaksiMasukController::class, 'updateKelompok'])->name('laporanTransaksiMasuk.updateKelompok');
 //Route::post('/masuk/editNew', [App\Http\Controllers\laporanTransaksiMasukController::class, 'editNew'])->name('masuk.editNew');
 Route::post('/masuk/editData', [App\Http\Controllers\laporanTransaksiMasukController::class, 'editDatanew'])->name('masuk.editData');
+Route::get('/masuk/cetak/{id}', [App\Http\Controllers\laporanTransaksiMasukController::class, 'cetakSatu'])->name('masuk.print');

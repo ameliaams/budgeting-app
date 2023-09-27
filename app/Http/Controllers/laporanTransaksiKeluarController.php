@@ -234,7 +234,7 @@ class laporanTransaksiKeluarController extends Controller
     $IN_ID_USER = auth()->user()->id;
 
     // Call Store Procedure
-    $results = DB::select('CALL 9_TRANSAKSI_KAS_KELUAR_GET_DATA_BYTANGGAL(?, ?, ?)', [
+    $results = DB::select('CALL 9_TRANSAKSI_KAS_MASUK_GET_DATA_BYTANGGAL(?, ?, ?)', [
         $IN_TANGGAL_AWAL,
         $IN_TANGGAL_AKHIR,
         $IN_ID_USER,
@@ -262,7 +262,7 @@ class laporanTransaksiKeluarController extends Controller
 
     return $pdf->stream();
 }
-public function updateKelompok(Request $request, $id)
+    public function updateKelompok(Request $request, $id)
     {
         $user = Auth::user();
         $IN_TANGGAL = $request->input('tanggal');
@@ -352,15 +352,43 @@ public function updateKelompok(Request $request, $id)
             $IN_ID_USER,
         ]);
     }
-    $resultsKas = DB::select('CALL 9_master_kas_get_data(?)', [$IN_ID_USER]);
-
-    $dropdownOptionsKas = [];
-    foreach ($resultsKas as $result) {
-        $dropdownOptionsKas[] = $result;
-    }
 
     // Redirect back with a success message
-    return redirect()->route('laporanTransaksiKeluar.index', ['dropdownOptionsKas' => $dropdownOptionsKas,])->with('success', 'Data Berhasil Disimpan!');
+    return redirect()->route('laporanTransaksiKeluar.index', ['dropdownOptionsKas' => $dropdownOptionsKas])->with('success', 'Data Berhasil Disimpan!');
 }
 
+    public function cetakSatu(Request $request, $id)
+    {
+        $user = Auth::user();
+        $IN_ID = $request->input('id');
+        $IN_TANGGAL = $request->input('tanggal');
+        $IN_KODE_KWINTANSI = $this->getKodeKwitansi($request);
+        $IN_ID_USER = auth()->user()->id;
+        
+        $kodeKwitansi = DB::select(
+            "CALL GET_KODE_KWITANSI_BY_ID_TRANSAKSI(?)",
+            [$id]
+        );
+
+        $results = DB::select('CALL 9_TRANSAKSI_KAS_GET_DATA_BYKODE_KWITANSI(?)', [$kodeKwitansi[0]->KODE_KWITANSI]);
+        
+        $totalVar = 0;
+        foreach ($results as $total) {
+            $totalVar += $total->NOMINAL;
+        }
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Times New Roman');
+        $dompdf = new Dompdf($pdfOptions);
+
+        $pdf = PDF::loadView('pdf.cetakKasKeluar', [
+            'user' => $user,
+            'results' => $results,
+            'totalVar' => $totalVar,
+            'tanggal' => $IN_TANGGAL
+        ]);
+
+        return $pdf->stream();
+    }
 }
+

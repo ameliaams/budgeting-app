@@ -359,5 +359,39 @@ class laporanTransaksiMasukController extends Controller
     // Redirect back with a success message
     return redirect()->route('laporanTransaksiMasuk.index', ['dropdownOptionsKas' => $dropdownOptionsKas])->with('success', 'Data Berhasil Disimpan!');
 }
+
+    public function cetakSatu(Request $request, $id)
+    {
+        $user = Auth::user();
+        $IN_ID = $request->input('id');
+        $IN_TANGGAL = $request->input('tanggal');
+        $IN_KODE_KWINTANSI = $this->getKodeKwitansi($request);
+        $IN_ID_USER = auth()->user()->id;
+        
+        $kodeKwitansi = DB::select(
+            "CALL GET_KODE_KWITANSI_BY_ID_TRANSAKSI(?)",
+            [$id]
+        );
+
+        $results = DB::select('CALL 9_TRANSAKSI_KAS_GET_DATA_BYKODE_KWITANSI(?)', [$kodeKwitansi[0]->KODE_KWITANSI]);
+        
+        $totalVar = 0;
+        foreach ($results as $total) {
+            $totalVar += $total->NOMINAL;
+        }
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Times New Roman');
+        $dompdf = new Dompdf($pdfOptions);
+
+        $pdf = PDF::loadView('pdf.cetakKas', [
+            'user' => $user,
+            'results' => $results,
+            'totalVar' => $totalVar,
+            'tanggal' => $IN_TANGGAL
+        ]);
+
+        return $pdf->stream();
+    }
 }
 

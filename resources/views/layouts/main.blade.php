@@ -212,12 +212,12 @@
                 </p>
               </a>
               <ul class="nav nav-treeview">
-                <li class="nav-item">
+              <li class="nav-item">
                   <a href="{{ asset('/coa') }}" class="nav-link {{ Request::is('coa') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Master COA</p>
+                      <i class="far fa-circle nav-icon"></i>
+                      <p class="justified-text">Kategori Transaksi</p>
                   </a>
-                </li>
+              </li>
                 <li class="nav-item">
                   <a href="{{ asset('/rab') }}" class="nav-link {{ Request::is('rab') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
@@ -227,7 +227,7 @@
                 <li class="nav-item">
                   <a href="{{ asset('/tahun') }}" class="nav-link {{ Request::is('tahun') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Master Tahun Anggaran</p>
+                    <p>Closing Bulanan</p>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -300,6 +300,12 @@
                     <p>Laporan Total Kas</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                <a href="{{ asset('/collapse') }}" class="nav-link {{ Request::is('collapse') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Laporan 10 Harian</p>
+                  </a>
+                </li>
               </ul>
             </li>
             <li class="nav-item {{ isActiveDiagram() ? 'menu-open' : '' }}">
@@ -318,14 +324,14 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item {{ isActiveCollapse() ? 'menu-open' : '' }}">
+            <!-- <li class="nav-item {{ isActiveCollapse() ? 'menu-open' : '' }}">
             <a href="{{ asset('/collapse') }}" class="nav-link {{ Request::is('collapse') ? 'active' : '' }}">
             <i class="nav-icon fas fa-hashtag"></i> 
                 <p>
                   Collapse
                 </p>
               </a>
-            </li>
+            </li> -->
             <!-- <li class="nav-item">
             <a href="{{ asset('/ubah') }}" class="nav-link {{ Request::is('ubah') ? 'active' : '' }}">
               <i class="fas fa-edit"></i>

@@ -22,7 +22,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">MASTER KAS</h3>
+            <!-- <h3 class="card-title">MASTER KAS</h3> -->
             <form action="{{ route('kas.add') }}" id="addDataModal">
               @csrf
               <button type="button" class="btn btn-primary form-control float-right" data-toggle="modal" data-target="#myModal" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">

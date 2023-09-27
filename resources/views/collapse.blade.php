@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Collapse Table')
+@section('title', 'Laporan 10 Harian')
 
 @section('content')
 <style>

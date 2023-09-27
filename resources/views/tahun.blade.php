@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Master Tahun Anggaran')
+@section('title', 'Closing Bulanan')
 
 @section('content')
 <style>
@@ -17,7 +17,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">MASTER TAHUN ANGGARAN</h3>
+            <!-- <h3 class="card-title">CLOSING BULANAN</h3> -->
             <form method="post" action="{{ route('tahun.tutup') }}">
                 @csrf
                 <input type="hidden" name="userId" value="{{ $user->ID }}">

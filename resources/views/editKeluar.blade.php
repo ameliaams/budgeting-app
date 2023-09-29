@@ -98,6 +98,11 @@
               <div class="card-footer">
                  <button type="submit" id="SaveButton" class="btn btn-primary">Simpan</button>
                  <button type="button" id="deleteButton" class="btn btn-danger">Batal</button>
+                 <!-- <form action="{{ route('keluar.delete', $d->ID) }}" method="post" style="display: inline-block;">
+                  @csrf
+                  @method('DELETE')
+                  <button type="button" id="delete" class="btn btn-danger" onclick="confirmDelete(event)">Hapus</button>
+                </form> -->
                  <a href="{{ route('keluar.print', $d->ID) }}" class="btn btn-primary float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
                     <i class="fa-solid fa-print"></i> Cetak
                 </a>
@@ -133,6 +138,37 @@
                                 });
                               });
                           </script>
+
+                          <!-- ... bagian JavaScript SweetAlert Hapus ... -->
+                          <script>
+                              function confirmDelete(event) {
+                                // Mencegah aksi default dari tombol "Delete"
+                                event.preventDefault();
+
+                                // Tampilkan SweetAlert dengan pesan konfirmasi delete
+                                Swal.fire({
+                                  title: 'Apakah Anda yakin?',
+                                  text: 'Anda tidak dapat mengembalikan data ini setelah dihapus.',
+                                  icon: 'warning',
+                                  showCancelButton: true,
+                                  confirmButtonColor: '#d33',
+                                  cancelButtonColor: '#3085d6',
+                                  confirmButtonText: 'Ya, hapus!',
+                                  cancelButtonText: 'Batal'
+                                }).then((result) => {
+                                  if (result.isConfirmed) {
+                                    // Jika konfirmasi "Ya" di-klik, submit form untuk menghapus data
+                                    event.target.closest('form').submit();
+                                    // Display a simple success message after successful submission
+                                    Swal.fire({
+                                            title: 'Berhasil!',
+                                            text: 'Data berhasil dihapus.',
+                                            icon: 'success'
+                                          });
+                                  }
+                                });
+                              }
+                            </script>
                           
                                 </div>
                             </div>

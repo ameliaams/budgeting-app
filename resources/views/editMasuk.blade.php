@@ -17,7 +17,7 @@
               <!-- /.card-header -->
               <!-- form start -->
               @if(!empty($results[0]))
-              <form method="POST" action="{{ route('masuk.editData') }}">
+              <form id="myForm" method="POST" action="{{ route('masuk.editData') }}">
                   @csrf
               <div class="card-body">
                 <div class="form-group row">
@@ -66,7 +66,7 @@
                       <table class="table">
                           <thead>
                               <tr>
-                                  <th style="width: 20px">ID</th>
+                                  <th>ID</th>
                                   <th>Nama COA</th>
                                   <th>Keterangan</th>
                                   <th>Nominal</th>
@@ -77,7 +77,7 @@
                             @foreach($results as $d)
                               <tr class="item">
                                   <td>
-                                  {{ old('id[]', $d->ID) }}
+                                  <input type="text" class="form-control" name="id[]" value="{{ old('id[]', $d->ID) }}" required readonly>
                                   </td>
                                   <td>
                                     <input type="text" class="form-control" name="debet[]" value="{{ old('debet[]', $d->NAMA_COA) }}" required readonly>
@@ -96,8 +96,14 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                 <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="submit" id="SaveButton" class="btn btn-primary">Simpan</button>
                  <button type="button" id="deleteButton" class="btn btn-danger">Batal</button>
+                 <!-- <a href="{{ route('masuk.delete', $d->ID) }}" class="btn btn-primary float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+                    <i class="fa-solid fa-print"></i> Hapus
+                </a> -->
+                 <a href="{{ route('masuk.print', $d->ID) }}" class="btn btn-primary float-right" style="width: 120px; border-radius: 20px; color: #FFF; background-color: #4169E1">
+                    <i class="fa-solid fa-print"></i> Cetak
+                </a>
               </div>
                </form>
                   @endif
@@ -112,29 +118,55 @@
                             });
                         </script>
 
-                        <!-- Tampilan SweetAlert -->
-                          @if (session('success'))
-                              <!-- Link eksternal untuk SweetAlert -->
-                              <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                        <!-- ... bagian JavaScript SweetAlert Simpan ... -->
+                            <script>
+                              document.getElementById('SaveButton').addEventListener('click', function(event) {
+                                event.preventDefault();
 
-                              <script>
-                                  // Tampilkan alert pesan sukses saat halaman dimuat
-                                  document.addEventListener('DOMContentLoaded', function() {
-                                    swal({
-                                    title: "Data Berhasil Disimpan!",
-                                    text: "",
-                                    icon: "success",
-                                    buttons: {
-                                      confirm: {
-                                        text: "OK",
-                                        value: true,
-                                        className: "btn btn-success"
-                                      }
-                                    }
-                                  });
-                                  });
-                              </script>
-                          @endif
+                                // Display SweetAlert for success
+                                Swal.fire({
+                                  title: 'Berhasil!',
+                                  text: 'Data berhasil disimpan.',
+                                  icon: 'success'
+                                }).then((result) => {
+                                  if (result.isConfirmed) {
+                                    // If confirmed, submit the form
+                                    document.getElementById('myForm').submit();
+                                  }
+                                });
+                              });
+                            </script>
+
+                        <!-- ... bagian JavaScript SweetAlert Hapus ... -->
+                            <script>
+                              function confirmDelete(event) {
+                                // Mencegah aksi default dari tombol "Delete"
+                                event.preventDefault();
+
+                                // Tampilkan SweetAlert dengan pesan konfirmasi delete
+                                Swal.fire({
+                                  title: 'Apakah Anda yakin?',
+                                  text: 'Anda tidak dapat mengembalikan data ini setelah dihapus.',
+                                  icon: 'warning',
+                                  showCancelButton: true,
+                                  confirmButtonColor: '#d33',
+                                  cancelButtonColor: '#3085d6',
+                                  confirmButtonText: 'Ya, hapus!',
+                                  cancelButtonText: 'Batal'
+                                }).then((result) => {
+                                  if (result.isConfirmed) {
+                                    // Jika konfirmasi "Ya" di-klik, submit form untuk menghapus data
+                                    event.target.closest('form').submit();
+                                    // Display a simple success message after successful submission
+                                    Swal.fire({
+                                            title: 'Berhasil!',
+                                            text: 'Data berhasil dihapus.',
+                                            icon: 'success'
+                                          });
+                                  }
+                                });
+                              }
+                            </script>
                                 </div>
                             </div>
                         </div>

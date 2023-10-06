@@ -300,64 +300,193 @@ class laporanTransaksiMasukController extends Controller
     }
 
     public function editDatanew(Request $request)
-{
-    $IN_TANGGAL = $request->input('tanggal');
-    $IN_ID_KAS = $request->input('kas');
-    $IN_JENIS_TRANSAKSI = 'M';
-    $IN_KETERANGAN = $request->input('keterangan');
-    $IN_NO_REF = $request->input('no_ref');
-    $IN_NOMINAL = $request->input('nominal');
-    $IN_ID = '';
-    $IN_KODE_KWINTANSI = $this->getKodeKwitansi($request);
-    $IN_DEPARTEMEN = '';
-    $IN_PENANGGUNG_JAWAB = '';
-    $IN_VERIFIKASI = '1';
-    $IN_ID_TAHUN_AJARAN = $this->getTahunAjaranAktif();
-    $IN_KODE_PENARIKAN_DANA = '';
-    $IN_NOMINAL_PERUBAHAN = $request->input('IN_NOMINAL_PERUBAHAN');
-    $IN_ID_USER = auth()->user()->id;
+    {
+        $IN_TANGGAL = $request->input('tanggal');
+        $IN_ID_KAS = $request->input('kas');
+        $IN_JENIS_TRANSAKSI = 'M';
+        $IN_KETERANGAN = $request->input('keterangan');
+        $IN_NO_REF = $request->input('no_ref');
+        $IN_NOMINAL = $request->input('nominal');
+        $IN_ID = '';
+        $IN_KODE_KWINTANSI = $this->getKodeKwitansi($request);
+        $IN_DEPARTEMEN = '';
+        $IN_PENANGGUNG_JAWAB = '';
+        $IN_VERIFIKASI = '1';
+        $IN_ID_TAHUN_AJARAN = $this->getTahunAjaranAktif();
+        $IN_KODE_PENARIKAN_DANA = '';
+        $IN_NOMINAL_PERUBAHAN = $request->input('IN_NOMINAL_PERUBAHAN');
+        $IN_ID_USER = auth()->user()->id;
 
-    $resultsKas = DB::select('CALL 9_master_kas_get_data(?)', [$IN_ID_USER]);
+        $resultsKas = DB::select('CALL 9_master_kas_get_data(?)', [$IN_ID_USER]);
 
-    $dropdownOptionsKas = collect($resultsKas);
+        $dropdownOptionsKas = collect($resultsKas);
 
-    $idCoaArray = $request->input('debet');
-    $keteranganArray = $request->input('keterangan');
-    $nominalArray = $request->input('nominal');
-    
-    $idTransaksi = $request->input('id');
+        $idCoaArray = $request->input('debet');
+        $keteranganArray = $request->input('keterangan');
+        $nominalArray = $request->input('nominal');
+        
+        $idTransaksi = $request->input('id');
 
-    $numEntries = count($idCoaArray);
+        $numEntries = count($idCoaArray);
 
-    for ($key = 0; $key < $numEntries; $key++) {
-        $IN_ID = $idTransaksi[$key];
-        $IN_ID_COA = $idCoaArray[$key];
-        $IN_KETERANGAN = $keteranganArray[$key];
-        $IN_NOMINAL = $nominalArray[$key];
+        for ($key = 0; $key < $numEntries; $key++) {
+            $IN_ID = $idTransaksi[$key];
+            $IN_ID_COA = $idCoaArray[$key];
+            $IN_KETERANGAN = $keteranganArray[$key];
+            $IN_NOMINAL = $nominalArray[$key];
 
-        // Call the stored procedure to save the COA entry
-        $results = DB::statement('CALL 9_TRANSAKSI_KAS_INS(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
-            $IN_ID,
-            $IN_KODE_KWINTANSI,
-            $IN_TANGGAL,
-            $IN_ID_COA,
-            $IN_ID_KAS,
-            $IN_JENIS_TRANSAKSI,
-            $IN_KETERANGAN, // Use the current value from the loop
-            $IN_DEPARTEMEN,
-            $IN_PENANGGUNG_JAWAB,
-            $IN_NOMINAL, // Use the current value from the loop
-            $IN_VERIFIKASI,
-            $IN_NO_REF,
-            $IN_ID_TAHUN_AJARAN,
-            $IN_KODE_PENARIKAN_DANA,
-            0, // Assuming $IN_NOMINAL_PERUBAHAN is not needed here
-            $IN_ID_USER,
-        ]);
+            // Call the stored procedure to save the COA entry
+            $results = DB::statement('CALL 9_TRANSAKSI_KAS_INS(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+                $IN_ID,
+                $IN_KODE_KWINTANSI,
+                $IN_TANGGAL,
+                $IN_ID_COA,
+                $IN_ID_KAS,
+                $IN_JENIS_TRANSAKSI,
+                $IN_KETERANGAN, // Use the current value from the loop
+                $IN_DEPARTEMEN,
+                $IN_PENANGGUNG_JAWAB,
+                $IN_NOMINAL, // Use the current value from the loop
+                $IN_VERIFIKASI,
+                $IN_NO_REF,
+                $IN_ID_TAHUN_AJARAN,
+                $IN_KODE_PENARIKAN_DANA,
+                0, // Assuming $IN_NOMINAL_PERUBAHAN is not needed here
+                $IN_ID_USER,
+            ]);
+        }
+
+        // Redirect back with a success message
+        return redirect()->route('laporanTransaksiMasuk.index', ['dropdownOptionsKas' => $dropdownOptionsKas])->with('success', 'Data Berhasil Disimpan!');
     }
 
-    // Redirect back with a success message
-    return redirect()->route('laporanTransaksiMasuk.index', ['dropdownOptionsKas' => $dropdownOptionsKas])->with('success', 'Data Berhasil Disimpan!');
-}
+    public function hapusAll(Request $request, $id)
+    {
+        echo dd($request);
+        $user = Auth::user();
+        $IN_ID = $request->input('id');
+        $IN_TANGGAL = $request->input('tanggal');
+        $IN_KODE_KWINTANSI = $this->getKodeKwitansi($request);
+        $IN_ID_USER = auth()->user()->id;
+        
+        $kodeKwitansi = DB::select(
+            "CALL GET_KODE_KWITANSI_BY_ID_TRANSAKSI(?)",
+            [$id]
+        );
+
+        $results = DB::select('CALL 9_TRANSAKSI_KAS_GET_DATA_BYKODE_KWITANSI(?)', [$kodeKwitansi[0]->KODE_KWITANSI]);
+        
+        $totalVar = 0;
+        foreach ($results as $total) {
+            $totalVar += $total->NOMINAL;
+        }
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Times New Roman');
+        $dompdf = new Dompdf($pdfOptions);
+
+        $pdf = PDF::loadView('pdf.cetakKas', [
+            'user' => $user,
+            'results' => $results,
+            'totalVar' => $totalVar,
+            'tanggal' => $IN_TANGGAL
+        ]);
+
+        return $pdf->stream();
+    }
+    public function hapusAllCopy(Request $request, $id)
+    {
+        $IN_TANGGAL = $request->input('tanggal');
+        $IN_ID_KAS = $request->input('kas');
+        $IN_JENIS_TRANSAKSI = 'M';
+        $IN_KETERANGAN = $request->input('keterangan');
+        $IN_NO_REF = $request->input('no_ref');
+        $IN_NOMINAL = $request->input('nominal');
+        $IN_ID = '';
+        $IN_KODE_KWINTANSI = $this->getKodeKwitansi($request);
+        $IN_DEPARTEMEN = '';
+        $IN_PENANGGUNG_JAWAB = '';
+        $IN_VERIFIKASI = '1';
+        $IN_ID_TAHUN_AJARAN = $this->getTahunAjaranAktif();
+        $IN_KODE_PENARIKAN_DANA = '';
+        $IN_NOMINAL_PERUBAHAN = $request->input('IN_NOMINAL_PERUBAHAN');
+        $IN_ID_USER = auth()->user()->id;
+
+        $resultsKas = DB::select('CALL 9_master_kas_get_data(?)', [$IN_ID_USER]);
+
+        $dropdownOptionsKas = collect($resultsKas);
+
+        $idCoaArray = $request->input('debet');
+        $keteranganArray = $request->input('keterangan');
+        $nominalArray = $request->input('nominal');
+        
+        $idTransaksi = $request->input('id');
+
+        $numEntries = count($idCoaArray);
+        echo dd($request);
+        for ($key = 0; $key < $numEntries; $key++) {
+            $IN_ID = $idTransaksi[$key];
+            $IN_ID_COA = $idCoaArray[$key];
+            $IN_KETERANGAN = $keteranganArray[$key];
+            $IN_NOMINAL = $nominalArray[$key];
+
+            // Call the stored procedure to save the COA entry
+            $delete = DB::statement(' CALL 9_TRANSAKSI_KAS_DEL_BYID(?, ?, ?)', [$id, $idTahunAjaran, $idUser]);
+
+            // Check the result
+            if ($delete) {
+    
+    
+                $update = DB::statement("CALL 9_KAS_UPDATE_MASTER_RAB(?, ?, ?)", [$id, $idTahunAjaran, $idUser]);
+                
+                $page = $request->query('page', 1);
+                $perPage = 10;
+                // After the update, retrieve the data based on the input dates
+                $results = DB::select('CALL 9_TRANSAKSI_KAS_MASUK_GET_DATA_BYTANGGAL(?, ?, ?)', [
+                    $IN_TANGGAL_AWAL,
+                    $IN_TANGGAL_AKHIR,
+                    $idUser,
+                ]);
+    
+            }
+        }
+
+        // Redirect back with a success message
+        return redirect()->route('laporanTransaksiMasuk.index', ['dropdownOptionsKas' => $dropdownOptionsKas])->with('success', 'Data Berhasil Disimpan!');
+    }
+
+    public function cetakSatu(Request $request, $id)
+    {
+        $user = Auth::user();
+        $IN_ID = $request->input('id');
+        $IN_TANGGAL = $request->input('tanggal');
+        $IN_KODE_KWINTANSI = $this->getKodeKwitansi($request);
+        $IN_ID_USER = auth()->user()->id;
+        
+        $kodeKwitansi = DB::select(
+            "CALL GET_KODE_KWITANSI_BY_ID_TRANSAKSI(?)",
+            [$id]
+        );
+
+        $results = DB::select('CALL 9_TRANSAKSI_KAS_GET_DATA_BYKODE_KWITANSI(?)', [$kodeKwitansi[0]->KODE_KWITANSI]);
+        
+        $totalVar = 0;
+        foreach ($results as $total) {
+            $totalVar += $total->NOMINAL;
+        }
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Times New Roman');
+        $dompdf = new Dompdf($pdfOptions);
+
+        $pdf = PDF::loadView('pdf.cetakKas', [
+            'user' => $user,
+            'results' => $results,
+            'totalVar' => $totalVar,
+            'tanggal' => $IN_TANGGAL
+        ]);
+
+        return $pdf->stream();
+    }
 }
 

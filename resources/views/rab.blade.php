@@ -53,7 +53,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">MASTER RAB</h3>
+            <!-- <h3 class="card-title">MASTER RAB</h3> -->
             <button id="reloadButton" class="btn btn-primary float-right"><i class="fas fa-sync-alt"></i> Sync</button>
           </div>
           </form>
